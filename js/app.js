@@ -757,6 +757,11 @@ document.addEventListener("DOMContentLoaded", () => {
             });
         }, observerOptions);
 
+        document.querySelectorAll(".reveal-up").forEach(el => {
+            observer.observe(el);
+        });
+    }
+
     // Header Search Widget Handler
     function initNavSearch() {
         const toggleBtn = document.getElementById("nav-search-toggle-btn");
