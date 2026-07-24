@@ -1,4 +1,4 @@
-// Atomic Labs - Periodic Table Application Engine
+// Frzi Labs - Periodic Table Application Engine
 
 document.addEventListener("DOMContentLoaded", () => {
     // State management
@@ -64,6 +64,9 @@ document.addEventListener("DOMContentLoaded", () => {
 
     // Initialize SPA Router based on URL Hash
     function handleRoute() {
+        const navPopover = document.getElementById("nav-search-popover");
+        if (navPopover) navPopover.classList.add("hidden");
+
         const hash = window.location.hash;
         if (hash.startsWith("#element-") || hash.startsWith("#element/")) {
             const idStr = hash.replace("#element-", "").replace("#element/", "");
@@ -76,6 +79,7 @@ document.addEventListener("DOMContentLoaded", () => {
         }
         // Default Explorer view
         renderExplorerView();
+        window.scrollTo({ top: 0, behavior: "smooth" });
     }
 
     window.addEventListener("hashchange", handleRoute);
@@ -382,9 +386,9 @@ document.addEventListener("DOMContentLoaded", () => {
         mainContainer.innerHTML = `
             <!-- Detail Page Header Bar -->
             <div class="pt-24 pb-6 px-margin-mobile md:px-margin-desktop max-w-container-max mx-auto flex items-center justify-between border-b border-outline-variant/10">
-                <a href="#explorer" class="inline-flex items-center gap-2 text-on-surface-variant hover:text-primary transition-colors font-label-caps text-label-caps uppercase tracking-wider">
-                    <span class="material-symbols-outlined text-sm">arrow_back</span>
-                    Back to Explorer
+                <a href="#explorer" class="inline-flex items-center gap-2 px-4 py-2 bg-primary text-on-primary rounded-xl font-label-caps text-xs uppercase font-semibold tracking-wider hover:bg-inverse-surface transition-all shadow-sm">
+                    <span class="material-symbols-outlined text-base">home</span>
+                    Back to Home
                 </a>
                 <div class="flex items-center gap-4 font-label-caps text-xs">
                     ${prevEl ? `<a href="#element/${prevEl.atomicNumber}" class="text-on-surface-variant hover:text-primary flex items-center gap-1">← ${prevEl.symbol} (${prevEl.atomicNumber})</a>` : ''}
@@ -753,11 +757,59 @@ document.addEventListener("DOMContentLoaded", () => {
             });
         }, observerOptions);
 
-        document.querySelectorAll(".reveal-up").forEach(el => {
-            observer.observe(el);
+    // Header Search Widget Handler
+    function initNavSearch() {
+        const toggleBtn = document.getElementById("nav-search-toggle-btn");
+        const popover = document.getElementById("nav-search-popover");
+        const input = document.getElementById("nav-search-input");
+        const dropdown = document.getElementById("nav-search-results-dropdown");
+        const clearBtn = document.getElementById("nav-search-clear-btn");
+
+        if (!toggleBtn || !popover || !input) return;
+
+        toggleBtn.addEventListener("click", (e) => {
+            e.stopPropagation();
+            const isHidden = popover.classList.contains("hidden");
+            if (isHidden) {
+                popover.classList.remove("hidden");
+                input.focus();
+                if (input.value) updateSearchDropdown(input.value, dropdown);
+            } else {
+                popover.classList.add("hidden");
+            }
+        });
+
+        popover.addEventListener("click", (e) => {
+            e.stopPropagation();
+        });
+
+        input.addEventListener("input", (e) => {
+            const query = e.target.value;
+            if (clearBtn) clearBtn.classList.toggle("hidden", !query);
+            updateSearchDropdown(query, dropdown);
+        });
+
+        if (clearBtn) {
+            clearBtn.addEventListener("click", () => {
+                input.value = "";
+                clearBtn.classList.add("hidden");
+                if (dropdown) dropdown.classList.add("hidden");
+                input.focus();
+            });
+        }
+
+        document.addEventListener("click", () => {
+            popover.classList.add("hidden");
+        });
+
+        document.addEventListener("keydown", (e) => {
+            if (e.key === "Escape") {
+                popover.classList.add("hidden");
+            }
         });
     }
 
-    // Initialize App Routing
+    // Initialize Header Search & App Routing
+    initNavSearch();
     handleRoute();
 });

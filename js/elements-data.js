@@ -1,4 +1,4 @@
-// Comprehensive 118 Elements Dataset for Atomic Labs
+// Comprehensive 118 Elements Dataset for Frzi Labs
 const ELEMENTS_DATA = [
   {
     "atomicNumber": 1,

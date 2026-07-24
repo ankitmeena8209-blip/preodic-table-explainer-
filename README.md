@@ -1,4 +1,4 @@
-# ⚛️ Periodic Table Explainer - Atomic Labs
+# ⚛️ Periodic Table Explainer - Frzi Labs
 
 An interactive, high-performance web application providing an immersive exploration of all **118 elements** in the Periodic Table. Built with dynamic filtering, real-time search, 3D electron shell visualization, and rich atomic metadata.
 
