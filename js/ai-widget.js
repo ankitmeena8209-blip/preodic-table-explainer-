@@ -81,13 +81,13 @@
             }
             @media (max-width: 640px) {
                 #frzi-ai-window {
-                    bottom: 0;
-                    right: 0;
-                    width: 100vw;
-                    max-width: 100vw;
-                    height: 100vh;
-                    max-height: 100vh;
-                    border-radius: 0;
+                    bottom: 5.5rem;
+                    right: 1rem;
+                    width: calc(100vw - 2rem);
+                    max-width: 400px;
+                    height: 500px;
+                    max-height: calc(100vh - 7rem);
+                    border-radius: 1.25rem;
                 }
                 #frzi-ai-button {
                     bottom: 1rem;
@@ -98,6 +98,13 @@
                 opacity: 1;
                 transform: translateY(0) scale(1);
                 pointer-events: auto;
+            }
+            
+            /* Class to hide the floating button when the widget is open */
+            #frzi-ai-button.ai-hidden {
+                opacity: 0;
+                transform: scale(0.8);
+                pointer-events: none;
             }
 
             .ai-header {
@@ -358,6 +365,7 @@
         button.addEventListener('click', () => {
             const isOpen = windowEl.classList.toggle('ai-open');
             if (isOpen) {
+                button.classList.add('ai-hidden');
                 inputEl.focus();
                 scrollToBottom();
             }
@@ -365,6 +373,7 @@
 
         document.getElementById('frzi-ai-close').addEventListener('click', () => {
             windowEl.classList.remove('ai-open');
+            button.classList.remove('ai-hidden');
         });
 
         document.getElementById('frzi-ai-clear').addEventListener('click', () => {
