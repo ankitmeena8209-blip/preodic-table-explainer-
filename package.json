@@ -18,6 +18,8 @@
   "author": "Ankit Meena",
   "license": "MIT",
   "devDependencies": {
+    "@types/node": "^26.1.1",
+    "@vercel/node": "^5.8.27",
     "serve": "^14.2.4"
   }
 }
