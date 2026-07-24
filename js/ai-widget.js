@@ -601,7 +601,7 @@ SAFETY: N/A
                     streamBuffer += chunk;
                     
                     // Correctly split on actual newline characters from SSE
-                    const lines = streamBuffer.split('\\n');
+                    const lines = streamBuffer.split('\n');
                     streamBuffer = lines.pop(); // Keep incomplete line in buffer
 
                     for (const line of lines) {
@@ -611,7 +611,7 @@ SAFETY: N/A
                             try {
                                 const data = JSON.parse(dataStr);
                                 if (data.error) {
-                                    botMsgContent += "\\nError: " + data.error;
+                                    botMsgContent += "\nError: " + data.error;
                                 } else if (data.choices && data.choices[0].delta && data.choices[0].delta.content) {
                                     botMsgContent += data.choices[0].delta.content;
                                 }
