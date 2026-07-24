@@ -3,10 +3,55 @@
 <head>
     <meta charset="utf-8"/>
     <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-    <title>Frzi Labs - Interactive Periodic Table Experience (118 Elements)</title>
+    <!-- Primary SEO Meta Tags -->
+    <title>FRZI Labs - Interactive Periodic Table Experience (118 Elements)</title>
+    <meta name="title" content="FRZI Labs - Interactive Periodic Table Experience (118 Elements)"/>
+    <meta name="description" content="Explore all 118 chemical elements interactively on FRZI Labs. Features 3D atomic orbital visualizations, real-time search, electronic configurations, and periodic trends."/>
+    <meta name="keywords" content="Periodic Table, Chemical Elements, Interactive Chemistry, Atomic Number, Electron Configuration, Science Education, FRZI Labs"/>
+    <meta name="author" content="FRZI Labs"/>
+    <meta name="robots" content="index, follow"/>
+    <link rel="canonical" href="https://preodic-table-explainer.vercel.app/"/>
 
     <!-- Google AdSense Verification & Ads -->
     <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-9577238871140380" crossorigin="anonymous"></script>
+
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website"/>
+    <meta property="og:url" content="https://preodic-table-explainer.vercel.app/"/>
+    <meta property="og:title" content="FRZI Labs - Interactive Periodic Table Experience (118 Elements)"/>
+    <meta property="og:description" content="Explore all 118 chemical elements interactively on FRZI Labs with 3D atomic orbital models, real-time search, and chemical data."/>
+    <meta property="og:site_name" content="FRZI Labs"/>
+
+    <!-- Twitter Card -->
+    <meta name="twitter:card" content="summary_large_image"/>
+    <meta name="twitter:url" content="https://preodic-table-explainer.vercel.app/"/>
+    <meta name="twitter:title" content="FRZI Labs - Interactive Periodic Table Experience (118 Elements)"/>
+    <meta name="twitter:description" content="Explore all 118 chemical elements interactively on FRZI Labs with 3D atomic orbital models."/>
+
+    <!-- Structured Data (Schema.org) -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@graph": [
+        {
+          "@type": "WebApplication",
+          "@id": "https://preodic-table-explainer.vercel.app/#webapp",
+          "url": "https://preodic-table-explainer.vercel.app/",
+          "name": "FRZI Labs - Interactive Periodic Table",
+          "applicationCategory": "EducationalApplication",
+          "operatingSystem": "All",
+          "description": "Interactive digital periodic table platform for chemistry students, educators, and researchers."
+        },
+        {
+          "@type": "EducationalOrganization",
+          "@id": "https://preodic-table-explainer.vercel.app/#organization",
+          "name": "FRZI Labs",
+          "url": "https://preodic-table-explainer.vercel.app/",
+          "email": "ankitgemini4@gmail.com"
+        }
+      ]
+    }
+    </script>
 
     <!-- Google Fonts & Material Symbols -->
     <link rel="preconnect" href="https://fonts.googleapis.com"/>
@@ -353,21 +398,54 @@
     <div id="app-main-content"></div>
 
     <!-- Global Footer -->
-    <footer class="w-full py-16 px-margin-mobile md:px-margin-desktop bg-surface border-t border-outline-variant/10 transition-all duration-300">
-        <div class="max-w-container-max mx-auto flex flex-col md:flex-row justify-between items-center gap-gutter">
-            <div class="font-headline-sm text-headline-sm text-primary font-bold">
-                Frzi Labs
+    <footer class="w-full py-16 px-margin-mobile md:px-margin-desktop bg-surface border-t border-outline-variant/15 transition-all duration-300">
+        <div class="max-w-container-max mx-auto space-y-12">
+            <div class="grid grid-cols-1 md:grid-cols-12 gap-8 items-start">
+                <!-- Column 1: Brand & Tagline -->
+                <div class="md:col-span-5 space-y-4">
+                    <a href="#explorer" class="font-headline-sm text-headline-sm tracking-tight text-primary font-bold flex items-center gap-2.5">
+                        <span class="w-3 h-3 rounded-full bg-secondary inline-block shadow-sm"></span>
+                        <span>FRZI Labs</span>
+                    </a>
+                    <p class="font-body-md text-sm text-on-surface-variant max-w-sm leading-relaxed">
+                        Making Chemistry Simple, Interactive & Accessible. Exploring the 118 chemical elements through 3D visualizations, periodic trends, and scientific accuracy.
+                    </p>
+                </div>
+
+                <!-- Column 2: Quick Navigation -->
+                <div class="md:col-span-3 space-y-3">
+                    <h3 class="font-label-caps text-xs uppercase tracking-wider text-primary font-semibold">Quick Navigation</h3>
+                    <ul class="space-y-2 text-sm text-on-surface-variant font-body-md">
+                        <li><a href="#explorer" class="hover:text-primary transition-colors">Periodic Explorer</a></li>
+                        <li><a href="#element/1" class="hover:text-primary transition-colors">Hydrogen (H #1)</a></li>
+                        <li><a href="#element/6" class="hover:text-primary transition-colors">Carbon (C #6)</a></li>
+                        <li><a href="#element/8" class="hover:text-primary transition-colors">Oxygen (O #8)</a></li>
+                        <li><a href="#element/79" class="hover:text-primary transition-colors">Gold (Au #79)</a></li>
+                        <li><a href="#element/118" class="hover:text-primary transition-colors">Oganesson (Og #118)</a></li>
+                    </ul>
+                </div>
+
+                <!-- Column 3: Legal & Information -->
+                <div class="md:col-span-4 space-y-3">
+                    <h3 class="font-label-caps text-xs uppercase tracking-wider text-primary font-semibold">Legal & Information</h3>
+                    <ul class="space-y-2 text-sm text-on-surface-variant font-body-md">
+                        <li><a href="about.html" class="hover:text-primary transition-colors">About Us</a></li>
+                        <li><a href="contact.html" class="hover:text-primary transition-colors">Contact Us</a></li>
+                        <li><a href="privacy-policy.html" class="hover:text-primary transition-colors">Privacy Policy</a></li>
+                        <li><a href="terms-and-conditions.html" class="hover:text-primary transition-colors">Terms &amp; Conditions</a></li>
+                        <li><a href="disclaimer.html" class="hover:text-primary transition-colors">Disclaimer</a></li>
+                    </ul>
+                </div>
             </div>
-            <div class="flex flex-wrap justify-center gap-8 font-body-md text-sm text-on-surface-variant">
-                <a href="#explorer" class="hover:text-primary transition-colors">Periodic Explorer</a>
-                <a href="#element/1" class="hover:text-primary transition-colors">Hydrogen</a>
-                <a href="#element/6" class="hover:text-primary transition-colors">Carbon</a>
-                <a href="#element/8" class="hover:text-primary transition-colors">Oxygen</a>
-                <a href="#element/79" class="hover:text-primary transition-colors">Gold</a>
-                <a href="#element/92" class="hover:text-primary transition-colors">Uranium</a>
-            </div>
-            <div class="font-body-md text-sm text-on-surface-variant/80">
-                © 2026 Frzi Labs. Complete 118-Element Interactive Experience.
+
+            <!-- Bottom Copyright & Tagline -->
+            <div class="pt-8 border-t border-outline-variant/10 flex flex-col sm:flex-row justify-between items-center gap-4 text-xs font-body-md text-on-surface-variant/80">
+                <div>
+                    © 2026 FRZI Labs. All Rights Reserved.
+                </div>
+                <div class="italic text-on-surface-variant/60">
+                    "Making Chemistry Simple, Interactive & Accessible."
+                </div>
             </div>
         </div>
     </footer>

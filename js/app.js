@@ -68,6 +68,27 @@ document.addEventListener("DOMContentLoaded", () => {
         if (navPopover) navPopover.classList.add("hidden");
 
         const hash = window.location.hash;
+        if (hash === "#about" || hash === "#about.html") {
+            window.location.href = "about.html";
+            return;
+        }
+        if (hash === "#contact" || hash === "#contact.html") {
+            window.location.href = "contact.html";
+            return;
+        }
+        if (hash === "#privacy-policy" || hash === "#privacy-policy.html") {
+            window.location.href = "privacy-policy.html";
+            return;
+        }
+        if (hash === "#terms-and-conditions" || hash === "#terms-and-conditions.html") {
+            window.location.href = "terms-and-conditions.html";
+            return;
+        }
+        if (hash === "#disclaimer" || hash === "#disclaimer.html") {
+            window.location.href = "disclaimer.html";
+            return;
+        }
+
         if (hash.startsWith("#element-") || hash.startsWith("#element/")) {
             const idStr = hash.replace("#element-", "").replace("#element/", "");
             let el = ELEMENTS_DATA.find(e => e.atomicNumber.toString() === idStr || e.symbol.toLowerCase() === idStr.toLowerCase() || e.name.toLowerCase() === idStr.toLowerCase());
