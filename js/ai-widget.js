@@ -61,24 +61,38 @@
                 position: fixed;
                 bottom: 6rem;
                 right: 2rem;
-                width: 380px;
-                max-width: calc(100vw - 4rem);
-                height: 600px;
+                width: 420px;
+                max-width: calc(100vw - 2rem);
+                height: 650px;
                 max-height: calc(100vh - 8rem);
-                background: rgba(15, 23, 42, 0.75);
+                background: rgba(15, 23, 42, 0.85);
                 backdrop-filter: blur(24px);
-                border: 1px solid rgba(255, 255, 255, 0.1);
+                border: 1px solid rgba(255, 255, 255, 0.15);
                 border-radius: 1.5rem;
                 box-shadow: 0 20px 40px -10px rgba(0, 0, 0, 0.5), 0 0 40px rgba(14, 165, 233, 0.1);
                 display: flex;
-                flex-col;
+                flex-direction: column;
                 z-index: 9998;
                 opacity: 0;
                 transform: translateY(20px) scale(0.95);
                 pointer-events: none;
                 transition: opacity 0.4s cubic-bezier(0.16, 1, 0.3, 1), transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
-                flex-direction: column;
                 overflow: hidden;
+            }
+            @media (max-width: 640px) {
+                #frzi-ai-window {
+                    bottom: 0;
+                    right: 0;
+                    width: 100vw;
+                    max-width: 100vw;
+                    height: 100vh;
+                    max-height: 100vh;
+                    border-radius: 0;
+                }
+                #frzi-ai-button {
+                    bottom: 1rem;
+                    right: 1rem;
+                }
             }
             #frzi-ai-window.ai-open {
                 opacity: 1;
@@ -101,14 +115,14 @@
                 color: #e2e8f0;
                 font-family: 'Outfit', sans-serif;
                 font-weight: 600;
-                font-size: 1.1rem;
+                font-size: 1.25rem;
             }
             .ai-header-actions button {
                 background: none;
                 border: none;
                 color: #94a3b8;
                 cursor: pointer;
-                padding: 0.25rem;
+                padding: 0.5rem;
                 border-radius: 0.375rem;
                 transition: all 0.2s;
                 display: inline-flex;
@@ -121,22 +135,22 @@
             .ai-messages {
                 flex: 1;
                 overflow-y: auto;
-                padding: 1.25rem;
+                padding: 1.5rem;
                 display: flex;
                 flex-direction: column;
-                gap: 1rem;
+                gap: 1.5rem;
                 scroll-behavior: smooth;
             }
             .ai-messages::-webkit-scrollbar { width: 6px; }
             .ai-messages::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.2); border-radius: 3px; }
 
             .ai-msg {
-                max-width: 85%;
-                padding: 0.75rem 1rem;
-                border-radius: 1rem;
+                max-width: 90%;
+                padding: 1rem 1.25rem;
+                border-radius: 1.25rem;
                 font-family: 'Inter', sans-serif;
-                font-size: 0.9rem;
-                line-height: 1.5;
+                font-size: 1.05rem;
+                line-height: 1.6;
                 color: #e2e8f0;
                 animation: slideIn 0.3s ease-out forwards;
                 word-wrap: break-word;
@@ -147,7 +161,7 @@
             }
             .ai-msg-user {
                 align-self: flex-end;
-                background: rgba(14, 165, 233, 0.2);
+                background: rgba(14, 165, 233, 0.25);
                 border: 1px solid rgba(14, 165, 233, 0.3);
                 border-bottom-right-radius: 0.25rem;
             }
@@ -156,76 +170,123 @@
                 background: rgba(255, 255, 255, 0.05);
                 border: 1px solid rgba(255, 255, 255, 0.1);
                 border-bottom-left-radius: 0.25rem;
+                max-width: 100%;
             }
-            .ai-msg-bot p { margin-bottom: 0.5rem; }
+            .ai-msg-bot p { margin-bottom: 0.75rem; }
             .ai-msg-bot p:last-child { margin-bottom: 0; }
-            .ai-msg-bot pre {
-                background: #0f172a;
+            
+            /* UI Card for Element Output */
+            .element-card {
+                background: rgba(255, 255, 255, 0.03);
+                border: 1px solid rgba(255, 255, 255, 0.1);
+                border-radius: 1rem;
+                padding: 1.25rem;
+                margin-top: 0.5rem;
+                display: flex;
+                flex-direction: column;
+                gap: 1rem;
+                width: 100%;
+            }
+            .ec-title {
+                font-size: 1.5rem;
+                font-weight: 700;
+                color: #38bdf8;
+                border-bottom: 1px solid rgba(255,255,255,0.1);
+                padding-bottom: 0.5rem;
+            }
+            .ec-summary {
+                font-size: 1.1rem;
+                font-style: italic;
+                color: #cbd5e1;
+            }
+            .ec-grid {
+                display: grid;
+                grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+                gap: 0.75rem;
+            }
+            .ec-stat {
+                background: rgba(0,0,0,0.2);
                 padding: 0.75rem;
                 border-radius: 0.5rem;
-                overflow-x: auto;
-                margin: 0.5rem 0;
-                position: relative;
+                display: flex;
+                flex-direction: column;
             }
-            .ai-msg-bot code {
-                font-family: 'Fira Code', monospace;
-                font-size: 0.85em;
-                color: #38bdf8;
+            .ec-stat-label {
+                font-size: 0.8rem;
+                text-transform: uppercase;
+                color: #94a3b8;
+                letter-spacing: 0.05em;
             }
-            .ai-msg-bot pre code { color: #e2e8f0; }
+            .ec-stat-val {
+                font-size: 1rem;
+                font-weight: 600;
+                color: #f8fafc;
+            }
+            .ec-section-title {
+                font-size: 1.1rem;
+                font-weight: 600;
+                color: #e2e8f0;
+                margin-top: 0.5rem;
+                border-bottom: 1px solid rgba(255,255,255,0.1);
+                padding-bottom: 0.25rem;
+            }
+            .ec-text {
+                font-size: 1rem;
+                color: #cbd5e1;
+            }
 
             .ai-input-area {
                 padding: 1.25rem;
                 border-top: 1px solid rgba(255, 255, 255, 0.1);
-                background: rgba(0,0,0,0.2);
+                background: rgba(0,0,0,0.3);
                 display: flex;
-                gap: 0.5rem;
+                gap: 0.75rem;
+                align-items: flex-end;
             }
             .ai-textarea {
                 flex: 1;
                 background: rgba(255,255,255,0.05);
                 border: 1px solid rgba(255,255,255,0.1);
-                border-radius: 1.5rem;
-                padding: 0.75rem 1rem;
+                border-radius: 1.25rem;
+                padding: 0.85rem 1.25rem;
                 color: #e2e8f0;
                 font-family: 'Inter', sans-serif;
-                font-size: 0.9rem;
+                font-size: 1.05rem;
                 resize: none;
                 outline: none;
-                max-height: 120px;
-                min-height: 44px;
+                max-height: 150px;
+                min-height: 52px;
                 transition: border-color 0.3s;
                 overflow-y: hidden;
             }
-            .ai-textarea:focus { border-color: rgba(14, 165, 233, 0.5); }
+            .ai-textarea:focus { border-color: rgba(14, 165, 233, 0.6); background: rgba(255,255,255,0.08); }
             .ai-textarea::placeholder { color: #64748b; }
             
             .ai-send-btn {
                 background: linear-gradient(135deg, #0ea5e9, #8b5cf6);
                 border: none;
                 border-radius: 50%;
-                width: 44px;
-                height: 44px;
+                width: 52px;
+                height: 52px;
                 display: flex;
                 align-items: center;
                 justify-content: center;
                 color: white;
                 cursor: pointer;
-                transition: transform 0.2s, opacity 0.2s;
-                align-self: flex-end;
+                transition: transform 0.2s, opacity 0.2s, box-shadow 0.2s;
+                box-shadow: 0 4px 12px rgba(14, 165, 233, 0.3);
             }
-            .ai-send-btn:hover { transform: scale(1.05); }
-            .ai-send-btn:disabled { opacity: 0.5; cursor: not-allowed; transform: none; }
-            .ai-send-btn:disabled i { opacity: 0.5; }
+            .ai-send-btn:hover { transform: scale(1.05); box-shadow: 0 6px 16px rgba(14, 165, 233, 0.5); }
+            .ai-send-btn:disabled { opacity: 0.5; cursor: not-allowed; transform: none; box-shadow: none; }
 
             .ai-typing {
                 display: flex;
-                gap: 0.25rem;
-                padding: 0.5rem 0;
+                gap: 0.35rem;
+                padding: 0.5rem 0.25rem;
             }
             .ai-dot {
-                width: 6px;
-                height: 6px;
+                width: 8px;
+                height: 8px;
                 background: #94a3b8;
                 border-radius: 50%;
                 animation: aiPulse 1.4s infinite ease-in-out both;
@@ -235,6 +296,19 @@
             @keyframes aiPulse {
                 0%, 80%, 100% { transform: scale(0); }
                 40% { transform: scale(1); }
+            }
+            
+            .ai-local-badge {
+                display: inline-flex;
+                align-items: center;
+                gap: 4px;
+                font-size: 0.75rem;
+                color: #10b981;
+                background: rgba(16, 185, 129, 0.1);
+                padding: 2px 8px;
+                border-radius: 12px;
+                margin-bottom: 8px;
+                font-weight: 600;
             }
         `;
         document.head.appendChild(style);
@@ -328,12 +402,80 @@
             }, 50);
         }
 
-        function renderMessage(role, content) {
+        // Custom parser to convert the custom AI format to a clean HTML card
+        function parseToCard(content) {
+            // Strip any markdown the AI might have sneaked in
+            let safeContent = content.replace(/\\*\\*/g, '').replace(/## /g, '').replace(/```/g, '');
+            
+            if (!safeContent.includes('[ELEMENT_CARD]')) {
+                // Return plain text safely
+                return safeContent.replace(/\\n/g, '<br/>');
+            }
+
+            // Parse the fields out of the custom format
+            let html = '<div class="element-card">';
+            
+            const extract = (key) => {
+                const regex = new RegExp(`${key}:\\s*([\\s\\S]*?)(?=(?:\\n[A-Z]+:|\\[END_CARD\\]|$))`, 'i');
+                const match = safeContent.match(regex);
+                return match ? match[1].trim() : '';
+            };
+
+            const name = extract('NAME');
+            const summary = extract('SUMMARY');
+            const facts = extract('FACTS');
+            const desc = extract('DESCRIPTION');
+            const physical = extract('PHYSICAL');
+            const chemical = extract('CHEMICAL');
+            const uses = extract('USES');
+            const interesting = extract('INTERESTING');
+            const safety = extract('SAFETY');
+
+            if (name) html += `<div class="ec-title">${name}</div>`;
+            if (summary) html += `<div class="ec-summary">${summary}</div>`;
+            
+            if (facts) {
+                html += '<div class="ec-grid">';
+                const factPairs = facts.split(',').map(f => f.trim());
+                factPairs.forEach(pair => {
+                    const [k, v] = pair.split(':').map(s => s ? s.trim() : '');
+                    if (k && v) {
+                        html += `<div class="ec-stat"><span class="ec-stat-label">${k}</span><span class="ec-stat-val">${v}</span></div>`;
+                    }
+                });
+                html += '</div>';
+            }
+
+            const addSection = (title, text) => {
+                if (text) {
+                    html += `<div class="ec-section-title">${title}</div><div class="ec-text">${text.replace(/\\n/g, '<br/>')}</div>`;
+                }
+            };
+
+            addSection('Description', desc);
+            addSection('Physical Properties', physical);
+            addSection('Chemical Properties', chemical);
+            addSection('Uses', uses);
+            addSection('Interesting Facts', interesting);
+            addSection('Safety', safety);
+
+            html += '</div>';
+            return html;
+        }
+
+        function renderMessage(role, content, isLocalFallback = false) {
             const div = document.createElement('div');
             div.className = `ai-msg ai-msg-${role}`;
+            
+            let htmlStr = '';
+            if (isLocalFallback) {
+                htmlStr += '<div class="ai-local-badge"><span class="material-symbols-outlined" style="font-size: 14px;">bolt</span> Fast Local Data</div>';
+            }
+            
             if (role === 'bot') {
-                const rawHTML = marked.parse(content);
-                div.innerHTML = DOMPurify.sanitize(rawHTML);
+                htmlStr += parseToCard(content);
+                // Simple sanitize instead of DOMPurify to save size & deps
+                div.innerHTML = htmlStr;
             } else {
                 div.textContent = content; // pure text for user
             }
@@ -350,11 +492,35 @@
             }
         }
 
+        function findElementInData(query) {
+            if (!window.ELEMENTS_DATA || !query) return null;
+            const q = query.toLowerCase().trim();
+            // Try matching name or symbol
+            return window.ELEMENTS_DATA.find(e => 
+                e.name.toLowerCase() === q || 
+                e.symbol.toLowerCase() === q || 
+                e.atomicNumber.toString() === q
+            );
+        }
+
+        function generateLocalElementCard(el) {
+            return `[ELEMENT_CARD]
+NAME: ${el.name} (${el.symbol})
+SUMMARY: ${el.category.replace('-', ' ')}
+FACTS: Atomic Number: ${el.atomicNumber}, Atomic Mass: ${el.atomicMass}, Group: ${el.group}, Period: ${el.period}, Category: ${el.category}
+DESCRIPTION: ${el.sections?.whatIsThis || 'No description available locally.'}
+PHYSICAL: Density: ${el.density}, Melting Point: ${el.meltingPoint}, Boiling Point: ${el.boilingPoint}
+CHEMICAL: Electronegativity: ${el.electronegativity}, Valency: ${el.valency}, Electron Config: ${el.electronConfiguration}
+USES: ${el.sections?.everydayUses || 'No uses specified.'}
+INTERESTING: Found in: ${el.sections?.howExtracted || 'N/A'}
+SAFETY: N/A
+[END_CARD]`;
+        }
+
         function getContextElement() {
             const hash = window.location.hash;
             if (hash.startsWith("#element-") || hash.startsWith("#element/")) {
                 const idStr = hash.replace("#element-", "").replace("#element/", "");
-                // Try to find the name if ELEMENTS_DATA is available (FRZI Labs global)
                 if (window.ELEMENTS_DATA) {
                     const el = window.ELEMENTS_DATA.find(e => e.atomicNumber.toString() === idStr || e.symbol.toLowerCase() === idStr.toLowerCase() || e.name.toLowerCase() === idStr.toLowerCase());
                     if (el) return el.name;
@@ -375,6 +541,18 @@
             sendBtn.disabled = true;
             inputEl.disabled = true;
 
+            // 1. FAST LOCAL DATA FALLBACK
+            const matchedEl = findElementInData(text);
+            if (matchedEl) {
+                const localCardStr = generateLocalElementCard(matchedEl);
+                renderMessage('bot', localCardStr, true); // Render local card instantly!
+                // Add an explicit message that AI is enhancing
+                const msg = renderMessage('bot', "✨ AI is enhancing this information...");
+                msg.style.opacity = '0.7';
+                msg.style.fontStyle = 'italic';
+                setTimeout(() => { if (msg.parentNode) msg.parentNode.removeChild(msg); }, 3000);
+            }
+
             // Typing indicator
             const typingDiv = document.createElement('div');
             typingDiv.className = 'ai-msg ai-msg-bot';
@@ -384,7 +562,6 @@
 
             try {
                 // Prepare API messages
-                // We send a subset of history to save tokens
                 const apiMessages = sessionMessages.slice(-10);
 
                 const response = await fetch('/api/ai', {
@@ -398,35 +575,41 @@
 
                 if (!response.ok) throw new Error("API Network Error");
 
-                msgContainer.removeChild(typingDiv);
+                if (typingDiv.parentNode) msgContainer.removeChild(typingDiv);
                 
                 // Read Stream
                 const reader = response.body.getReader();
                 const decoder = new TextDecoder('utf-8');
                 let botMsgContent = "";
                 const botMsgDiv = renderMessage('bot', ""); // empty start
+                let streamBuffer = "";
 
                 while (true) {
                     const { done, value } = await reader.read();
                     if (done) break;
                     
                     const chunk = decoder.decode(value, { stream: true });
-                    const lines = chunk.split('\\n');
+                    streamBuffer += chunk;
+                    
+                    // Correctly split on actual newline characters from SSE
+                    const lines = streamBuffer.split('\\n');
+                    streamBuffer = lines.pop(); // Keep incomplete line in buffer
+
                     for (const line of lines) {
                         if (line.startsWith('data: ')) {
-                            const dataStr = line.slice(6);
+                            const dataStr = line.slice(6).trim();
                             if (dataStr === '[DONE]') continue;
                             try {
                                 const data = JSON.parse(dataStr);
                                 if (data.error) {
-                                    botMsgContent += "\\n*Error: " + data.error + "*";
+                                    botMsgContent += "\\nError: " + data.error;
                                 } else if (data.choices && data.choices[0].delta && data.choices[0].delta.content) {
                                     botMsgContent += data.choices[0].delta.content;
                                 }
                             } catch (e) {}
                         }
                     }
-                    botMsgDiv.innerHTML = DOMPurify.sanitize(marked.parse(botMsgContent));
+                    botMsgDiv.innerHTML = parseToCard(botMsgContent);
                     scrollToBottom();
                 }
 
@@ -434,8 +617,11 @@
                 sessionStorage.setItem('frzi_ai_history', JSON.stringify(sessionMessages));
 
             } catch (error) {
-                msgContainer.removeChild(typingDiv);
-                addMessage('bot', "*Sorry, I encountered an error connecting to the FRZI Labs backend. Please try again later.*");
+                if (typingDiv.parentNode) msgContainer.removeChild(typingDiv);
+                // If local data succeeded, we don't need to show a scary error, just silent fail on enhancement
+                if (!matchedEl) {
+                    addMessage('bot', "Sorry, I encountered an error connecting to the FRZI Labs backend. Please try again later.");
+                }
             } finally {
                 isWaiting = false;
                 sendBtn.disabled = false;
