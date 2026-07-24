@@ -5,10 +5,10 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
     
     <!-- Primary SEO Meta Tags -->
-    <title>Disclaimer | FRZI Labs - Educational Information & Accuracy Notice</title>
-    <meta name="title" content="Disclaimer | FRZI Labs - Educational Information & Accuracy Notice"/>
-    <meta name="description" content="Read the FRZI Labs educational disclaimer. Learn about scientific accuracy standards, limitation of liability, and safety guidelines for chemical information."/>
-    <meta name="keywords" content="FRZI Labs Disclaimer, Scientific Accuracy Notice, Chemistry Educational Disclaimer, Chemical Safety Warning"/>
+    <title>Disclaimer | FRZI Labs - Scientific & Educational Notice</title>
+    <meta name="title" content="Disclaimer | FRZI Labs - Scientific & Educational Notice"/>
+    <meta name="description" content="Official Disclaimer for FRZI Labs. Educational purpose notice, scientific data sources (IUPAC, NIST), lab safety warning, and data accuracy terms."/>
+    <meta name="keywords" content="Disclaimer, FRZI Labs Disclaimer, Scientific Accuracy, Chemistry Lab Safety, Educational Reference Disclaimer"/>
     <meta name="author" content="FRZI Labs"/>
     <meta name="robots" content="index, follow"/>
     <link rel="canonical" href="https://preodic-table-explainer.vercel.app/disclaimer.html"/>
@@ -19,15 +19,15 @@
     <!-- Open Graph / Facebook -->
     <meta property="og:type" content="website"/>
     <meta property="og:url" content="https://preodic-table-explainer.vercel.app/disclaimer.html"/>
-    <meta property="og:title" content="Disclaimer | FRZI Labs - Educational Information & Accuracy Notice"/>
-    <meta property="og:description" content="Read the FRZI Labs educational disclaimer. Content is provided for general educational purpose only."/>
+    <meta property="og:title" content="Disclaimer | FRZI Labs - Scientific & Educational Notice"/>
+    <meta property="og:description" content="Official Disclaimer for FRZI Labs regarding scientific data accuracy, educational purpose, and chemical handling safety."/>
     <meta property="og:site_name" content="FRZI Labs"/>
 
     <!-- Twitter Card -->
     <meta name="twitter:card" content="summary_large_image"/>
     <meta name="twitter:url" content="https://preodic-table-explainer.vercel.app/disclaimer.html"/>
-    <meta name="twitter:title" content="Disclaimer | FRZI Labs - Educational Information & Accuracy Notice"/>
-    <meta name="twitter:description" content="Read the FRZI Labs educational disclaimer regarding scientific information and laboratory safety."/>
+    <meta name="twitter:title" content="Disclaimer | FRZI Labs - Scientific & Educational Notice"/>
+    <meta name="twitter:description" content="Official Disclaimer for FRZI Labs regarding scientific data accuracy and laboratory safety."/>
 
     <!-- Google Fonts & Material Symbols -->
     <link rel="preconnect" href="https://fonts.googleapis.com"/>
@@ -48,7 +48,7 @@
           "@id": "https://preodic-table-explainer.vercel.app/disclaimer.html#webpage",
           "url": "https://preodic-table-explainer.vercel.app/disclaimer.html",
           "name": "Disclaimer | FRZI Labs",
-          "description": "Scientific disclaimer stating that FRZI Labs provides information for educational reference only."
+          "description": "Scientific, educational, and safety disclaimer for FRZI Labs interactive 3D Periodic Table."
         },
         {
           "@type": "BreadcrumbList",
@@ -84,19 +84,145 @@
 </head>
 <body class="relative min-h-screen font-sans antialiased selection:bg-secondary/20 flex flex-col justify-between">
 
+    <!-- Global Particle Canvas Shader Background -->
+    <div class="fixed inset-0 z-[-1] opacity-25 pointer-events-none">
+        <canvas id="shader-canvas-ANIMATION_2" class="w-full h-full block"></canvas>
+    </div>
+
+    <!-- WebGL Background Shader Script -->
+    <script>
+    (function() {
+        const canvas = document.getElementById('shader-canvas-ANIMATION_2');
+        function syncSize() {
+            const w = window.innerWidth || 1280;
+            const h = window.innerHeight || 720;
+            if (canvas.width !== w || canvas.height !== h) {
+                canvas.width = w;
+                canvas.height = h;
+            }
+        }
+        window.addEventListener('resize', syncSize);
+        syncSize();
+
+        const gl = canvas.getContext('webgl') || canvas.getContext('experimental-webgl');
+        if (!gl) return;
+
+        const vs = `attribute vec2 a_position;
+        varying vec2 v_texCoord;
+        void main() {
+            v_texCoord = a_position * 0.5 + 0.5;
+            gl_Position = vec4(a_position, 0.0, 1.0);
+        }`;
+
+        const fs = `precision highp float;
+        uniform float u_time;
+        uniform vec2 u_resolution;
+        varying vec2 v_texCoord;
+
+        float hash(vec2 p) {
+            p = fract(p * vec2(123.34, 456.21));
+            p += dot(p, p + 45.32);
+            return fract(p.x * p.y);
+        }
+
+        void main() {
+            vec2 uv = v_texCoord;
+            vec2 pos = uv * 5.0;
+            vec2 ipos = floor(pos);
+            vec2 fpos = fract(pos);
+            
+            float m_dist = 1.0;
+            for (int y = -1; y <= 1; y++) {
+                for (int x = -1; x <= 1; x++) {
+                    vec2 neighbor = vec2(float(x), float(y));
+                    vec2 point = vec2(hash(ipos + neighbor), hash(ipos + neighbor + 123.4));
+                    point = 0.5 + 0.5 * sin(u_time * 0.2 + 6.2831 * point);
+                    vec2 diff = neighbor + point - fpos;
+                    float dist = length(diff);
+                    m_dist = min(m_dist, dist);
+                }
+            }
+            
+            vec3 color = vec3(0.98, 0.98, 0.98);
+            float particles = 1.0 - smoothstep(0.0, 0.025, m_dist);
+            color = mix(color, vec3(0.0, 0.35, 0.85), particles * 0.12);
+            gl_FragColor = vec4(color, 1.0);
+        }`;
+
+        function createShader(type, src) {
+            const s = gl.createShader(type);
+            gl.shaderSource(s, src);
+            gl.compileShader(s);
+            return s;
+        }
+
+        const prog = gl.createProgram();
+        gl.attachShader(prog, createShader(gl.VERTEX_SHADER, vs));
+        gl.attachShader(prog, createShader(gl.FRAGMENT_SHADER, fs));
+        gl.linkProgram(prog);
+        gl.useProgram(prog);
+
+        const buf = gl.createBuffer();
+        gl.bindBuffer(gl.ARRAY_BUFFER, buf);
+        gl.bufferData(gl.ARRAY_BUFFER, new Float32Array([-1,-1, 1,-1, -1,1, 1,1]), gl.STATIC_DRAW);
+
+        const posLoc = gl.getAttribLocation(prog, 'a_position');
+        gl.enableVertexAttribArray(posLoc);
+        gl.vertexAttribPointer(posLoc, 2, gl.FLOAT, false, 0, 0);
+
+        const uTime = gl.getUniformLocation(prog, 'u_time');
+        const uRes = gl.getUniformLocation(prog, 'u_resolution');
+
+        function render(t) {
+            gl.viewport(0, 0, canvas.width, canvas.height);
+            if (uTime) gl.uniform1f(uTime, t * 0.001);
+            if (uRes) gl.uniform2f(uRes, canvas.width, canvas.height);
+            gl.drawArrays(gl.TRIANGLE_STRIP, 0, 4);
+            requestAnimationFrame(render);
+        }
+        render(0);
+    })();
+    </script>
+
     <!-- Top Navigation Bar -->
     <header class="fixed top-0 w-full z-50 bg-white/80 backdrop-blur-2xl border-b border-outline-variant/15 transition-all duration-300">
         <div class="flex justify-between items-center h-20 px-margin-mobile md:px-margin-desktop max-w-container-max mx-auto">
+            <!-- Brand Logo -->
             <a href="index.html#explorer" class="font-headline-sm text-headline-sm tracking-tight text-primary font-bold flex items-center gap-2.5 hover:opacity-85 transition-opacity">
                 <span class="w-3 h-3 rounded-full bg-secondary inline-block shadow-sm"></span>
                 <span>FRZI Labs</span>
             </a>
 
+            <!-- Navigation Controls: Home & Navbar Search Icon -->
             <div class="flex items-center gap-2.5">
-                <a href="index.html#explorer" class="flex items-center gap-2 px-4 py-2 rounded-full bg-surface-container-low/90 hover:bg-primary hover:text-on-primary text-primary transition-all font-label-caps text-xs font-semibold shadow-xs" title="Return to Periodic Table Explorer">
+                <!-- Home Button -->
+                <a href="index.html#explorer" id="nav-home-btn" class="flex items-center gap-2 px-4 py-2 rounded-full bg-surface-container-low/90 hover:bg-primary hover:text-on-primary text-primary transition-all font-label-caps text-xs font-semibold shadow-xs" title="Go to Home / Hero Page">
                     <span class="material-symbols-outlined text-base">home</span>
-                    <span>Home</span>
+                    <span class="hidden sm:inline">Home</span>
                 </a>
+
+                <!-- Header Spotlight Search Widget -->
+                <div class="relative" id="nav-search-container">
+                    <button id="nav-search-toggle-btn" class="flex items-center gap-2 px-3.5 py-2 rounded-full bg-surface-container-low/90 hover:bg-surface-container text-primary border border-outline-variant/20 transition-all font-label-caps text-xs font-medium shadow-xs" title="Search All Elements">
+                        <span class="material-symbols-outlined text-lg text-secondary">search</span>
+                        <span class="hidden sm:inline text-on-surface-variant font-label-mono">Search...</span>
+                    </button>
+
+                    <!-- Clean Spotlight Search Card -->
+                    <div id="nav-search-popover" class="hidden absolute right-0 top-full mt-3 w-80 sm:w-96 bg-white/95 backdrop-blur-2xl border border-outline-variant/30 rounded-2xl shadow-2xl overflow-hidden z-50 transition-all">
+                        <!-- Single Integrated Input Header -->
+                        <div class="relative flex items-center px-4 py-3 border-b border-outline-variant/15 bg-transparent">
+                            <span class="material-symbols-outlined text-secondary text-xl shrink-0">search</span>
+                            <input id="nav-search-input" type="text" placeholder="Search by Name, Symbol, or Atomic #..." 
+                                class="w-full pl-3 pr-8 bg-transparent text-primary placeholder:text-on-surface-variant/50 focus:outline-none border-none ring-0 focus:ring-0 text-sm font-sans" />
+                            <button id="nav-search-clear-btn" class="hidden absolute right-3 text-on-surface-variant/60 hover:text-primary p-1">
+                                <span class="material-symbols-outlined text-base">close</span>
+                            </button>
+                        </div>
+                        <!-- Results Dropdown -->
+                        <div id="nav-search-results-dropdown" class="max-h-72 overflow-y-auto divide-y divide-outline-variant/10 text-left"></div>
+                    </div>
+                </div>
             </div>
         </div>
     </header>
@@ -112,51 +238,51 @@
 
         <!-- Page Header -->
         <header class="space-y-4 border-b border-outline-variant/20 pb-8">
-            <div class="inline-block px-3.5 py-1 rounded-full border border-amber-500/30 bg-amber-500/10 text-amber-700 font-label-caps text-xs uppercase tracking-widest font-semibold">
-                Accuracy Notice
+            <div class="inline-block px-3.5 py-1 rounded-full border border-secondary/30 bg-secondary/10 text-secondary font-label-caps text-xs uppercase tracking-widest font-semibold">
+                Scientific &amp; Safety Notice
             </div>
             <h1 class="text-4xl md:text-5xl font-bold tracking-tight text-primary">
-                Scientific &amp; Educational Disclaimer
+                Scientific Disclaimer
             </h1>
-            <p class="text-sm font-label-mono text-on-surface-variant">
-                Effective Date: July 24, 2026 | Last Updated: 2026
+            <p class="text-sm font-label-mono text-on-surface-variant/80">
+                Effective Date: January 1, 2026 • Last Updated: July 2026
             </p>
         </header>
 
-        <!-- Detailed Disclaimer Document -->
+        <!-- Detailed Disclaimer Content -->
         <article class="prose prose-lg max-w-none text-on-surface-variant space-y-8 leading-relaxed font-body-md">
             
             <section class="space-y-4">
-                <h2 class="text-2xl font-bold text-primary tracking-tight">1. General Educational Information Only</h2>
+                <h2 class="text-2xl font-bold text-primary tracking-tight">1. Educational &amp; Informational Purpose</h2>
                 <p>
-                    All content, chemical data, physical metrics, electronic configurations, and 3D visual representations published on <strong>FRZI Labs</strong> (<a href="index.html#explorer" class="text-secondary underline">https://preodic-table-explainer.vercel.app/</a>) are provided for general educational, academic reference, and informational purposes only.
+                    All content, 3D atomic models, thermodynamic metrics, electronic configurations, and elemental descriptions provided on <strong>FRZI Labs</strong> (<a href="index.html#explorer" class="text-secondary underline">https://preodic-table-explainer.vercel.app/</a>) are compiled exclusively for educational, academic, and general reference purposes.
                 </p>
                 <p>
-                    Although our chemical element datasets are carefully researched and compiled from peer-reviewed scientific institutions (including IUPAC, NIST, PubChem, and RSC), FRZI Labs makes no warranties, express or implied, regarding the absolute completeness, accuracy, or suitability for industrial laboratory applications of any dataset published on this platform.
-                </p>
-            </section>
-
-            <section class="space-y-4">
-                <h2 class="text-2xl font-bold text-primary tracking-tight">2. Verification Through Authoritative Sources</h2>
-                <p>
-                    Scientific data and chemical constants can evolve as analytical measurement techniques advance. Users, students, researchers, and engineers should independently verify critical scientific calculations, experimental parameters, thermodynamic metrics, and toxicity safety data through primary academic sources, official Material Safety Data Sheets (MSDS), or official IUPAC reports before undertaking laboratory experiments or commercial chemical synthesis.
+                    While we strive for complete scientific precision, FRZI Labs does not guarantee that all datasets are free of typographical errors, updated isotopic revisions, or minor rounding variances.
                 </p>
             </section>
 
             <section class="space-y-4">
-                <h2 class="text-2xl font-bold text-primary tracking-tight">3. Laboratory Handling & Safety Disclaimer</h2>
+                <h2 class="text-2xl font-bold text-primary tracking-tight">2. No Medical, Engineering, or Laboratory Safety Advice</h2>
                 <p>
-                    Descriptions of elemental reactivity, toxicity, radiological properties, or oxidation behavior contained on FRZI Labs do <strong>NOT</strong> constitute a laboratory safety manual or operational protocol. Chemical elements (such as reactive alkali metals, halogen gases, or heavy radioactive isotopes) possess extreme physical and chemical hazards.
+                    The physical and chemical metrics presented across our dataset (e.g. reactivity, toxicity, flammability, oxidation states) are theoretical data points. They must NOT be used as official safety protocol guides for handling physical chemical substances or conducting laboratory experiments.
                 </p>
                 <p>
-                    Never attempt physical chemical experiments or reagent handling based solely on information read on this website. Always consult certified chemical hygiene officers, institutional safety guidelines, and official MSDS documents.
+                    Always consult official <strong>Safety Data Sheets (SDS)</strong>, certified chemical safety officers, and professional laboratory equipment guidelines before handling any physical elemental samples or volatile compounds.
                 </p>
             </section>
 
             <section class="space-y-4">
-                <h2 class="text-2xl font-bold text-primary tracking-tight">4. External Links Disclaimer</h2>
+                <h2 class="text-2xl font-bold text-primary tracking-tight">3. Data Verification &amp; Scientific Sources</h2>
                 <p>
-                    FRZI Labs may contain links to external academic websites, institutional databases, or third-party resources. Such external links are provided solely for user convenience. FRZI Labs does not endorse, control, or guarantee the scientific accuracy or safety of content found on external linked sites.
+                    FRZI Labs curates data from reputable international scientific bodies including IUPAC (International Union of Pure and Applied Chemistry), NIST (National Institute of Standards and Technology), and PubChem. However, chemical science continually evolves with new isotope discoveries and revised standard atomic weights.
+                </p>
+            </section>
+
+            <section class="space-y-4">
+                <h2 class="text-2xl font-bold text-primary tracking-tight">4. External Web Links Disclaimer</h2>
+                <p>
+                    FRZI Labs may contain links to external websites, academic papers, or external databases. We do not investigate, monitor, or endorse the privacy practices or accuracy of information hosted on third-party sites.
                 </p>
             </section>
 
@@ -218,6 +344,10 @@
             </div>
         </div>
     </footer>
+
+    <!-- Application Data & Logic -->
+    <script src="js/elements-data.js"></script>
+    <script src="js/app.js"></script>
 
 </body>
 </html>
