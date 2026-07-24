@@ -92,15 +92,18 @@ document.addEventListener("DOMContentLoaded", () => {
         if (hash.startsWith("#element-") || hash.startsWith("#element/")) {
             const idStr = hash.replace("#element-", "").replace("#element/", "");
             let el = ELEMENTS_DATA.find(e => e.atomicNumber.toString() === idStr || e.symbol.toLowerCase() === idStr.toLowerCase() || e.name.toLowerCase() === idStr.toLowerCase());
-            if (el) {
+            if (el && mainContainer) {
                 renderElementDetailView(el);
                 window.scrollTo({ top: 0, behavior: "smooth" });
                 return;
             }
         }
+        
         // Default Explorer view
-        renderExplorerView();
-        window.scrollTo({ top: 0, behavior: "smooth" });
+        if (mainContainer) {
+            renderExplorerView();
+            window.scrollTo({ top: 0, behavior: "smooth" });
+        }
     }
 
     window.addEventListener("hashchange", handleRoute);
@@ -119,11 +122,11 @@ document.addEventListener("DOMContentLoaded", () => {
             <!-- Hero Section -->
             <section class="relative pt-32 pb-16 px-margin-mobile md:px-margin-desktop max-w-container-max mx-auto flex flex-col items-center justify-center min-h-[600px] text-center overflow-hidden">
                 <!-- 3D Atom Background preview -->
-                <div class="absolute inset-0 z-0 opacity-25 pointer-events-none flex items-center justify-center">
+                <div class="absolute inset-0 z-0 opacity-25 pointer-events-none flex items-center justify-center reveal-up">
                     <div id="hero-threejs-container" class="w-full h-full max-w-[700px] max-h-[700px]"></div>
                 </div>
 
-                <div class="relative z-10 max-w-4xl">
+                <div class="relative z-10 max-w-4xl reveal-up">
                     <div class="inline-block mb-6 px-4 py-1.5 rounded-full border border-outline-variant/30 bg-surface-container-lowest/70 backdrop-blur-md shadow-sm">
                         <span class="font-label-caps text-label-caps text-secondary tracking-widest uppercase">Interactive Exhibition • 118 Elements</span>
                     </div>
@@ -169,7 +172,7 @@ document.addEventListener("DOMContentLoaded", () => {
             </section>
 
             <!-- Periodic Table Filter Bar & Grid Section -->
-            <section class="py-12 px-2 md:px-margin-desktop max-w-container-max mx-auto overflow-x-auto">
+            <section class="py-12 px-2 md:px-margin-desktop max-w-container-max mx-auto overflow-x-auto reveal-up">
                 <div class="flex flex-wrap items-center justify-center gap-2 mb-8" id="filter-pills-wrapper">
                     ${Object.keys(categoryNames).map(catKey => `
                         <button data-filter="${catKey}" class="filter-pill px-4 py-2 rounded-full font-label-caps text-xs transition-all duration-300 border ${activeFilter === catKey ? 'bg-primary text-on-primary border-primary shadow-sm scale-105' : 'bg-surface-container-lowest/80 text-on-surface-variant border-outline-variant/30 hover:border-primary/50'}">
@@ -205,7 +208,7 @@ document.addEventListener("DOMContentLoaded", () => {
             </section>
 
             <!-- Element of the Day & Discovery Timeline -->
-            <section class="py-20 px-margin-mobile md:px-margin-desktop max-w-container-max mx-auto">
+            <section class="py-20 px-margin-mobile md:px-margin-desktop max-w-container-max mx-auto reveal-up">
                 <div class="grid grid-cols-1 md:grid-cols-12 gap-8 md:gap-16">
                     <!-- Element of the Day (Gold Au #79) -->
                     <div class="md:col-span-5 glass-panel p-8 rounded-2xl relative overflow-hidden group border border-outline-variant/20 shadow-md">
@@ -465,6 +468,20 @@ document.addEventListener("DOMContentLoaded", () => {
                                 <div class="font-label-caps text-xs text-on-surface-variant mb-1">Valency</div>
                                 <div class="font-label-mono text-primary text-xl font-bold">${el.valency}</div>
                             </div>
+                            
+                            <!-- Wikipedia Reference Card -->
+                            <div id="wiki-reference-card-${el.atomicNumber}" class="col-span-2 bg-surface-container-lowest/70 backdrop-blur-md border border-outline-variant/20 p-5 rounded-2xl hover:bg-surface-container-lowest transition-all shadow-sm flex items-center justify-between hidden">
+                                <div class="flex items-center gap-3">
+                                    <img src="https://upload.wikimedia.org/wikipedia/commons/6/63/Wikipedia-logo.png" class="w-8 h-8 object-contain" alt="Wikipedia Logo" />
+                                    <div>
+                                        <div class="font-body-md text-primary font-semibold">Wikipedia Reference</div>
+                                        <div class="font-label-caps text-[10px] text-on-surface-variant">Read the complete article on Wikipedia</div>
+                                    </div>
+                                </div>
+                                <a id="wiki-reference-btn-${el.atomicNumber}" href="#" target="_blank" rel="noopener noreferrer" class="px-4 py-2 bg-secondary text-on-secondary rounded-full font-label-caps text-xs uppercase tracking-wider hover:bg-secondary-fixed-dim transition-colors duration-300 shadow-sm flex items-center gap-1">
+                                    View on Wikipedia <span class="material-symbols-outlined text-sm">north_east</span>
+                                </a>
+                            </div>
                         </div>
                     </div>
 
@@ -522,7 +539,7 @@ document.addEventListener("DOMContentLoaded", () => {
                     <div class="grid grid-cols-1 md:grid-cols-2 gap-gutter">
                         <!-- Image Card -->
                         <div class="group relative overflow-hidden rounded-2xl bg-surface-container-lowest border border-outline-variant/20 flex flex-col h-96 shadow-sm">
-                            <div class="bg-cover bg-center w-full h-64 border-b border-outline-variant/10 group-hover:scale-105 transition-all duration-700 ease-[cubic-bezier(0.2,0.8,0.2,1)]"
+                            <div id="wiki-image-${el.atomicNumber}" class="bg-cover bg-center w-full h-64 border-b border-outline-variant/10 group-hover:scale-105 transition-all duration-700 ease-[cubic-bezier(0.2,0.8,0.2,1)]"
                                  style="background-image: url('${el.image}')" title="${el.imageAlt}"></div>
                             <div class="p-6 flex-grow flex flex-col justify-center bg-surface-container-lowest">
                                 <h3 class="font-headline-sm text-headline-sm text-primary font-semibold">${el.name} Visual Form</h3>
@@ -535,7 +552,15 @@ document.addEventListener("DOMContentLoaded", () => {
                             <div>
                                 <span class="material-symbols-outlined text-4xl text-secondary mb-4">travel_explore</span>
                                 <h3 class="font-headline-sm text-headline-sm text-primary mb-3 font-semibold">Where is it found?</h3>
-                                <p class="font-body-md text-on-surface-variant leading-relaxed mb-6">${el.sections.whereFound}</p>
+                                <p id="wiki-summary-${el.atomicNumber}" class="font-body-md text-on-surface-variant leading-relaxed mb-6 animate-pulse">
+                                    <span class="flex flex-col gap-2 mt-1">
+                                        <span class="h-4 bg-outline-variant/20 rounded w-full block"></span>
+                                        <span class="h-4 bg-outline-variant/20 rounded w-11/12 block"></span>
+                                        <span class="h-4 bg-outline-variant/20 rounded w-4/5 block"></span>
+                                        <span class="h-4 bg-outline-variant/20 rounded w-full block"></span>
+                                        <span class="h-4 bg-outline-variant/20 rounded w-3/4 block"></span>
+                                    </span>
+                                </p>
                                 <h4 class="font-label-caps text-xs uppercase text-primary font-bold mb-1">Extraction Method</h4>
                                 <p class="font-body-md text-sm text-on-surface-variant leading-relaxed">${el.sections.howExtracted}</p>
                             </div>
@@ -631,8 +656,95 @@ document.addEventListener("DOMContentLoaded", () => {
 
         initElementThreeJS(el);
         initScrollReveals();
+        fetchWikipediaData(el.name, el.atomicNumber);
     }
 
+    // ==========================================
+    // WIKIPEDIA API INTEGRATION
+    // ==========================================
+    const WIKI_CACHE = {};
+
+    async function fetchWikipediaData(elementName, atomicNumber) {
+        if (WIKI_CACHE[elementName]) {
+            updateWikipediaUI(WIKI_CACHE[elementName], atomicNumber);
+            return;
+        }
+
+        try {
+            const res = await fetch(`https://en.wikipedia.org/api/rest_v1/page/summary/${encodeURIComponent(elementName)}`);
+            if (!res.ok) throw new Error("Wikipedia API error");
+            const data = await res.json();
+            WIKI_CACHE[elementName] = data;
+            updateWikipediaUI(data, atomicNumber);
+        } catch (error) {
+            fallbackWikipediaUI(atomicNumber);
+        }
+    }
+
+    function updateWikipediaUI(data, atomicNumber) {
+        // Image Update
+        if (data.thumbnail && data.thumbnail.source) {
+            const imgEl = document.getElementById(`wiki-image-${atomicNumber}`);
+            if (imgEl) {
+                imgEl.style.backgroundImage = `url('${data.thumbnail.source}')`;
+            }
+        }
+
+        // Summary Update
+        if (data.extract) {
+            const summaryEl = document.getElementById(`wiki-summary-${atomicNumber}`);
+            if (summaryEl) {
+                // Limit to roughly 3-6 sentences
+                let sentences = data.extract.match(/[^\.!\?]+[\.!\?]+/g) || [data.extract];
+                summaryEl.innerHTML = sentences.slice(0, 5).join(' ');
+                summaryEl.classList.remove('animate-pulse');
+            }
+        } else {
+            fallbackWikipediaUI(atomicNumber);
+        }
+
+        // Reference Card Update
+        if (data.content_urls && data.content_urls.desktop) {
+            const cardEl = document.getElementById(`wiki-reference-card-${atomicNumber}`);
+            const btnEl = document.getElementById(`wiki-reference-btn-${atomicNumber}`);
+            if (cardEl && btnEl) {
+                cardEl.classList.remove('hidden');
+                btnEl.href = data.content_urls.desktop.page;
+            }
+        }
+        
+        injectWikipediaSEO(data);
+    }
+
+    function fallbackWikipediaUI(atomicNumber) {
+        const el = ELEMENTS_DATA.find(e => e.atomicNumber === atomicNumber);
+        if (!el) return;
+        
+        const summaryEl = document.getElementById(`wiki-summary-${atomicNumber}`);
+        if (summaryEl) {
+            summaryEl.innerHTML = el.sections.whereFound;
+            summaryEl.classList.remove('animate-pulse');
+        }
+    }
+
+    function injectWikipediaSEO(data) {
+        let script = document.getElementById("wiki-seo-script");
+        if (!script) {
+            script = document.createElement("script");
+            script.type = "application/ld+json";
+            script.id = "wiki-seo-script";
+            document.head.appendChild(script);
+        }
+        if (data.content_urls && data.content_urls.desktop) {
+            script.textContent = JSON.stringify({
+                "@context": "https://schema.org",
+                "@type": "WebPage",
+                "name": data.title,
+                "description": data.extract,
+                "sameAs": data.content_urls.desktop.page
+            });
+        }
+    }
 
     // ==========================================
     // THREE.JS 3D ATOM MODEL RENDERER
