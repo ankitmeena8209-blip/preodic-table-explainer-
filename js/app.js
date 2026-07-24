@@ -332,18 +332,18 @@ document.addEventListener("DOMContentLoaded", () => {
         ).slice(0, 6);
 
         if (matches.length === 0) {
-            dropdownEl.innerHTML = `<div class="p-4 text-sm text-on-surface-variant">No element found matching "${query}"</div>`;
+            dropdownEl.innerHTML = `<div class="p-4 text-center text-xs font-label-mono text-on-surface-variant">No element found matching "${query}"</div>`;
         } else {
             dropdownEl.innerHTML = matches.map(el => `
-                <a href="#element/${el.atomicNumber}" class="flex items-center justify-between p-3 hover:bg-surface-container-low transition-colors">
+                <a href="#element/${el.atomicNumber}" class="flex items-center justify-between px-4 py-3 hover:bg-surface-container-low transition-colors group">
                     <div class="flex items-center gap-3">
-                        <span class="w-8 h-8 rounded-lg bg-primary/10 flex items-center justify-center font-label-mono text-xs font-bold text-primary">${el.atomicNumber}</span>
+                        <span class="w-8 h-8 rounded-xl bg-secondary/10 group-hover:bg-secondary group-hover:text-white transition-all flex items-center justify-center font-label-mono text-xs font-bold text-secondary">${el.atomicNumber}</span>
                         <div>
-                            <span class="font-semibold text-primary">${el.name}</span>
-                            <span class="text-xs text-on-surface-variant ml-2 font-label-mono">${el.symbol}</span>
+                            <span class="font-semibold text-primary text-sm group-hover:text-secondary transition-colors">${el.name}</span>
+                            <span class="text-xs text-on-surface-variant ml-2 font-label-mono font-medium">${el.symbol}</span>
                         </div>
                     </div>
-                    <span class="text-xs font-label-caps uppercase px-2 py-0.5 rounded border border-outline-variant/20 text-on-surface-variant">${el.category.replace('-', ' ')}</span>
+                    <span class="text-[10px] font-label-caps uppercase px-2.5 py-1 rounded-full border border-outline-variant/30 text-on-surface-variant bg-surface-container-lowest">${el.category.replace('-', ' ')}</span>
                 </a>
             `).join('');
         }

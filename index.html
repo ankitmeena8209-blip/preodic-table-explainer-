@@ -112,6 +112,12 @@
     </script>
 
     <style>
+        /* Global focus reset to remove default browser outline boxes */
+        *:focus, input:focus, button:focus {
+            outline: none !important;
+            box-shadow: none !important;
+        }
+
         body {
             background-color: #f9f9f9;
             color: #1a1c1c;
@@ -298,39 +304,42 @@
     </script>
 
     <!-- Top Navigation Bar -->
-    <header class="fixed top-0 w-full z-50 bg-surface/80 backdrop-blur-xl border-b border-outline-variant/10 transition-all duration-300">
+    <header class="fixed top-0 w-full z-50 bg-white/80 backdrop-blur-2xl border-b border-outline-variant/15 transition-all duration-300">
         <div class="flex justify-between items-center h-20 px-margin-mobile md:px-margin-desktop max-w-container-max mx-auto">
             <!-- Brand Logo -->
-            <a href="#explorer" class="font-headline-sm text-headline-sm tracking-tighter text-primary font-bold flex items-center gap-2">
-                <span class="w-3 h-3 rounded-full bg-secondary inline-block"></span>
-                Frzi Labs
+            <a href="#explorer" class="font-headline-sm text-headline-sm tracking-tight text-primary font-bold flex items-center gap-2.5 hover:opacity-85 transition-opacity">
+                <span class="w-3 h-3 rounded-full bg-secondary inline-block shadow-sm"></span>
+                <span>Frzi Labs</span>
             </a>
 
             <!-- Navigation Controls: Home & Navbar Search Icon -->
-            <div class="flex items-center gap-3">
+            <div class="flex items-center gap-2.5">
                 <!-- Home Button -->
-                <a href="#explorer" id="nav-home-btn" class="flex items-center gap-1.5 px-3.5 py-2 rounded-xl bg-surface-container-low hover:bg-primary hover:text-on-primary text-primary transition-all font-label-caps text-xs font-semibold shadow-sm" title="Go to Home / Hero Page">
-                    <span class="material-symbols-outlined text-lg">home</span>
+                <a href="#explorer" id="nav-home-btn" class="flex items-center gap-2 px-4 py-2 rounded-full bg-surface-container-low/90 hover:bg-primary hover:text-on-primary text-primary transition-all font-label-caps text-xs font-semibold shadow-xs" title="Go to Home / Hero Page">
+                    <span class="material-symbols-outlined text-base">home</span>
                     <span class="hidden sm:inline">Home</span>
                 </a>
 
-                <!-- Header Search Widget -->
+                <!-- Header Spotlight Search Widget -->
                 <div class="relative" id="nav-search-container">
-                    <button id="nav-search-toggle-btn" class="p-2.5 text-primary hover:bg-surface-container-low rounded-xl transition-all flex items-center justify-center border border-outline-variant/20 shadow-sm" title="Search All Elements">
-                        <span class="material-symbols-outlined text-xl">search</span>
+                    <button id="nav-search-toggle-btn" class="flex items-center gap-2 px-3.5 py-2 rounded-full bg-surface-container-low/90 hover:bg-surface-container text-primary border border-outline-variant/20 transition-all font-label-caps text-xs font-medium shadow-xs" title="Search All Elements">
+                        <span class="material-symbols-outlined text-lg text-secondary">search</span>
+                        <span class="hidden sm:inline text-on-surface-variant font-label-mono">Search...</span>
                     </button>
 
-                    <!-- Expandable Search Popover -->
-                    <div id="nav-search-popover" class="hidden absolute right-0 top-full mt-3 w-80 sm:w-96 bg-surface-container-lowest border border-outline-variant/30 rounded-2xl shadow-2xl overflow-hidden z-50 p-3">
-                        <div class="relative flex items-center bg-surface-container-low border border-outline-variant/30 rounded-xl">
-                            <span class="material-symbols-outlined text-on-surface-variant pl-3 text-xl">search</span>
+                    <!-- Clean Spotlight Search Card -->
+                    <div id="nav-search-popover" class="hidden absolute right-0 top-full mt-3 w-80 sm:w-96 bg-white/95 backdrop-blur-2xl border border-outline-variant/30 rounded-2xl shadow-2xl overflow-hidden z-50 transition-all">
+                        <!-- Single Integrated Input Header -->
+                        <div class="relative flex items-center px-4 py-3 border-b border-outline-variant/15 bg-transparent">
+                            <span class="material-symbols-outlined text-secondary text-xl shrink-0">search</span>
                             <input id="nav-search-input" type="text" placeholder="Search by Name, Symbol, or Atomic #..." 
-                                class="w-full py-2.5 pl-2 pr-8 bg-transparent text-primary placeholder:text-on-surface-variant/60 focus:outline-none text-sm font-body-md" />
-                            <button id="nav-search-clear-btn" class="hidden absolute right-2 text-on-surface-variant hover:text-primary p-1">
+                                class="w-full pl-3 pr-8 bg-transparent text-primary placeholder:text-on-surface-variant/50 focus:outline-none border-none ring-0 focus:ring-0 text-sm font-sans" />
+                            <button id="nav-search-clear-btn" class="hidden absolute right-3 text-on-surface-variant/60 hover:text-primary p-1">
                                 <span class="material-symbols-outlined text-base">close</span>
                             </button>
                         </div>
-                        <div id="nav-search-results-dropdown" class="mt-2 max-h-72 overflow-y-auto divide-y divide-outline-variant/10 text-left rounded-xl"></div>
+                        <!-- Results Dropdown -->
+                        <div id="nav-search-results-dropdown" class="max-h-72 overflow-y-auto divide-y divide-outline-variant/10 text-left"></div>
                     </div>
                 </div>
             </div>
