@@ -1,0 +1,556 @@
+<!DOCTYPE html>
+
+<html lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Atomic Labs - Periodic</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&amp;family=JetBrains+Mono:wght@500&amp;family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@100..900&amp;family=JetBrains+Mono:wght@100..900&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "error": "#ba1a1a",
+                        "surface-container-lowest": "#ffffff",
+                        "secondary-fixed-dim": "#adc6ff",
+                        "inverse-on-surface": "#f1f1f1",
+                        "surface-bright": "#f9f9f9",
+                        "tertiary-fixed-dim": "#c6c6c7",
+                        "tertiary-container": "#1a1c1c",
+                        "on-secondary": "#ffffff",
+                        "primary-container": "#1c1b1b",
+                        "secondary": "#0058bc",
+                        "tertiary-fixed": "#e2e2e2",
+                        "surface-variant": "#e2e2e2",
+                        "primary-fixed": "#e5e2e1",
+                        "on-tertiary": "#ffffff",
+                        "surface-container": "#eeeeee",
+                        "primary-fixed-dim": "#c8c6c5",
+                        "surface": "#f9f9f9",
+                        "inverse-surface": "#2f3131",
+                        "on-secondary-fixed": "#001a41",
+                        "surface-dim": "#dadada",
+                        "on-secondary-fixed-variant": "#004493",
+                        "on-surface-variant": "#444748",
+                        "tertiary": "#000000",
+                        "secondary-container": "#0070eb",
+                        "on-background": "#1a1c1c",
+                        "outline-variant": "#c4c7c7",
+                        "on-primary": "#ffffff",
+                        "inverse-primary": "#c8c6c5",
+                        "on-error-container": "#93000a",
+                        "on-surface": "#1a1c1c",
+                        "surface-container-low": "#f3f3f3",
+                        "on-error": "#ffffff",
+                        "on-tertiary-container": "#838484",
+                        "on-primary-fixed": "#1c1b1b",
+                        "on-tertiary-fixed": "#1a1c1c",
+                        "secondary-fixed": "#d8e2ff",
+                        "surface-container-highest": "#e2e2e2",
+                        "on-primary-container": "#858383",
+                        "primary": "#000000",
+                        "surface-tint": "#5f5e5e",
+                        "surface-container-high": "#e8e8e8",
+                        "on-secondary-container": "#fefcff",
+                        "background": "#f9f9f9",
+                        "outline": "#747878",
+                        "error-container": "#ffdad6",
+                        "on-primary-fixed-variant": "#474646",
+                        "on-tertiary-fixed-variant": "#454747"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                    "spacing": {
+                        "margin-desktop": "64px",
+                        "gutter": "24px",
+                        "unit": "8px",
+                        "container-max": "1440px",
+                        "margin-mobile": "20px"
+                    },
+                    "fontFamily": {
+                        "headline-lg": ["Inter"],
+                        "display-xl": ["Inter"],
+                        "label-caps": ["Inter"],
+                        "label-mono": ["JetBrains Mono"],
+                        "headline-sm": ["Inter"],
+                        "body-md": ["Inter"],
+                        "display-xl-mobile": ["Inter"],
+                        "body-lg": ["Inter"]
+                    },
+                    "fontSize": {
+                        "headline-lg": ["32px", { "lineHeight": "40px", "letterSpacing": "-0.02em", "fontWeight": "500" }],
+                        "display-xl": ["64px", { "lineHeight": "72px", "letterSpacing": "-0.04em", "fontWeight": "600" }],
+                        "label-caps": ["12px", { "lineHeight": "16px", "letterSpacing": "0.1em", "fontWeight": "600" }],
+                        "label-mono": ["14px", { "lineHeight": "20px", "letterSpacing": "0.05em", "fontWeight": "500" }],
+                        "headline-sm": ["24px", { "lineHeight": "32px", "letterSpacing": "-0.01em", "fontWeight": "500" }],
+                        "body-md": ["16px", { "lineHeight": "24px", "fontWeight": "400" }],
+                        "display-xl-mobile": ["40px", { "lineHeight": "48px", "letterSpacing": "-0.03em", "fontWeight": "600" }],
+                        "body-lg": ["18px", { "lineHeight": "28px", "fontWeight": "400" }]
+                    }
+                }
+            }
+        }
+    </script>
+<style>
+        body {
+            background-color: #f9f9f9;
+            color: #1a1c1c;
+            overflow-x: hidden;
+        }
+        
+        .glass-panel {
+            background: rgba(255, 255, 255, 0.7);
+            backdrop-filter: blur(24px);
+            -webkit-backdrop-filter: blur(24px);
+            border: 1px solid rgba(196, 199, 199, 0.2);
+        }
+
+        .element-cell {
+            transition: all 0.4s cubic-bezier(0.2, 0.8, 0.2, 1);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .element-cell::after {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; right: 0; bottom: 0;
+            border: 1px solid transparent;
+            transition: border-color 0.3s ease;
+            pointer-events: none;
+        }
+
+        .element-cell:hover {
+            transform: scale(1.05);
+            z-index: 10;
+            box-shadow: 0 10px 30px -10px rgba(0,0,0,0.1);
+            background-color: #ffffff;
+        }
+
+        .element-cell:hover::after {
+            border-color: #007AFF;
+        }
+
+        .category-alkali { border-left: 2px solid #ff6b6b; }
+        .category-alkaline-earth { border-left: 2px solid #ff9f43; }
+        .category-transition { border-left: 2px solid #feca57; }
+        .category-basic-metal { border-left: 2px solid #1dd1a1; }
+        .category-metalloid { border-left: 2px solid #0abde3; }
+        .category-nonmetal { border-left: 2px solid #5f27cd; }
+        .category-halogen { border-left: 2px solid #341f97; }
+        .category-noble-gas { border-left: 2px solid #ee5253; }
+        
+        /* Layout for periodic table */
+        .periodic-grid {
+            display: grid;
+            grid-template-columns: repeat(18, minmax(0, 1fr));
+            gap: 4px;
+            max-width: 1440px;
+            margin: 0 auto;
+        }
+    </style>
+</head>
+<body class="relative min-h-screen font-sans">
+<!-- Global Particle Background -->
+<div class="fixed inset-0 z-[-1] opacity-30 pointer-events-none">
+<!-- STITCH_SHADER_START:ANIMATION_2 class="absolute inset-0 w-full h-full" -->
+<div class="absolute inset-0 w-full h-full" style="display:block;">
+<canvas id="shader-canvas-ANIMATION_2" style="display:block;width:100%;height:100%"></canvas>
+<script>
+(function() {
+  const canvas = document.getElementById('shader-canvas-ANIMATION_2');
+
+  // Sync the WebGL drawing-buffer size with the CSS-driven layout size.
+  // This fires on initial layout and whenever the element is resized.
+  function syncSize() {
+    const w = canvas.clientWidth  || 1280;
+    const h = canvas.clientHeight || 720;
+    if (canvas.width !== w || canvas.height !== h) {
+      canvas.width  = w;
+      canvas.height = h;
+    }
+  }
+  if (typeof ResizeObserver !== 'undefined') {
+    new ResizeObserver(syncSize).observe(canvas);
+  }
+  syncSize();
+
+  const gl = canvas.getContext('webgl') || canvas.getContext('experimental-webgl');
+  if (!gl) return;
+  const vs = `attribute vec2 a_position;
+varying vec2 v_texCoord;
+void main() {
+  v_texCoord = a_position * 0.5 + 0.5;
+  gl_Position = vec4(a_position, 0.0, 1.0);
+}`;
+  const fs = `precision highp float;
+uniform float u_time;
+uniform vec2 u_resolution;
+uniform vec2 u_mouse;
+varying vec2 v_texCoord;
+
+float hash(vec2 p) {
+    p = fract(p * vec2(123.34, 456.21));
+    p += dot(p, p + 45.32);
+    return fract(p.x * p.y);
+}
+
+void main() {
+    vec2 uv = v_texCoord;
+    vec2 pos = uv * 5.0;
+    vec2 ipos = floor(pos);
+    vec2 fpos = fract(pos);
+    
+    float m_dist = 1.0;
+    for (int y= -1; y <= 1; y++) {
+        for (int x= -1; x <= 1; x++) {
+            vec2 neighbor = vec2(float(x), float(y));
+            vec2 point = vec2(hash(ipos + neighbor), hash(ipos + neighbor + 123.4));
+            point = 0.5 + 0.5 * sin(u_time * 0.2 + 6.2831 * point);
+            vec2 diff = neighbor + point - fpos;
+            float dist = length(diff);
+            m_dist = min(m_dist, dist);
+        }
+    }
+    
+    // Subtle grid/particle color
+    vec3 color = vec3(0.98, 0.98, 0.98); // Off-white base
+    float particles = 1.0 - smoothstep(0.0, 0.02, m_dist);
+    color = mix(color, vec3(0.0, 0.48, 1.0), particles * 0.1); // Subtle blue particles
+    
+    gl_FragColor = vec4(color, 1.0);
+}`;
+  function cs(type, src) {
+    const s = gl.createShader(type);
+    gl.shaderSource(s, src);
+    gl.compileShader(s);
+    return s;
+  }
+  const prog = gl.createProgram();
+  gl.attachShader(prog, cs(gl.VERTEX_SHADER, vs));
+  gl.attachShader(prog, cs(gl.FRAGMENT_SHADER, fs));
+  gl.linkProgram(prog);
+  gl.useProgram(prog);
+  const buf = gl.createBuffer();
+  gl.bindBuffer(gl.ARRAY_BUFFER, buf);
+  gl.bufferData(gl.ARRAY_BUFFER, new Float32Array([-1,-1, 1,-1, -1,1, 1,1]), gl.STATIC_DRAW);
+  const pos = gl.getAttribLocation(prog, 'a_position');
+  gl.enableVertexAttribArray(pos);
+  gl.vertexAttribPointer(pos, 2, gl.FLOAT, false, 0, 0);
+  const uTime = gl.getUniformLocation(prog, 'u_time');
+  const uRes = gl.getUniformLocation(prog, 'u_resolution');
+  const uMouse = gl.getUniformLocation(prog, 'u_mouse');
+
+  // u_mouse is in pixel coordinates matching u_resolution (ShaderToy convention).
+  // Shaders that need normalized coords should use: u_mouse / u_resolution.
+  let mouse = { x: canvas.width / 2, y: canvas.height / 2 };
+  window.addEventListener('mousemove', (event) => {
+    const rect = canvas.getBoundingClientRect();
+    if (rect.width && rect.height) {
+      const nx = (event.clientX - rect.left) / rect.width;
+      const ny = 1.0 - (event.clientY - rect.top) / rect.height;
+      mouse.x = nx * canvas.width;
+      mouse.y = ny * canvas.height;
+    }
+  });
+
+  function render(t) {
+    if (typeof ResizeObserver === 'undefined') syncSize();
+    gl.viewport(0, 0, canvas.width, canvas.height);
+    if (uTime) gl.uniform1f(uTime, t * 0.001);
+    if (uRes) gl.uniform2f(uRes, canvas.width, canvas.height);
+    if (uMouse) gl.uniform2f(uMouse, mouse.x, mouse.y);
+    gl.drawArrays(gl.TRIANGLE_STRIP, 0, 4);
+    requestAnimationFrame(render);
+  }
+  render(0);
+})();
+</script>
+</div>
+<!-- STITCH_SHADER_END:ANIMATION_2 -->
+</div>
+<!-- TopNavBar -->
+<nav class="fixed top-0 w-full z-50 bg-surface/80 backdrop-blur-xl dark:bg-surface-container-lowest/80 border-b border-outline-variant/10 transition-all duration-300 ease-[cubic-bezier(0.2,0.8,0.2,1)]">
+<div class="flex justify-between items-center h-20 px-margin-desktop max-w-container-max mx-auto hidden md:flex">
+<div class="font-headline-sm text-headline-sm tracking-tighter text-primary dark:text-on-surface font-semibold">
+                Atomic Labs
+            </div>
+<div class="flex items-center gap-8 font-label-caps text-label-caps">
+<a class="text-secondary dark:text-secondary-fixed-dim font-semibold border-b-2 border-secondary pb-1" href="#">Explorer</a>
+<a class="text-on-surface-variant dark:text-on-tertiary-container hover:text-primary dark:hover:text-on-surface transition-colors" href="#">Experiments</a>
+<a class="text-on-surface-variant dark:text-on-tertiary-container hover:text-primary dark:hover:text-on-surface transition-colors" href="#">Curriculum</a>
+<a class="text-on-surface-variant dark:text-on-tertiary-container hover:text-primary dark:hover:text-on-surface transition-colors" href="#">Archive</a>
+</div>
+<div class="flex items-center gap-4 text-primary dark:text-on-surface">
+<button class="p-2 hover:bg-surface-container-low dark:hover:bg-surface-container-highest/20 rounded-lg transition-colors">
+<span class="material-symbols-outlined">filter_list</span>
+</button>
+<button class="p-2 hover:bg-surface-container-low dark:hover:bg-surface-container-highest/20 rounded-lg transition-colors">
+<span class="material-symbols-outlined">account_circle</span>
+</button>
+</div>
+</div>
+<!-- Mobile Nav Header -->
+<div class="flex md:hidden justify-between items-center h-16 px-margin-mobile">
+<div class="font-headline-sm text-headline-sm tracking-tighter text-primary font-semibold">
+                Atomic Labs
+            </div>
+<button class="text-primary">
+<span class="material-symbols-outlined">menu</span>
+</button>
+</div>
+</nav>
+<!-- Hero Section -->
+<section class="relative pt-40 pb-20 px-margin-mobile md:px-margin-desktop max-w-container-max mx-auto flex flex-col items-center justify-center min-h-[716px] text-center overflow-hidden">
+<!-- 3D Model Embed -->
+<div class="absolute inset-0 z-0 opacity-20 pointer-events-none flex items-center justify-center">
+<!-- STITCH_THREEJS_START:ANIMATION_3 class="absolute inset-0 w-full h-full max-w-[800px] max-h-[800px]" -->
+<div class="absolute inset-0 w-full h-full max-w-[800px] max-h-[800px]" style="display:block;">
+<script src="https://ajax.googleapis.com/ajax/libs/threejs/r125/three.min.js"></script>
+<div id="threejs-container-ANIMATION_3" style="width:100%;height:100%"></div>
+<script>
+(function() {
+  const container = document.getElementById('threejs-container-ANIMATION_3');
+  const devicePixelRatio = window.devicePixelRatio || 1;
+  const width = container.clientWidth || window.innerWidth;
+const height = container.clientHeight || window.innerHeight;
+
+const scene = new THREE.Scene();
+const camera = new THREE.PerspectiveCamera(75, width / height, 0.1, 1000);
+const renderer = new THREE.WebGLRenderer({ alpha: true, antialias: true });
+renderer.setSize(width, height);
+container.appendChild(renderer.domElement);
+
+// Nucleus
+const nucleusGroup = new THREE.Group();
+for(let i = 0; i < 12; i++) {
+    const geo = new THREE.SphereGeometry(0.2, 16, 16);
+    const mat = new THREE.MeshPhongMaterial({ color: i % 2 === 0 ? 0x007AFF : 0x121212 });
+    const sphere = new THREE.Mesh(geo, mat);
+    sphere.position.set(Math.random() * 0.4 - 0.2, Math.random() * 0.4 - 0.2, Math.random() * 0.4 - 0.2);
+    nucleusGroup.add(sphere);
+}
+scene.add(nucleusGroup);
+
+// Electron Shells
+const createShell = (radius, speed, count) => {
+    const shellGroup = new THREE.Group();
+    const ringGeo = new THREE.RingGeometry(radius, radius + 0.01, 64);
+    const ringMat = new THREE.MeshBasicMaterial({ color: 0xDADADA, side: THREE.DoubleSide, transparent: true, opacity: 0.3 });
+    const ring = new THREE.Mesh(ringGeo, ringMat);
+    ring.rotation.x = Math.PI / 2;
+    shellGroup.add(ring);
+
+    for(let i = 0; i < count; i++) {
+        const electronGeo = new THREE.SphereGeometry(0.08, 16, 16);
+        const electronMat = new THREE.MeshPhongMaterial({ color: 0x007AFF });
+        const electron = new THREE.Mesh(electronGeo, electronMat);
+        const angle = (i / count) * Math.PI * 2;
+        electron.position.set(Math.cos(angle) * radius, 0, Math.sin(angle) * radius);
+        shellGroup.add(electron);
+    }
+    
+    return { group: shellGroup, speed };
+};
+
+const shells = [
+    createShell(1.5, 0.02, 2),
+    createShell(2.5, 0.015, 8),
+    createShell(3.5, 0.01, 8)
+];
+shells.forEach(s => scene.add(s.group));
+
+const ambientLight = new THREE.AmbientLight(0xffffff, 0.8);
+scene.add(ambientLight);
+const pointLight = new THREE.PointLight(0xffffff, 1);
+pointLight.position.set(5, 5, 5);
+scene.add(pointLight);
+
+camera.position.z = 8;
+
+const animate = () => {
+    requestAnimationFrame(animate);
+    nucleusGroup.rotation.y += 0.005;
+    shells.forEach(s => {
+        s.group.rotation.y += s.speed;
+        s.group.rotation.x += s.speed * 0.5;
+    });
+    renderer.render(scene, camera);
+};
+
+animate();
+
+window.addEventListener('resize', () => {
+    const w = container.clientWidth || window.innerWidth;
+    const h = container.clientHeight || window.innerHeight;
+    camera.aspect = w / h;
+    camera.updateProjectionMatrix();
+    renderer.setSize(w, h);
+});
+})();
+</script>
+</div>
+<!-- STITCH_THREEJS_END:ANIMATION_3 -->
+</div>
+<div class="relative z-10 max-w-4xl">
+<div class="inline-block mb-6 px-4 py-1.5 rounded-full border border-outline-variant/30 bg-surface-container-lowest/50 backdrop-blur-md">
+<span class="font-label-caps text-label-caps text-primary tracking-widest uppercase">Interactive Exhibition</span>
+</div>
+<h1 class="font-display-xl-mobile md:font-display-xl text-display-xl-mobile md:text-display-xl text-primary mb-8 tracking-tighter text-balance">
+                Discover the Building Blocks of the Universe
+            </h1>
+<p class="font-body-lg text-body-lg text-on-surface-variant max-w-2xl mx-auto mb-12 text-balance leading-relaxed">
+                Explore every element through beautiful interactive animations, real-life examples, atomic structure, discoveries and fascinating facts.
+            </p>
+<div class="flex flex-col sm:flex-row items-center justify-center gap-4">
+<button class="px-8 py-4 bg-primary text-on-primary rounded-lg font-label-caps text-label-caps uppercase tracking-wider hover:bg-inverse-surface transition-colors duration-300 w-full sm:w-auto">
+                    Begin Exploration
+                </button>
+<button class="px-8 py-4 bg-transparent border border-outline-variant text-primary rounded-lg font-label-caps text-label-caps uppercase tracking-wider hover:bg-surface-container-low transition-colors duration-300 w-full sm:w-auto flex items-center justify-center gap-2">
+<span class="material-symbols-outlined text-sm">play_circle</span>
+                    View Tutorial
+                </button>
+</div>
+</div>
+</section>
+<!-- Periodic Table Grid Section -->
+<section class="py-20 px-4 md:px-margin-desktop overflow-x-auto">
+<div class="min-w-[1024px]"> <!-- Ensure it doesn't squish too much on smaller screens, forcing scroll -->
+<div class="periodic-grid gap-1 md:gap-2">
+<!-- Row 1 -->
+<div class="element-cell glass-panel category-nonmetal aspect-square flex flex-col items-center justify-center p-1 cursor-pointer rounded-sm" style="grid-column: 1; grid-row: 1;">
+<span class="font-label-mono text-[10px] self-start text-on-surface-variant">1</span>
+<span class="font-headline-sm text-headline-sm font-semibold">H</span>
+<span class="font-label-mono text-[8px] text-on-surface-variant truncate w-full text-center">1.008</span>
+</div>
+<div class="element-cell glass-panel category-noble-gas aspect-square flex flex-col items-center justify-center p-1 cursor-pointer rounded-sm" style="grid-column: 18; grid-row: 1;">
+<span class="font-label-mono text-[10px] self-start text-on-surface-variant">2</span>
+<span class="font-headline-sm text-headline-sm font-semibold">He</span>
+<span class="font-label-mono text-[8px] text-on-surface-variant truncate w-full text-center">4.002</span>
+</div>
+<!-- Row 2 -->
+<div class="element-cell glass-panel category-alkali aspect-square flex flex-col items-center justify-center p-1 cursor-pointer rounded-sm" style="grid-column: 1; grid-row: 2;">
+<span class="font-label-mono text-[10px] self-start text-on-surface-variant">3</span>
+<span class="font-headline-sm text-headline-sm font-semibold">Li</span>
+</div>
+<div class="element-cell glass-panel category-alkaline-earth aspect-square flex flex-col items-center justify-center p-1 cursor-pointer rounded-sm" style="grid-column: 2; grid-row: 2;">
+<span class="font-label-mono text-[10px] self-start text-on-surface-variant">4</span>
+<span class="font-headline-sm text-headline-sm font-semibold">Be</span>
+</div>
+<div class="element-cell glass-panel category-metalloid aspect-square flex flex-col items-center justify-center p-1 cursor-pointer rounded-sm" style="grid-column: 13; grid-row: 2;">
+<span class="font-label-mono text-[10px] self-start text-on-surface-variant">5</span>
+<span class="font-headline-sm text-headline-sm font-semibold">B</span>
+</div>
+<div class="element-cell glass-panel category-nonmetal aspect-square flex flex-col items-center justify-center p-1 cursor-pointer rounded-sm" style="grid-column: 14; grid-row: 2;">
+<span class="font-label-mono text-[10px] self-start text-on-surface-variant">6</span>
+<span class="font-headline-sm text-headline-sm font-semibold">C</span>
+</div>
+<div class="element-cell glass-panel category-nonmetal aspect-square flex flex-col items-center justify-center p-1 cursor-pointer rounded-sm" style="grid-column: 15; grid-row: 2;">
+<span class="font-label-mono text-[10px] self-start text-on-surface-variant">7</span>
+<span class="font-headline-sm text-headline-sm font-semibold">N</span>
+</div>
+<div class="element-cell glass-panel category-nonmetal aspect-square flex flex-col items-center justify-center p-1 cursor-pointer rounded-sm" style="grid-column: 16; grid-row: 2;">
+<span class="font-label-mono text-[10px] self-start text-on-surface-variant">8</span>
+<span class="font-headline-sm text-headline-sm font-semibold">O</span>
+</div>
+<div class="element-cell glass-panel category-halogen aspect-square flex flex-col items-center justify-center p-1 cursor-pointer rounded-sm" style="grid-column: 17; grid-row: 2;">
+<span class="font-label-mono text-[10px] self-start text-on-surface-variant">9</span>
+<span class="font-headline-sm text-headline-sm font-semibold">F</span>
+</div>
+<div class="element-cell glass-panel category-noble-gas aspect-square flex flex-col items-center justify-center p-1 cursor-pointer rounded-sm" style="grid-column: 18; grid-row: 2;">
+<span class="font-label-mono text-[10px] self-start text-on-surface-variant">10</span>
+<span class="font-headline-sm text-headline-sm font-semibold">Ne</span>
+</div>
+<!-- Just showing a few rows to represent the concept, full table would be verbose for this snippet -->
+<!-- Gap filler for illustration -->
+<div class="col-span-10 row-span-2 col-start-3 row-start-2 flex items-center justify-center opacity-50">
+<span class="font-label-caps text-label-caps tracking-widest text-on-surface-variant uppercase">Interactive Grid</span>
+</div>
+</div>
+</div>
+</section>
+<!-- Element of the Day & Timeline -->
+<section class="py-24 px-margin-mobile md:px-margin-desktop max-w-container-max mx-auto">
+<div class="grid grid-cols-1 md:grid-cols-12 gap-8 md:gap-16">
+<!-- Element of the Day -->
+<div class="md:col-span-5 glass-panel p-8 rounded-2xl relative overflow-hidden group border border-outline-variant/20">
+<div class="absolute top-0 right-0 p-8 opacity-10 font-display-xl text-[120px] leading-none pointer-events-none transform translate-x-4 -translate-y-4 transition-transform group-hover:scale-110 duration-700">
+                    Au
+                </div>
+<h3 class="font-label-caps text-label-caps text-secondary mb-8 uppercase tracking-widest">Element of the Day</h3>
+<div class="flex items-end gap-6 mb-8">
+<div class="w-32 h-32 rounded-xl bg-surface-container-lowest border border-[#feca57] flex flex-col items-center justify-center shadow-sm">
+<span class="font-label-mono text-sm self-start pl-2 pt-2 text-on-surface-variant">79</span>
+<span class="font-display-xl-mobile text-display-xl-mobile font-semibold text-primary">Au</span>
+<span class="font-label-mono text-xs text-on-surface-variant pb-2">196.97</span>
+</div>
+<div>
+<h2 class="font-headline-lg text-headline-lg text-primary mb-2">Gold</h2>
+<span class="px-3 py-1 rounded-full text-xs font-label-caps border border-[#feca57] text-[#feca57] bg-[#feca57]/10 uppercase">Transition Metal</span>
+</div>
+</div>
+<p class="font-body-md text-body-md text-on-surface-variant mb-8 line-clamp-3">
+                    A dense, soft, malleable, and highly ductile metal. It is one of the least reactive chemical elements and is solid under standard conditions.
+                </p>
+<button class="text-primary font-label-caps text-label-caps uppercase tracking-wider flex items-center gap-2 hover:text-secondary transition-colors">
+                    View Details
+                    <span class="material-symbols-outlined text-sm">arrow_forward</span>
+</button>
+</div>
+<!-- Timeline Preview -->
+<div class="md:col-span-7 flex flex-col justify-center">
+<h3 class="font-headline-lg text-headline-lg text-primary mb-6">Discovery Timeline</h3>
+<p class="font-body-md text-body-md text-on-surface-variant mb-12 max-w-xl">
+                    Trace the human journey of isolating and identifying the elements that make up our universe, from antiquity to modern synthetics.
+                </p>
+<div class="space-y-8 relative before:absolute before:inset-0 before:ml-5 before:-translate-x-px md:before:mx-auto md:before:translate-x-0 before:h-full before:w-0.5 before:bg-gradient-to-b before:from-transparent before:via-outline-variant/30 before:to-transparent">
+<div class="relative flex items-center justify-between md:justify-normal md:odd:flex-row-reverse group is-active">
+<div class="flex items-center justify-center w-10 h-10 rounded-full border border-outline-variant/50 bg-surface-container-lowest shadow shrink-0 md:order-1 md:group-odd:-translate-x-1/2 md:group-even:translate-x-1/2">
+<span class="font-label-caps text-[10px] text-primary">1669</span>
+</div>
+<div class="w-[calc(100%-4rem)] md:w-[calc(50%-2.5rem)] p-4 rounded-xl border border-outline-variant/10 bg-surface-container-lowest/50 backdrop-blur-sm transition-all hover:border-outline-variant/30 hover:bg-surface-container-lowest">
+<div class="flex items-center gap-2 mb-1">
+<span class="font-semibold text-primary">Phosphorus</span>
+<span class="text-xs text-on-surface-variant font-label-mono">P</span>
+</div>
+<p class="text-sm text-on-surface-variant">First element scientifically discovered by Hennig Brand.</p>
+</div>
+</div>
+<div class="relative flex items-center justify-between md:justify-normal md:odd:flex-row-reverse group">
+<div class="flex items-center justify-center w-10 h-10 rounded-full border border-outline-variant/20 bg-surface-container-lowest text-on-surface-variant shrink-0 md:order-1 md:group-odd:-translate-x-1/2 md:group-even:translate-x-1/2 transition-colors group-hover:border-outline-variant/50 group-hover:text-primary">
+<span class="font-label-caps text-[10px]">1766</span>
+</div>
+<div class="w-[calc(100%-4rem)] md:w-[calc(50%-2.5rem)] p-4 rounded-xl border border-transparent transition-all hover:border-outline-variant/10 hover:bg-surface-container-lowest/30">
+<div class="flex items-center gap-2 mb-1">
+<span class="font-medium text-on-surface-variant group-hover:text-primary transition-colors">Hydrogen</span>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- Footer -->
+<footer class="w-full py-20 px-margin-desktop bg-surface dark:bg-surface-container-lowest border-t border-outline-variant/5 max-w-container-max mx-auto flex flex-col md:flex-row justify-between items-center gap-gutter transition-all duration-300">
+<div class="font-headline-sm text-headline-sm text-primary dark:text-on-surface">
+            Atomic Labs
+        </div>
+<div class="flex flex-wrap justify-center gap-6 font-body-md text-body-md">
+<a class="text-on-surface-variant dark:text-on-tertiary-container hover:text-primary dark:hover:text-on-surface hover:opacity-80 transition-opacity" href="#">Documentation</a>
+<a class="text-on-surface-variant dark:text-on-tertiary-container hover:text-primary dark:hover:text-on-surface hover:opacity-80 transition-opacity" href="#">Privacy Policy</a>
+<a class="text-on-surface-variant dark:text-on-tertiary-container hover:text-primary dark:hover:text-on-surface hover:opacity-80 transition-opacity" href="#">Methodology</a>
+<a class="text-on-surface-variant dark:text-on-tertiary-container hover:text-primary dark:hover:text-on-surface hover:opacity-80 transition-opacity" href="#">Contact</a>
+</div>
+<div class="font-body-md text-body-md text-on-surface-variant dark:text-on-tertiary-container">
+            © 2024 Atomic Labs. Designed for the curious mind.
+        </div>
+</footer>
+</body></html>

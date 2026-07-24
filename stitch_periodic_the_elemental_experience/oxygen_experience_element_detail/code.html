@@ -1,0 +1,562 @@
+<!DOCTYPE html>
+
+<html class="scroll-smooth" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Oxygen (O) - Periodic Element Experience</title>
+<!-- Google Fonts & Material Symbols -->
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;family=JetBrains+Mono:wght@400;500&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<!-- Tailwind CSS -->
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<!-- Tailwind Config -->
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "error": "#ba1a1a",
+                        "surface-container-lowest": "#ffffff",
+                        "secondary-fixed-dim": "#adc6ff",
+                        "inverse-on-surface": "#f1f1f1",
+                        "surface-bright": "#f9f9f9",
+                        "tertiary-fixed-dim": "#c6c6c7",
+                        "tertiary-container": "#1a1c1c",
+                        "on-secondary": "#ffffff",
+                        "primary-container": "#1c1b1b",
+                        "secondary": "#0058bc",
+                        "tertiary-fixed": "#e2e2e2",
+                        "surface-variant": "#e2e2e2",
+                        "primary-fixed": "#e5e2e1",
+                        "on-tertiary": "#ffffff",
+                        "surface-container": "#eeeeee",
+                        "primary-fixed-dim": "#c8c6c5",
+                        "surface": "#f9f9f9",
+                        "inverse-surface": "#2f3131",
+                        "on-secondary-fixed": "#001a41",
+                        "surface-dim": "#dadada",
+                        "on-secondary-fixed-variant": "#004493",
+                        "on-surface-variant": "#444748",
+                        "tertiary": "#000000",
+                        "secondary-container": "#0070eb",
+                        "on-background": "#1a1c1c",
+                        "outline-variant": "#c4c7c7",
+                        "on-primary": "#ffffff",
+                        "inverse-primary": "#c8c6c5",
+                        "on-error-container": "#93000a",
+                        "on-surface": "#1a1c1c",
+                        "surface-container-low": "#f3f3f3",
+                        "on-error": "#ffffff",
+                        "on-tertiary-container": "#838484",
+                        "on-primary-fixed": "#1c1b1b",
+                        "on-tertiary-fixed": "#1a1c1c",
+                        "secondary-fixed": "#d8e2ff",
+                        "surface-container-highest": "#e2e2e2",
+                        "on-primary-container": "#858383",
+                        "primary": "#000000",
+                        "surface-tint": "#5f5e5e",
+                        "surface-container-high": "#e8e8e8",
+                        "on-secondary-container": "#fefcff",
+                        "background": "#f9f9f9",
+                        "outline": "#747878",
+                        "error-container": "#ffdad6",
+                        "on-primary-fixed-variant": "#474646",
+                        "on-tertiary-fixed-variant": "#454747"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                    "spacing": {
+                        "margin-desktop": "64px",
+                        "gutter": "24px",
+                        "unit": "8px",
+                        "container-max": "1440px",
+                        "margin-mobile": "20px"
+                    },
+                    "fontFamily": {
+                        "headline-lg": ["Inter"],
+                        "display-xl": ["Inter"],
+                        "label-caps": ["Inter"],
+                        "label-mono": ["JetBrains Mono"],
+                        "headline-sm": ["Inter"],
+                        "body-md": ["Inter"],
+                        "display-xl-mobile": ["Inter"],
+                        "body-lg": ["Inter"]
+                    },
+                    "fontSize": {
+                        "headline-lg": ["32px", { "lineHeight": "40px", "letterSpacing": "-0.02em", "fontWeight": "500" }],
+                        "display-xl": ["64px", { "lineHeight": "72px", "letterSpacing": "-0.04em", "fontWeight": "600" }],
+                        "label-caps": ["12px", { "lineHeight": "16px", "letterSpacing": "0.1em", "fontWeight": "600" }],
+                        "label-mono": ["14px", { "lineHeight": "20px", "letterSpacing": "0.05em", "fontWeight": "500" }],
+                        "headline-sm": ["24px", { "lineHeight": "32px", "letterSpacing": "-0.01em", "fontWeight": "500" }],
+                        "body-md": ["16px", { "lineHeight": "24px", "fontWeight": "400" }],
+                        "display-xl-mobile": ["40px", { "lineHeight": "48px", "letterSpacing": "-0.03em", "fontWeight": "600" }],
+                        "body-lg": ["18px", { "lineHeight": "28px", "fontWeight": "400" }]
+                    }
+                }
+            }
+        }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        
+        /* Custom Scroll Animations */
+        .reveal-up {
+            opacity: 0;
+            transform: translateY(40px) scale(0.98);
+            transition: opacity 0.8s cubic-bezier(0.2, 0.8, 0.2, 1), transform 0.8s cubic-bezier(0.2, 0.8, 0.2, 1);
+        }
+        .reveal-up.is-visible {
+            opacity: 1;
+            transform: translateY(0) scale(1);
+        }
+
+        /* Electron Orbit Animation */
+        @keyframes spin {
+            100% { transform: rotate(360deg); }
+        }
+        .orbit-ring {
+            animation: spin linear infinite;
+        }
+        .orbit-ring-reverse {
+            animation: spin linear infinite reverse;
+        }
+
+        /* H2O Bobbing Animation */
+        @keyframes float {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-10px); }
+        }
+        .molecule-float {
+            animation: float 4s ease-in-out infinite;
+        }
+    </style>
+</head>
+<body class="bg-background text-on-surface antialiased overflow-x-hidden selection:bg-secondary/20">
+<!-- Global Background Animation -->
+<!-- STITCH_SHADER_START:ANIMATION_2 class="fixed inset-0 w-full h-full -z-20 opacity-20 pointer-events-none" -->
+<div class="fixed inset-0 w-full h-full -z-20 opacity-20 pointer-events-none" style="display:block;">
+<canvas id="shader-canvas-ANIMATION_2" style="display:block;width:100%;height:100%"></canvas>
+<script>
+(function() {
+  const canvas = document.getElementById('shader-canvas-ANIMATION_2');
+
+  // Sync the WebGL drawing-buffer size with the CSS-driven layout size.
+  // This fires on initial layout and whenever the element is resized.
+  function syncSize() {
+    const w = canvas.clientWidth  || 1280;
+    const h = canvas.clientHeight || 720;
+    if (canvas.width !== w || canvas.height !== h) {
+      canvas.width  = w;
+      canvas.height = h;
+    }
+  }
+  if (typeof ResizeObserver !== 'undefined') {
+    new ResizeObserver(syncSize).observe(canvas);
+  }
+  syncSize();
+
+  const gl = canvas.getContext('webgl') || canvas.getContext('experimental-webgl');
+  if (!gl) return;
+  const vs = `attribute vec2 a_position;
+varying vec2 v_texCoord;
+void main() {
+  v_texCoord = a_position * 0.5 + 0.5;
+  gl_Position = vec4(a_position, 0.0, 1.0);
+}`;
+  const fs = `precision highp float;
+uniform float u_time;
+uniform vec2 u_resolution;
+uniform vec2 u_mouse;
+varying vec2 v_texCoord;
+
+float hash(vec2 p) {
+    p = fract(p * vec2(123.34, 456.21));
+    p += dot(p, p + 45.32);
+    return fract(p.x * p.y);
+}
+
+void main() {
+    vec2 uv = v_texCoord;
+    vec2 pos = uv * 5.0;
+    vec2 ipos = floor(pos);
+    vec2 fpos = fract(pos);
+    
+    float m_dist = 1.0;
+    for (int y= -1; y <= 1; y++) {
+        for (int x= -1; x <= 1; x++) {
+            vec2 neighbor = vec2(float(x), float(y));
+            vec2 point = vec2(hash(ipos + neighbor), hash(ipos + neighbor + 123.4));
+            point = 0.5 + 0.5 * sin(u_time * 0.2 + 6.2831 * point);
+            vec2 diff = neighbor + point - fpos;
+            float dist = length(diff);
+            m_dist = min(m_dist, dist);
+        }
+    }
+    
+    // Subtle grid/particle color
+    vec3 color = vec3(0.98, 0.98, 0.98); // Off-white base
+    float particles = 1.0 - smoothstep(0.0, 0.02, m_dist);
+    color = mix(color, vec3(0.0, 0.48, 1.0), particles * 0.1); // Subtle blue particles
+    
+    gl_FragColor = vec4(color, 1.0);
+}`;
+  function cs(type, src) {
+    const s = gl.createShader(type);
+    gl.shaderSource(s, src);
+    gl.compileShader(s);
+    return s;
+  }
+  const prog = gl.createProgram();
+  gl.attachShader(prog, cs(gl.VERTEX_SHADER, vs));
+  gl.attachShader(prog, cs(gl.FRAGMENT_SHADER, fs));
+  gl.linkProgram(prog);
+  gl.useProgram(prog);
+  const buf = gl.createBuffer();
+  gl.bindBuffer(gl.ARRAY_BUFFER, buf);
+  gl.bufferData(gl.ARRAY_BUFFER, new Float32Array([-1,-1, 1,-1, -1,1, 1,1]), gl.STATIC_DRAW);
+  const pos = gl.getAttribLocation(prog, 'a_position');
+  gl.enableVertexAttribArray(pos);
+  gl.vertexAttribPointer(pos, 2, gl.FLOAT, false, 0, 0);
+  const uTime = gl.getUniformLocation(prog, 'u_time');
+  const uRes = gl.getUniformLocation(prog, 'u_resolution');
+  const uMouse = gl.getUniformLocation(prog, 'u_mouse');
+
+  // u_mouse is in pixel coordinates matching u_resolution (ShaderToy convention).
+  // Shaders that need normalized coords should use: u_mouse / u_resolution.
+  let mouse = { x: canvas.width / 2, y: canvas.height / 2 };
+  window.addEventListener('mousemove', (event) => {
+    const rect = canvas.getBoundingClientRect();
+    if (rect.width && rect.height) {
+      const nx = (event.clientX - rect.left) / rect.width;
+      const ny = 1.0 - (event.clientY - rect.top) / rect.height;
+      mouse.x = nx * canvas.width;
+      mouse.y = ny * canvas.height;
+    }
+  });
+
+  function render(t) {
+    if (typeof ResizeObserver === 'undefined') syncSize();
+    gl.viewport(0, 0, canvas.width, canvas.height);
+    if (uTime) gl.uniform1f(uTime, t * 0.001);
+    if (uRes) gl.uniform2f(uRes, canvas.width, canvas.height);
+    if (uMouse) gl.uniform2f(uMouse, mouse.x, mouse.y);
+    gl.drawArrays(gl.TRIANGLE_STRIP, 0, 4);
+    requestAnimationFrame(render);
+  }
+  render(0);
+})();
+</script>
+</div>
+<!-- STITCH_SHADER_END:ANIMATION_2 -->
+<!-- TopNavBar -->
+<header class="fixed top-0 w-full z-50 bg-surface/80 backdrop-blur-xl border-b border-outline-variant/10 transition-all duration-300 ease-[cubic-bezier(0.2,0.8,0.2,1)]">
+<div class="flex justify-between items-center h-20 px-margin-desktop max-w-container-max mx-auto">
+<div class="font-headline-sm text-headline-sm tracking-tighter text-primary">Atomic Labs</div>
+<nav class="hidden md:flex gap-gutter items-center h-full">
+<!-- Active Navigation: Explorer -->
+<a class="h-full flex flex-col justify-center text-secondary font-semibold border-b-2 border-secondary pb-1 px-unit font-label-caps text-label-caps" href="#">
+                    Explorer
+                </a>
+<a class="h-full flex flex-col justify-center text-on-surface-variant hover:text-primary transition-colors hover:bg-surface-container-low rounded-lg px-unit font-label-caps text-label-caps" href="#">
+                    Experiments
+                </a>
+<a class="h-full flex flex-col justify-center text-on-surface-variant hover:text-primary transition-colors hover:bg-surface-container-low rounded-lg px-unit font-label-caps text-label-caps" href="#">
+                    Curriculum
+                </a>
+<a class="h-full flex flex-col justify-center text-on-surface-variant hover:text-primary transition-colors hover:bg-surface-container-low rounded-lg px-unit font-label-caps text-label-caps" href="#">
+                    Archive
+                </a>
+</nav>
+<div class="flex items-center gap-unit">
+<button class="p-2 text-primary hover:bg-surface-container-low rounded-lg transition-all duration-300 ease-[cubic-bezier(0.2,0.8,0.2,1)] flex items-center justify-center">
+<span class="material-symbols-outlined">filter_list</span>
+</button>
+<button class="p-2 text-primary hover:bg-surface-container-low rounded-lg transition-all duration-300 ease-[cubic-bezier(0.2,0.8,0.2,1)] flex items-center justify-center">
+<span class="material-symbols-outlined">account_circle</span>
+</button>
+</div>
+</div>
+</header>
+<!-- Main Content -->
+<main class="pt-32 pb-margin-desktop px-margin-mobile md:px-margin-desktop max-w-container-max mx-auto space-y-32">
+<!-- Hero Section -->
+<section class="grid grid-cols-1 md:grid-cols-2 gap-margin-desktop items-center min-h-[716px]">
+<!-- Left: Stats -->
+<div class="space-y-12 z-10 reveal-up">
+<div class="space-y-2">
+<div class="flex items-baseline gap-4">
+<h1 class="text-[160px] md:text-[200px] leading-none font-bold tracking-tighter text-primary">O</h1>
+<div class="flex flex-col">
+<span class="font-display-xl-mobile md:font-display-xl text-display-xl-mobile md:text-display-xl text-primary">Oxygen</span>
+<span class="font-label-mono text-label-mono text-on-surface-variant uppercase tracking-widest mt-2">Atomic Number 8</span>
+</div>
+</div>
+</div>
+<!-- Bento Stats Grid -->
+<div class="grid grid-cols-2 gap-4">
+<div class="bg-surface-container-lowest/50 backdrop-blur-md border border-outline-variant/20 p-6 rounded-xl hover:bg-surface-container-lowest/80 transition-colors">
+<div class="font-label-caps text-label-caps text-on-surface-variant mb-2">Atomic Mass</div>
+<div class="font-label-mono text-label-mono text-primary text-xl">15.999 u</div>
+</div>
+<div class="bg-surface-container-lowest/50 backdrop-blur-md border border-outline-variant/20 p-6 rounded-xl hover:bg-surface-container-lowest/80 transition-colors">
+<div class="font-label-caps text-label-caps text-on-surface-variant mb-2">Category</div>
+<div class="font-body-md text-body-md text-primary font-medium">Reactive Non-metal</div>
+</div>
+<div class="bg-surface-container-lowest/50 backdrop-blur-md border border-outline-variant/20 p-6 rounded-xl hover:bg-surface-container-lowest/80 transition-colors">
+<div class="font-label-caps text-label-caps text-on-surface-variant mb-2">Period / Group</div>
+<div class="font-label-mono text-label-mono text-primary text-xl">2 / 16</div>
+</div>
+<div class="bg-surface-container-lowest/50 backdrop-blur-md border border-outline-variant/20 p-6 rounded-xl hover:bg-surface-container-lowest/80 transition-colors">
+<div class="font-label-caps text-label-caps text-on-surface-variant mb-2">Electron Config</div>
+<div class="font-label-mono text-label-mono text-primary">[He] 2s² 2p⁴</div>
+</div>
+</div>
+</div>
+<!-- Right: 3D Model -->
+<div class="relative h-[400px] md:h-[600px] w-full flex items-center justify-center reveal-up" style="transition-delay: 100ms;">
+<div class="absolute inset-0 bg-radial-gradient from-secondary/5 to-transparent rounded-full blur-3xl -z-10"></div>
+<!-- STITCH_THREEJS_START:ANIMATION_3 class="absolute inset-0 w-full h-full" -->
+<div class="absolute inset-0 w-full h-full" style="display:block;">
+<script src="https://ajax.googleapis.com/ajax/libs/threejs/r125/three.min.js"></script>
+<div id="threejs-container-ANIMATION_3" style="width:100%;height:100%"></div>
+<script>
+(function() {
+  const container = document.getElementById('threejs-container-ANIMATION_3');
+  const devicePixelRatio = window.devicePixelRatio || 1;
+  const width = container.clientWidth || window.innerWidth;
+const height = container.clientHeight || window.innerHeight;
+
+const scene = new THREE.Scene();
+const camera = new THREE.PerspectiveCamera(75, width / height, 0.1, 1000);
+const renderer = new THREE.WebGLRenderer({ alpha: true, antialias: true });
+renderer.setSize(width, height);
+container.appendChild(renderer.domElement);
+
+// Nucleus
+const nucleusGroup = new THREE.Group();
+for(let i = 0; i < 12; i++) {
+    const geo = new THREE.SphereGeometry(0.2, 16, 16);
+    const mat = new THREE.MeshPhongMaterial({ color: i % 2 === 0 ? 0x007AFF : 0x121212 });
+    const sphere = new THREE.Mesh(geo, mat);
+    sphere.position.set(Math.random() * 0.4 - 0.2, Math.random() * 0.4 - 0.2, Math.random() * 0.4 - 0.2);
+    nucleusGroup.add(sphere);
+}
+scene.add(nucleusGroup);
+
+// Electron Shells
+const createShell = (radius, speed, count) => {
+    const shellGroup = new THREE.Group();
+    const ringGeo = new THREE.RingGeometry(radius, radius + 0.01, 64);
+    const ringMat = new THREE.MeshBasicMaterial({ color: 0xDADADA, side: THREE.DoubleSide, transparent: true, opacity: 0.3 });
+    const ring = new THREE.Mesh(ringGeo, ringMat);
+    ring.rotation.x = Math.PI / 2;
+    shellGroup.add(ring);
+
+    for(let i = 0; i < count; i++) {
+        const electronGeo = new THREE.SphereGeometry(0.08, 16, 16);
+        const electronMat = new THREE.MeshPhongMaterial({ color: 0x007AFF });
+        const electron = new THREE.Mesh(electronGeo, electronMat);
+        const angle = (i / count) * Math.PI * 2;
+        electron.position.set(Math.cos(angle) * radius, 0, Math.sin(angle) * radius);
+        shellGroup.add(electron);
+    }
+    
+    return { group: shellGroup, speed };
+};
+
+const shells = [
+    createShell(1.5, 0.02, 2),
+    createShell(2.5, 0.015, 8),
+    createShell(3.5, 0.01, 8)
+];
+shells.forEach(s => scene.add(s.group));
+
+const ambientLight = new THREE.AmbientLight(0xffffff, 0.8);
+scene.add(ambientLight);
+const pointLight = new THREE.PointLight(0xffffff, 1);
+pointLight.position.set(5, 5, 5);
+scene.add(pointLight);
+
+camera.position.z = 8;
+
+const animate = () => {
+    requestAnimationFrame(animate);
+    nucleusGroup.rotation.y += 0.005;
+    shells.forEach(s => {
+        s.group.rotation.y += s.speed;
+        s.group.rotation.x += s.speed * 0.5;
+    });
+    renderer.render(scene, camera);
+};
+
+animate();
+
+window.addEventListener('resize', () => {
+    const w = container.clientWidth || window.innerWidth;
+    const h = container.clientHeight || window.innerHeight;
+    camera.aspect = w / h;
+    camera.updateProjectionMatrix();
+    renderer.setSize(w, h);
+});
+})();
+</script>
+</div>
+<!-- STITCH_THREEJS_END:ANIMATION_3 -->
+</div>
+</section>
+<!-- Section 1: What is Oxygen? -->
+<section class="max-w-4xl mx-auto text-center reveal-up">
+<h2 class="font-headline-lg text-headline-lg text-primary mb-6">The Breath of the Cosmos</h2>
+<p class="font-body-lg text-body-lg text-on-surface-variant leading-relaxed">
+                Oxygen is a highly reactive nonmetal, and an oxidizing agent that readily forms oxides with most elements as well as with other compounds. By mass, oxygen is the third-most abundant element in the universe, after hydrogen and helium. At standard temperature and pressure, two atoms of the element bind to form dioxygen, a colorless and odorless diatomic gas.
+            </p>
+</section>
+<!-- Section 2: Where is it found? -->
+<section class="reveal-up space-y-8">
+<h2 class="font-headline-sm text-headline-sm text-primary border-b border-outline-variant/20 pb-4">Where is it found?</h2>
+<div class="grid grid-cols-1 md:grid-cols-2 gap-gutter">
+<!-- Card 1 -->
+<div class="group relative overflow-hidden rounded-xl bg-surface-container-lowest border border-outline-variant/10 flex flex-col h-96">
+<div class="bg-cover bg-center w-full h-64 border-b border-outline-variant/10 grayscale group-hover:grayscale-0 transition-all duration-700 ease-[cubic-bezier(0.2,0.8,0.2,1)]" data-alt="A pristine, light-mode museum style illustration of the Earth's crust showing geological layers with a glowing, subtle white/blue hue indicating oxygen saturation. Minimalist, high contrast, clean white background, architectural linework." style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuBRHyrZA4hBA5fjE0TFRdfpjL_zQ3Jp_NyE5A4qGxZ3HnpbrBVawTxvD70GynmFUngRq9bs9ixlm0s9Fsuro9Rt8dC-8N6OJxkjxPWIdLPQp1reZBaLOakE3y8A45x3CoV04bAyXPKvhF2N3hQnPgeSqPwA9IG7XIGqvx1A1wxJdYvii0tbG-USjcdauOQX-LDgyn1bGv3i3qd0rc76lVNNNAJIgO833bJ--eNDompYWvrGYqGNf5Fh1nCSwdlhlfwDLN3bUAGR5Yg')"></div>
+<div class="p-6 flex-grow flex flex-col justify-center bg-surface-container-lowest backdrop-blur-md">
+<h3 class="font-headline-sm text-headline-sm text-primary">Earth's Crust</h3>
+<p class="font-body-md text-body-md text-on-surface-variant mt-2">Almost half of the Earth's crust is made of oxygen, bound in silicates and other minerals.</p>
+</div>
+</div>
+<!-- Card 2 -->
+<div class="group relative overflow-hidden rounded-xl bg-surface-container-lowest border border-outline-variant/10 flex flex-col h-96">
+<div class="bg-cover bg-center w-full h-64 border-b border-outline-variant/10 grayscale group-hover:grayscale-0 transition-all duration-700 ease-[cubic-bezier(0.2,0.8,0.2,1)]" data-alt="A highly detailed, pristine, light-mode museum style illustration of the Earth's atmosphere meeting the edge of space. Minimalist, high contrast, clean white background, utilizing thin geometric lines to represent atmospheric layers and gas composition." style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuCMPDwBIWDRtUnMt-lYG9xf_NRsrMzIJ4qgN2jzu4AoiWF2pmpm0JRi2gvz7y5ttTqX6-CfK47Tvook7ZyhxGrEdOFuE5XfMG1etg7thqtOaiWkeRBt6zt9AAcV43s_iXUOaLIa9M2mag9sHlFKuOBgb3C6zddlbzZWUSqhL7CxhbEe2prV3x6yph2WQ0IiSOLoIDBvuQBPLWH3QTMyyNSYC-Mwg5vAqqSsO61QXA7LNLD06EKK7Cvn6twFV_hb9dWY4aALRwrTUxs')"></div>
+<div class="p-6 flex-grow flex flex-col justify-center bg-surface-container-lowest backdrop-blur-md">
+<h3 class="font-headline-sm text-headline-sm text-primary">The Atmosphere</h3>
+<p class="font-body-md text-body-md text-on-surface-variant mt-2">Diatomic oxygen gas constitutes 20.95% of the Earth's atmosphere by volume, essential for most terrestrial life.</p>
+</div>
+</div>
+</div>
+</section>
+<!-- Section 3: Daily Life Uses -->
+<section class="reveal-up space-y-8">
+<h2 class="font-headline-sm text-headline-sm text-primary border-b border-outline-variant/20 pb-4">Applications &amp; Uses</h2>
+<div class="grid grid-cols-1 md:grid-cols-3 gap-gutter">
+<div class="bg-surface-container-lowest border border-outline-variant/10 rounded-xl p-8 hover:-translate-y-2 transition-transform duration-500">
+<span class="material-symbols-outlined text-4xl text-secondary mb-4">monitor_heart</span>
+<h3 class="font-headline-sm text-headline-sm text-primary mb-2">Medicine</h3>
+<p class="font-body-md text-body-md text-on-surface-variant">Supplemental oxygen therapy is crucial for treating respiratory diseases, trauma, and during surgical procedures.</p>
+</div>
+<div class="bg-surface-container-lowest border border-outline-variant/10 rounded-xl p-8 hover:-translate-y-2 transition-transform duration-500">
+<span class="material-symbols-outlined text-4xl text-secondary mb-4">eco</span>
+<h3 class="font-headline-sm text-headline-sm text-primary mb-2">Nature</h3>
+<p class="font-body-md text-body-md text-on-surface-variant">The oxygen cycle relies on photosynthesis by plants and phytoplankton, maintaining atmospheric equilibrium.</p>
+</div>
+<div class="bg-surface-container-lowest border border-outline-variant/10 rounded-xl p-8 hover:-translate-y-2 transition-transform duration-500">
+<span class="material-symbols-outlined text-4xl text-secondary mb-4">rocket_launch</span>
+<h3 class="font-headline-sm text-headline-sm text-primary mb-2">Aerospace</h3>
+<p class="font-body-md text-body-md text-on-surface-variant">Liquid oxygen (LOX) is the most common oxidizer used in liquid propellant rockets to achieve orbit.</p>
+</div>
+</div>
+</section>
+<!-- Section 4 & 5: Compounds & Electron Shell (Side by side for structural density) -->
+<section class="grid grid-cols-1 lg:grid-cols-2 gap-margin-desktop reveal-up">
+<!-- Section 4: Compounds (Water) -->
+<div class="bg-surface-container-lowest border border-outline-variant/10 rounded-xl p-8 flex flex-col justify-between overflow-hidden relative min-h-[400px]">
+<div class="relative z-10">
+<h3 class="font-headline-sm text-headline-sm text-primary mb-2">Essential Compounds</h3>
+<p class="font-body-md text-body-md text-on-surface-variant max-w-sm">
+                        The most famous oxygen compound is water (H₂O). The unique bent shape of the molecule gives water its polar properties.
+                    </p>
+</div>
+<!-- Abstract H2O CSS Representation -->
+<div class="absolute inset-0 flex items-center justify-center pointer-events-none mt-16 molecule-float">
+<div class="relative w-48 h-48 flex items-center justify-center">
+<!-- Oxygen (Center) -->
+<div class="w-24 h-24 rounded-full bg-secondary shadow-[0_0_40px_rgba(0,88,188,0.2)] flex items-center justify-center text-on-secondary font-bold text-2xl z-20">O</div>
+<!-- Hydrogen 1 -->
+<div class="absolute -bottom-4 left-4 w-12 h-12 rounded-full border border-secondary bg-surface-container-lowest flex items-center justify-center text-primary font-bold z-10">H</div>
+<!-- Bond 1 -->
+<div class="absolute bottom-8 left-12 w-16 h-1 bg-outline-variant/30 rotate-[35deg] z-0"></div>
+<!-- Hydrogen 2 -->
+<div class="absolute -bottom-4 right-4 w-12 h-12 rounded-full border border-secondary bg-surface-container-lowest flex items-center justify-center text-primary font-bold z-10">H</div>
+<!-- Bond 2 -->
+<div class="absolute bottom-8 right-12 w-16 h-1 bg-outline-variant/30 -rotate-[35deg] z-0"></div>
+</div>
+</div>
+</div>
+<!-- Section 5: Electron Shell Animation -->
+<div class="bg-surface-container-highest/10 border border-outline-variant/20 rounded-xl p-8 flex flex-col items-center justify-center relative min-h-[400px] overflow-hidden">
+<div class="absolute top-8 left-8 text-left z-10">
+<h3 class="font-headline-sm text-headline-sm text-primary mb-1">Bohr Model</h3>
+<p class="font-label-mono text-label-mono text-on-surface-variant">2, 6 Electrons</p>
+</div>
+<!-- CSS Bohr Model -->
+<div class="relative w-64 h-64 flex items-center justify-center mt-12">
+<!-- Nucleus -->
+<div class="w-12 h-12 rounded-full bg-primary flex items-center justify-center text-on-primary font-bold z-10 shadow-lg text-sm">
+                        8P<br/>8N
+                    </div>
+<!-- Inner Shell (n=1) -->
+<div class="absolute w-28 h-28 rounded-full border border-outline-variant/40 orbit-ring" style="animation-duration: 8s;">
+<div class="absolute -top-2 left-1/2 -translate-x-1/2 w-4 h-4 rounded-full bg-secondary shadow-md"></div>
+<div class="absolute -bottom-2 left-1/2 -translate-x-1/2 w-4 h-4 rounded-full bg-secondary shadow-md"></div>
+</div>
+<!-- Outer Shell (n=2) -->
+<div class="absolute w-56 h-56 rounded-full border border-outline-variant/40 orbit-ring-reverse" style="animation-duration: 15s;">
+<!-- 6 Electrons placed somewhat evenly -->
+<div class="absolute -top-2 left-1/2 -translate-x-1/2 w-4 h-4 rounded-full bg-secondary shadow-md"></div>
+<div class="absolute top-10 right-2 w-4 h-4 rounded-full bg-secondary shadow-md"></div>
+<div class="absolute bottom-10 right-2 w-4 h-4 rounded-full bg-secondary shadow-md"></div>
+<div class="absolute -bottom-2 left-1/2 -translate-x-1/2 w-4 h-4 rounded-full bg-secondary shadow-md"></div>
+<div class="absolute bottom-10 left-2 w-4 h-4 rounded-full bg-secondary shadow-md"></div>
+<div class="absolute top-10 left-2 w-4 h-4 rounded-full bg-secondary shadow-md"></div>
+</div>
+</div>
+</div>
+</section>
+</main>
+<!-- Footer -->
+<footer class="w-full py-20 px-margin-desktop border-t border-outline-variant/5 bg-surface dark:bg-surface-container-lowest transition-all duration-300">
+<div class="max-w-container-max mx-auto flex flex-col md:flex-row justify-between items-center gap-gutter">
+<div class="font-headline-sm text-headline-sm text-primary dark:text-on-surface">Atomic Labs</div>
+<nav class="flex flex-wrap justify-center gap-6">
+<a class="font-body-md text-body-md text-on-surface-variant dark:text-on-tertiary-container hover:text-primary dark:hover:text-on-surface hover:opacity-80 transition-opacity" href="#">Documentation</a>
+<a class="font-body-md text-body-md text-on-surface-variant dark:text-on-tertiary-container hover:text-primary dark:hover:text-on-surface hover:opacity-80 transition-opacity" href="#">Privacy Policy</a>
+<a class="font-body-md text-body-md text-on-surface-variant dark:text-on-tertiary-container hover:text-primary dark:hover:text-on-surface hover:opacity-80 transition-opacity" href="#">Methodology</a>
+<a class="font-body-md text-body-md text-on-surface-variant dark:text-on-tertiary-container hover:text-primary dark:hover:text-on-surface hover:opacity-80 transition-opacity" href="#">Contact</a>
+</nav>
+<div class="font-body-md text-body-md text-on-surface-variant">
+                © 2024 Atomic Labs. Designed for the curious mind.
+            </div>
+</div>
+</footer>
+<!-- Scroll Interaction Script -->
+<script>
+        document.addEventListener("DOMContentLoaded", () => {
+            const observerOptions = {
+                root: null,
+                rootMargin: '0px',
+                threshold: 0.1
+            };
+
+            const observer = new IntersectionObserver((entries, observer) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('is-visible');
+                        observer.unobserve(entry.target);
+                    }
+                });
+            }, observerOptions);
+
+            document.querySelectorAll('.reveal-up').forEach(el => {
+                observer.observe(el);
+            });
+        });
+    </script>
+</body></html>

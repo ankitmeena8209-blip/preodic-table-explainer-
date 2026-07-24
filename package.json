@@ -1,0 +1,23 @@
+{
+  "name": "periodic-table-explainer",
+  "version": "1.0.0",
+  "description": "Interactive 118-Element Periodic Table Explainer with 3D Visualizations & Dynamic Filtering",
+  "main": "index.html",
+  "scripts": {
+    "start": "npx -y serve .",
+    "dev": "npx -y serve ."
+  },
+  "keywords": [
+    "periodic-table",
+    "chemistry",
+    "threejs",
+    "elements",
+    "interactive",
+    "educational"
+  ],
+  "author": "Ankit Meena",
+  "license": "MIT",
+  "devDependencies": {
+    "serve": "^14.2.4"
+  }
+}

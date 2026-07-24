@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width,initial-scale=1.0" name="viewport"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    html, body {
+      width: 100%;
+      height: 100%;
+      overflow: hidden;
+      background: #000;
+    }
+  </style>
+</head>
+<body>
+<!-- STITCH_THREEJS_START:ANIMATION_3 class="fixed inset-0 w-full h-full bg-transparent" -->
+<div class="fixed inset-0 w-full h-full bg-transparent" style="display:block;">
+<script src="https://ajax.googleapis.com/ajax/libs/threejs/r125/three.min.js"></script>
+<div id="threejs-container-ANIMATION_3" style="width:100%;height:100%"></div>
+<script>
+(function() {
+  const container = document.getElementById('threejs-container-ANIMATION_3');
+  const devicePixelRatio = window.devicePixelRatio || 1;
+  const width = container.clientWidth || window.innerWidth;
+const height = container.clientHeight || window.innerHeight;
+
+const scene = new THREE.Scene();
+const camera = new THREE.PerspectiveCamera(75, width / height, 0.1, 1000);
+const renderer = new THREE.WebGLRenderer({ alpha: true, antialias: true });
+renderer.setSize(width, height);
+container.appendChild(renderer.domElement);
+
+// Nucleus
+const nucleusGroup = new THREE.Group();
+for(let i = 0; i < 12; i++) {
+    const geo = new THREE.SphereGeometry(0.2, 16, 16);
+    const mat = new THREE.MeshPhongMaterial({ color: i % 2 === 0 ? 0x007AFF : 0x121212 });
+    const sphere = new THREE.Mesh(geo, mat);
+    sphere.position.set(Math.random() * 0.4 - 0.2, Math.random() * 0.4 - 0.2, Math.random() * 0.4 - 0.2);
+    nucleusGroup.add(sphere);
+}
+scene.add(nucleusGroup);
+
+// Electron Shells
+const createShell = (radius, speed, count) => {
+    const shellGroup = new THREE.Group();
+    const ringGeo = new THREE.RingGeometry(radius, radius + 0.01, 64);
+    const ringMat = new THREE.MeshBasicMaterial({ color: 0xDADADA, side: THREE.DoubleSide, transparent: true, opacity: 0.3 });
+    const ring = new THREE.Mesh(ringGeo, ringMat);
+    ring.rotation.x = Math.PI / 2;
+    shellGroup.add(ring);
+
+    for(let i = 0; i < count; i++) {
+        const electronGeo = new THREE.SphereGeometry(0.08, 16, 16);
+        const electronMat = new THREE.MeshPhongMaterial({ color: 0x007AFF });
+        const electron = new THREE.Mesh(electronGeo, electronMat);
+        const angle = (i / count) * Math.PI * 2;
+        electron.position.set(Math.cos(angle) * radius, 0, Math.sin(angle) * radius);
+        shellGroup.add(electron);
+    }
+    
+    return { group: shellGroup, speed };
+};
+
+const shells = [
+    createShell(1.5, 0.02, 2),
+    createShell(2.5, 0.015, 8),
+    createShell(3.5, 0.01, 8)
+];
+shells.forEach(s => scene.add(s.group));
+
+const ambientLight = new THREE.AmbientLight(0xffffff, 0.8);
+scene.add(ambientLight);
+const pointLight = new THREE.PointLight(0xffffff, 1);
+pointLight.position.set(5, 5, 5);
+scene.add(pointLight);
+
+camera.position.z = 8;
+
+const animate = () => {
+    requestAnimationFrame(animate);
+    nucleusGroup.rotation.y += 0.005;
+    shells.forEach(s => {
+        s.group.rotation.y += s.speed;
+        s.group.rotation.x += s.speed * 0.5;
+    });
+    renderer.render(scene, camera);
+};
+
+animate();
+
+window.addEventListener('resize', () => {
+    const w = container.clientWidth || window.innerWidth;
+    const h = container.clientHeight || window.innerHeight;
+    camera.aspect = w / h;
+    camera.updateProjectionMatrix();
+    renderer.setSize(w, h);
+});
+})();
+</script>
+</div>
+<!-- STITCH_THREEJS_END:ANIMATION_3 -->
+</body>
+</html>

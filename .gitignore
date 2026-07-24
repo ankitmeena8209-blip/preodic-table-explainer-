@@ -1,0 +1,22 @@
+# Dependencies
+node_modules/
+
+# Local Environment & Builds
+.env
+.env.local
+.env.development.local
+.env.production.local
+dist/
+build/
+
+# Vercel
+.vercel
+
+# OS / System Files
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# Temporary Archives & Logs
+*.zip
+*.log
