@@ -135,28 +135,34 @@ document.addEventListener("DOMContentLoaded", () => {
                     </p>
 
                     <!-- Interactive Search Bar -->
-                    <div class="relative max-w-xl mx-auto mb-8 w-full z-30">
-                        <div class="relative flex items-center bg-surface-container-lowest border border-outline-variant/40 rounded-2xl shadow-lg focus-within:border-secondary focus-within:ring-2 focus-within:ring-secondary/20 transition-all">
-                            <span class="material-symbols-outlined text-on-surface-variant pl-4 text-2xl">search</span>
-                            <input id="hero-search-input" type="text" placeholder="Search by Name (Gold), Symbol (Au), or Atomic Number (79)..." 
+                    <div class="relative max-w-2xl mx-auto mb-6 w-full z-30">
+                        <div class="relative flex items-center bg-white/90 backdrop-blur-2xl border border-outline-variant/30 rounded-full shadow-xl focus-within:border-secondary focus-within:ring-4 focus-within:ring-secondary/10 transition-all p-1.5">
+                            <span class="material-symbols-outlined text-secondary pl-4 text-2xl shrink-0">search</span>
+                            <input id="hero-search-input" type="text" placeholder="Search any element by Name (Gold), Symbol (Au), or Number (79)..." 
                                 value="${searchQuery}"
-                                class="w-full py-4 pl-3 pr-4 bg-transparent text-primary placeholder:text-on-surface-variant/60 focus:outline-none font-body-md" />
-                            <button id="clear-search-btn" class="${searchQuery ? 'block' : 'hidden'} pr-4 text-on-surface-variant hover:text-primary">
-                                <span class="material-symbols-outlined">close</span>
+                                class="w-full py-3.5 pl-3 pr-4 bg-transparent text-primary placeholder:text-on-surface-variant/50 focus:outline-none font-body-md text-base border-none ring-0 focus:ring-0" />
+                            <button id="clear-search-btn" class="${searchQuery ? 'block' : 'hidden'} pr-4 text-on-surface-variant/60 hover:text-primary p-1">
+                                <span class="material-symbols-outlined text-xl">close</span>
                             </button>
                         </div>
                         <!-- Search Dropdown Results -->
-                        <div id="hero-search-dropdown" class="hidden absolute left-0 right-0 top-full mt-2 bg-surface-container-lowest border border-outline-variant/20 rounded-xl shadow-2xl overflow-hidden max-h-80 overflow-y-auto z-50 divide-y divide-outline-variant/10 text-left"></div>
+                        <div id="hero-search-dropdown" class="hidden absolute left-0 right-0 top-full mt-3 bg-white/95 backdrop-blur-2xl border border-outline-variant/30 rounded-2xl shadow-2xl overflow-hidden max-h-80 overflow-y-auto z-50 divide-y divide-outline-variant/10 text-left"></div>
                     </div>
 
-                    <!-- Action buttons -->
-                    <div class="flex flex-wrap items-center justify-center gap-4">
-                        <a href="#element/8" class="px-8 py-4 bg-primary text-on-primary rounded-xl font-label-caps text-label-caps uppercase tracking-wider hover:bg-inverse-surface transition-colors duration-300 shadow-md">
-                            Featured: Oxygen (8)
+                    <!-- Clean Quick Links -->
+                    <div class="flex flex-wrap items-center justify-center gap-2.5">
+                        <span class="text-xs font-label-mono text-on-surface-variant/70 uppercase tracking-wider font-semibold mr-1">Popular:</span>
+                        <a href="#element/1" class="px-3.5 py-1.5 bg-surface-container-low/80 hover:bg-primary hover:text-on-primary text-primary rounded-full font-label-mono text-xs transition-all border border-outline-variant/20 shadow-2xs flex items-center gap-1.5">
+                            <span class="font-bold text-secondary">1</span> Hydrogen (H)
                         </a>
-                        <a href="#element/79" class="px-8 py-4 bg-transparent border border-outline-variant text-primary rounded-xl font-label-caps text-label-caps uppercase tracking-wider hover:bg-surface-container-low transition-colors duration-300 flex items-center gap-2">
-                            <span class="material-symbols-outlined text-sm font-bold">stars</span>
-                            Gold (79)
+                        <a href="#element/6" class="px-3.5 py-1.5 bg-surface-container-low/80 hover:bg-primary hover:text-on-primary text-primary rounded-full font-label-mono text-xs transition-all border border-outline-variant/20 shadow-2xs flex items-center gap-1.5">
+                            <span class="font-bold text-secondary">6</span> Carbon (C)
+                        </a>
+                        <a href="#element/8" class="px-3.5 py-1.5 bg-surface-container-low/80 hover:bg-primary hover:text-on-primary text-primary rounded-full font-label-mono text-xs transition-all border border-outline-variant/20 shadow-2xs flex items-center gap-1.5">
+                            <span class="font-bold text-secondary">8</span> Oxygen (O)
+                        </a>
+                        <a href="#element/79" class="px-3.5 py-1.5 bg-surface-container-low/80 hover:bg-primary hover:text-on-primary text-primary rounded-full font-label-mono text-xs transition-all border border-outline-variant/20 shadow-2xs flex items-center gap-1.5">
+                            <span class="font-bold text-amber-500">79</span> Gold (Au)
                         </a>
                     </div>
                 </div>

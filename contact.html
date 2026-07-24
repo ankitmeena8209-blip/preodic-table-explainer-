@@ -129,16 +129,21 @@
         </header>
 
         <!-- Clickable Direct Email Section -->
-        <section class="p-8 rounded-3xl bg-surface-container-lowest border border-outline-variant/25 shadow-lg space-y-6 text-center md:text-left">
-            <div class="flex flex-col md:flex-row items-center justify-between gap-6">
-                <div class="space-y-2">
+        <section class="p-8 md:p-10 rounded-3xl bg-white border border-outline-variant/30 shadow-xl space-y-6 text-center md:text-left relative overflow-hidden">
+            <div class="absolute top-0 right-0 p-8 opacity-5 text-primary pointer-events-none">
+                <span class="material-symbols-outlined text-[120px]">mail</span>
+            </div>
+
+            <div class="relative z-10 flex flex-col md:flex-row items-center justify-between gap-6">
+                <div class="space-y-2 max-w-xl">
                     <h2 class="text-2xl font-bold text-primary tracking-tight">Direct Email Contact</h2>
-                    <p class="text-on-surface-variant text-sm font-body-md">
-                        Click the button below to reach out to our core team via your default email application.
+                    <p class="text-on-surface-variant text-sm leading-relaxed font-body-md">
+                        Click the button below to send an email directly to our development and support team via your default mail client.
                     </p>
                 </div>
+                
                 <div class="flex flex-col items-center md:items-end gap-2 shrink-0">
-                    <button id="email-us-btn" type="button" class="inline-flex items-center gap-3 px-8 py-4 bg-secondary text-white hover:bg-secondary-container hover:text-white rounded-2xl font-bold text-base transition-all shadow-md cursor-pointer border-none">
+                    <button id="email-us-btn" type="button" class="inline-flex items-center justify-center gap-3 px-8 py-4 bg-blue-600 hover:bg-blue-700 text-white font-bold text-base rounded-2xl transition-all shadow-lg hover:shadow-blue-500/25 cursor-pointer border-none active:scale-95" title="Click to Send Email">
                         <span class="material-symbols-outlined text-2xl">mail</span>
                         <span>Email Us</span>
                     </button>
@@ -252,31 +257,22 @@
         if (emailBtn) {
             emailBtn.addEventListener("click", async function() {
                 try {
-                    emailBtn.disabled = true;
-                    emailBtn.classList.add("opacity-75");
-
                     const res = await fetch("/api/contact?format=json");
-                    if (!res.ok) throw new Error("Email service unavailable");
-                    const data = await res.json();
-
-                    if (data && data.mailto) {
-                        window.location.href = data.mailto;
-                    } else {
-                        throw new Error("Missing email data");
-                    }
-                } catch (err) {
-                    if (errorMsg) errorMsg.classList.remove("hidden");
-                    if (emailBtn) {
-                        emailBtn.disabled = true;
-                        emailBtn.classList.add("opacity-50", "cursor-not-allowed");
-                    }
-                } finally {
-                    setTimeout(() => {
-                        if (emailBtn && !emailBtn.disabled) {
-                            emailBtn.disabled = false;
-                            emailBtn.classList.remove("opacity-75");
+                    if (res.ok) {
+                        const data = await res.json();
+                        if (data && data.mailto) {
+                            window.location.href = data.mailto;
+                            return;
                         }
-                    }, 1000);
+                    }
+                    // Direct endpoint redirect fallback
+                    window.location.href = "/api/contact";
+                } catch (err) {
+                    try {
+                        window.location.href = "/api/contact";
+                    } catch (e) {
+                        if (errorMsg) errorMsg.classList.remove("hidden");
+                    }
                 }
             });
         }
