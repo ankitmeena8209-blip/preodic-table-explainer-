@@ -23,9 +23,9 @@ SAFETY: <...>
 If it is a general question, return plain text paragraphs without any markdown characters.`;
 
 const MODELS = [
-  "google/gemini-flash-1.5",
-  "deepseek/deepseek-chat-v3",
-  "mistralai/mistral-small"
+  "llama-3.1-8b-instant",
+  "llama3-70b-8192",
+  "mixtral-8x7b-32768"
 ];
 
 export default async function handler(req: VercelRequest, res: VercelResponse) {
@@ -33,7 +33,7 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
     return res.status(405).json({ error: "Method not allowed" });
   }
 
-  const apiKey = process.env.OPENROUTER_API_KEY;
+  const apiKey = process.env.GROQ_API_KEY;
   if (!apiKey) {
     return res.status(500).json({ error: "Missing API Key" });
   }
@@ -66,12 +66,10 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
     const model = MODELS[i];
     
     try {
-      const response = await fetch("https://openrouter.ai/api/v1/chat/completions", {
+      const response = await fetch("https://api.groq.com/openai/v1/chat/completions", {
         method: "POST",
         headers: {
           "Authorization": `Bearer ${apiKey}`,
-          "HTTP-Referer": "https://frzilabs.com", 
-          "X-Title": "FRZI Labs Element Explainer",
           "Content-Type": "application/json"
         },
         body: JSON.stringify({
