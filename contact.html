@@ -8,7 +8,7 @@
     <title>Contact Us | FRZI Labs - Get in Touch for Chemistry & Feedback</title>
     <meta name="title" content="Contact Us | FRZI Labs - Get in Touch for Chemistry & Feedback"/>
     <meta name="description" content="Have questions, error reports, or collaboration requests? Contact the FRZI Labs chemistry education team today. We welcome student and educator feedback."/>
-    <meta name="keywords" content="Contact FRZI Labs, Chemistry Support, Periodic Table Feedback, Science Education Inquiries, Ankit Gemini Email"/>
+    <meta name="keywords" content="Contact FRZI Labs, Chemistry Support, Periodic Table Feedback, Science Education Inquiries"/>
     <meta name="author" content="FRZI Labs"/>
     <meta name="robots" content="index, follow"/>
     <link rel="canonical" href="https://preodic-table-explainer.vercel.app/contact.html"/>
@@ -52,7 +52,6 @@
           "mainEntity": {
             "@type": "EducationalOrganization",
             "name": "FRZI Labs",
-            "email": "ankitgemini4@gmail.com",
             "url": "https://preodic-table-explainer.vercel.app/"
           }
         },
@@ -135,13 +134,18 @@
                 <div class="space-y-2">
                     <h2 class="text-2xl font-bold text-primary tracking-tight">Direct Email Contact</h2>
                     <p class="text-on-surface-variant text-sm font-body-md">
-                        Click the email button below to launch your default mail application and reach out to our core development team.
+                        Click the button below to reach out to our core team via your default email application.
                     </p>
                 </div>
-                <a href="mailto:ankitgemini4@gmail.com" class="inline-flex items-center gap-3 px-8 py-4 bg-secondary text-white hover:bg-secondary-container hover:text-white rounded-2xl font-bold text-base transition-all shadow-md shrink-0">
-                    <span class="material-symbols-outlined text-2xl">mail</span>
-                    <span>ankitgemini4@gmail.com</span>
-                </a>
+                <div class="flex flex-col items-center md:items-end gap-2 shrink-0">
+                    <button id="email-us-btn" type="button" class="inline-flex items-center gap-3 px-8 py-4 bg-secondary text-white hover:bg-secondary-container hover:text-white rounded-2xl font-bold text-base transition-all shadow-md cursor-pointer border-none">
+                        <span class="material-symbols-outlined text-2xl">mail</span>
+                        <span>Email Us</span>
+                    </button>
+                    <div id="email-unavailable-msg" class="hidden text-xs text-red-600 font-label-mono font-medium mt-1">
+                        Contact email is currently unavailable.
+                    </div>
+                </div>
             </div>
         </section>
 
@@ -238,6 +242,46 @@
             </div>
         </div>
     </footer>
+
+    <!-- Secure Email Handler Script -->
+    <script>
+    document.addEventListener("DOMContentLoaded", function() {
+        const emailBtn = document.getElementById("email-us-btn");
+        const errorMsg = document.getElementById("email-unavailable-msg");
+
+        if (emailBtn) {
+            emailBtn.addEventListener("click", async function() {
+                try {
+                    emailBtn.disabled = true;
+                    emailBtn.classList.add("opacity-75");
+
+                    const res = await fetch("/api/contact?format=json");
+                    if (!res.ok) throw new Error("Email service unavailable");
+                    const data = await res.json();
+
+                    if (data && data.mailto) {
+                        window.location.href = data.mailto;
+                    } else {
+                        throw new Error("Missing email data");
+                    }
+                } catch (err) {
+                    if (errorMsg) errorMsg.classList.remove("hidden");
+                    if (emailBtn) {
+                        emailBtn.disabled = true;
+                        emailBtn.classList.add("opacity-50", "cursor-not-allowed");
+                    }
+                } finally {
+                    setTimeout(() => {
+                        if (emailBtn && !emailBtn.disabled) {
+                            emailBtn.disabled = false;
+                            emailBtn.classList.remove("opacity-75");
+                        }
+                    }, 1000);
+                }
+            });
+        }
+    });
+    </script>
 
 </body>
 </html>

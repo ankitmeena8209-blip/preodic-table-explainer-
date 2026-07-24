@@ -1,11 +1,16 @@
 # Dependencies
 node_modules/
 
-# Local Environment & Builds
+# Local Environment & Secret Files (NEVER COMMIT REAL EMAILS OR KEYS)
 .env
 .env.local
+.env.development
 .env.development.local
+.env.production
 .env.production.local
+.env*.local
+
+# Builds
 dist/
 build/
 
