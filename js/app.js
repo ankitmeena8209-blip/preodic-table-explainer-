@@ -488,7 +488,7 @@ document.addEventListener("DOMContentLoaded", () => {
                     <!-- Right: 3D Animated Atom Model Canvas -->
                     <div class="relative h-[400px] md:h-[550px] w-full flex items-center justify-center reveal-up">
                         <div class="absolute inset-0 bg-radial-gradient from-secondary/10 to-transparent rounded-full blur-3xl -z-10"></div>
-                        <div id="element-threejs-container" class="w-full h-full"></div>
+                        <div id="element-threejs-container" class="w-full h-full overflow-hidden"></div>
                     </div>
                 </section>
 
@@ -850,7 +850,7 @@ document.addEventListener("DOMContentLoaded", () => {
         pointLight.position.set(8, 8, 8);
         scene.add(pointLight);
 
-        camera.position.z = 3.2 + (shellsArray.length * 0.8);
+        camera.position.z = 4.0 + (shellsArray.length * 1.5);
 
         let animFrameId;
         const animate = () => {
