@@ -663,6 +663,7 @@ document.addEventListener("DOMContentLoaded", () => {
     // WIKIPEDIA API INTEGRATION
     // ==========================================
     const WIKI_CACHE = {};
+    console.log("FRZI Labs - Wikipedia Integration Loaded.");
 
     async function fetchWikipediaData(elementName, atomicNumber) {
         if (WIKI_CACHE[elementName]) {
@@ -724,6 +725,14 @@ document.addEventListener("DOMContentLoaded", () => {
         if (summaryEl) {
             summaryEl.innerHTML = el.sections.whereFound;
             summaryEl.classList.remove('animate-pulse');
+        }
+
+        // Always show the reference card as a fallback
+        const cardEl = document.getElementById(`wiki-reference-card-${atomicNumber}`);
+        const btnEl = document.getElementById(`wiki-reference-btn-${atomicNumber}`);
+        if (cardEl && btnEl) {
+            cardEl.classList.remove('hidden');
+            btnEl.href = `https://en.wikipedia.org/wiki/${encodeURIComponent(el.name)}`;
         }
     }
 
