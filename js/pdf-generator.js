@@ -184,26 +184,29 @@ window.downloadStudySheet = async function() {
         const pageHeight = doc.internal.pageSize.height;
         
         // Header
+        const headerHeight = 55;
         doc.setFillColor(30, 41, 59); // Primary dark blue
-        doc.rect(0, 0, pageWidth, 40, 'F');
+        doc.rect(0, 0, pageWidth, headerHeight, 'F');
         
         doc.setTextColor(255, 255, 255);
         doc.setFont("helvetica", "bold");
         doc.setFontSize(28);
-        doc.text(`${el.name} (${el.symbol})`, margin, 25);
+        doc.text(`${el.name} (${el.symbol})`, margin, 36);
         
         doc.setFont("helvetica", "normal");
         doc.setFontSize(12);
-        doc.text(`Atomic Number: ${el.atomicNumber}  |  Atomic Mass: ${el.atomicMass} u`, margin, 33);
+        doc.text(`Atomic Number: ${el.atomicNumber}  |  Atomic Mass: ${el.atomicMass} u`, margin, 46);
         
         doc.setTextColor(200, 200, 200);
         doc.setFontSize(10);
-        doc.text("FRZI Labs - Element Study Sheet", pageWidth - margin - 55, 25);
+        // Website name positioned safely on the left to avoid overlap
+        doc.text("FRZI Labs - Element Study Sheet", margin, 20);
 
-        // Draw Mini Periodic Table indicator in the header area
-        drawMiniPeriodicTable(doc, pageWidth - margin - 45, 12, el);
+        // Draw Mini Periodic Table indicator safely inside printable area on the right
+        const tableWidth = 45;
+        drawMiniPeriodicTable(doc, pageWidth - margin - tableWidth, 20, el);
 
-        let currentY = 50;
+        let currentY = headerHeight + 10;
         
         function addSectionTitle(title) {
             if (currentY > pageHeight - 30) {
