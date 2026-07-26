@@ -78,7 +78,13 @@ class I18nService {
                 // Or we can just use innerHTML if we store HTML in JSON. 
                 // A safer way: if it only contains text, replace textContent.
                 // If it has icons, we should wrap the text in a span and translate that span.
-                el.innerHTML = translation;
+                
+                // Prevent unnecessary DOM updates by comparing encoded HTML
+                const temp = document.createElement('div');
+                temp.innerHTML = translation;
+                if (el.innerHTML !== temp.innerHTML) {
+                    el.innerHTML = translation;
+                }
             }
         });
 
@@ -133,19 +139,22 @@ class I18nService {
         });
 
         // Automatically translate newly injected DOM nodes (e.g. from app.js SPA routing)
-        const observer = new MutationObserver((mutations) => {
+        this.observer = new MutationObserver((mutations) => {
             let shouldTranslate = false;
             for (const mutation of mutations) {
-                if (mutation.addedNodes.length > 0) {
+                // Ignore mutations on attributes to prevent loops if we ever observe attributes
+                if (mutation.type === 'childList' && mutation.addedNodes.length > 0) {
                     shouldTranslate = true;
                     break;
                 }
             }
             if (shouldTranslate) {
+                this.observer.disconnect();
                 this.translateDOM();
+                this.observer.observe(document.body, { childList: true, subtree: true });
             }
         });
-        observer.observe(document.body, { childList: true, subtree: true });
+        this.observer.observe(document.body, { childList: true, subtree: true });
     }
 }
 
