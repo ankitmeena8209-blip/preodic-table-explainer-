@@ -72,6 +72,10 @@ document.addEventListener("DOMContentLoaded", () => {
             window.location.href = "about.html";
             return;
         }
+        if (hash === "#faq" || hash === "#faq.html") {
+            window.location.href = "faq.html";
+            return;
+        }
         if (hash === "#contact" || hash === "#contact.html") {
             window.location.href = "contact.html";
             return;
@@ -651,12 +655,107 @@ document.addEventListener("DOMContentLoaded", () => {
                         <p class="font-body-md text-sm text-on-surface-variant leading-relaxed">${el.sections.safetyInfo}</p>
                     </div>
                 </section>
+                
+                <!-- Section 7: Frequently Asked Questions -->
+                <section class="reveal-up space-y-8">
+                    <h2 class="font-headline-sm text-headline-sm text-primary border-b border-outline-variant/20 pb-4 font-semibold">Frequently Asked Questions</h2>
+                    <div id="element-faqs-container" class="space-y-4">
+                        ${renderElementFAQs(el.atomicNumber)}
+                    </div>
+                </section>
             </main>
         `;
 
         initElementThreeJS(el);
         initScrollReveals();
         fetchWikipediaData(el.name, el.atomicNumber);
+        updateSEO(el);
+    }
+
+    function renderElementFAQs(atomicNumber) {
+        if (typeof ELEMENT_FAQS === 'undefined' || !ELEMENT_FAQS[atomicNumber]) {
+            return '<p class="text-on-surface-variant/70 text-sm">No FAQs available for this element.</p>';
+        }
+
+        let html = '';
+        ELEMENT_FAQS[atomicNumber].forEach(faq => {
+            html += `
+                <details class="group border border-outline-variant/30 bg-white/60 backdrop-blur-md rounded-2xl overflow-hidden [&_summary::-webkit-details-marker]:hidden mb-4">
+                    <summary class="flex items-center justify-between p-5 cursor-pointer text-primary font-semibold text-lg hover:bg-surface-container-low transition-colors">
+                        <span>${faq.q}</span>
+                        <span class="material-symbols-outlined transition-transform duration-300 group-open:-rotate-180 text-secondary">expand_more</span>
+                    </summary>
+                    <div class="px-5 pb-5 text-on-surface-variant/90 border-t border-outline-variant/10 pt-4">
+                        <p>${faq.a}</p>
+                    </div>
+                </details>
+            `;
+        });
+        return html;
+    }
+
+    function updateSEO(el) {
+        // Update Title
+        document.title = `${el.name} (${el.symbol}) - Periodic Table | FRZI Labs`;
+
+        // Update Meta Tags
+        const desc = `Learn everything about ${el.name} (${el.symbol}): atomic number ${el.atomicNumber}, atomic mass ${el.atomicMass}, ${el.category}, uses, discovery, and properties.`;
+        
+        document.querySelector('meta[name="description"]')?.setAttribute("content", desc);
+        document.querySelector('meta[property="og:title"]')?.setAttribute("content", `${el.name} - Periodic Table Element`);
+        document.querySelector('meta[property="og:description"]')?.setAttribute("content", desc);
+        document.querySelector('meta[name="twitter:title"]')?.setAttribute("content", `${el.name} - Periodic Table Element`);
+        document.querySelector('meta[name="twitter:description"]')?.setAttribute("content", desc);
+
+        // Update Canonical URL
+        const canonical = document.querySelector('link[rel="canonical"]');
+        if (canonical) {
+            canonical.setAttribute("href", `https://preodic-table-explainer.vercel.app/#element/${el.atomicNumber}`);
+        }
+
+        // Article & Breadcrumb Schema
+        let seoScript = document.getElementById("element-seo-script");
+        if (!seoScript) {
+            seoScript = document.createElement("script");
+            seoScript.type = "application/ld+json";
+            seoScript.id = "element-seo-script";
+            document.head.appendChild(seoScript);
+        }
+
+        const schema = {
+            "@context": "https://schema.org",
+            "@graph": [
+                {
+                    "@type": "BreadcrumbList",
+                    "itemListElement": [
+                        { "@type": "ListItem", "position": 1, "name": "Home", "item": "https://preodic-table-explainer.vercel.app/" },
+                        { "@type": "ListItem", "position": 2, "name": "Periodic Table", "item": "https://preodic-table-explainer.vercel.app/#explorer" },
+                        { "@type": "ListItem", "position": 3, "name": el.name }
+                    ]
+                },
+                {
+                    "@type": "Article",
+                    "headline": `${el.name} (${el.symbol}) Element Properties`,
+                    "description": desc,
+                    "author": { "@type": "Organization", "name": "FRZI Labs" }
+                }
+            ]
+        };
+
+        // Add FAQ Schema if available
+        if (typeof ELEMENT_FAQS !== 'undefined' && ELEMENT_FAQS[el.atomicNumber]) {
+            const faqSchema = {
+                "@type": "FAQPage",
+                "mainEntity": ELEMENT_FAQS[el.atomicNumber].map(faq => ({
+                    "@type": "Question",
+                    "name": faq.q,
+                    "acceptedAnswer": { "@type": "Answer", "text": faq.a }
+                }))
+            };
+            schema["@graph"].push(faqSchema);
+        }
+
+        seoScript.textContent = JSON.stringify(schema, null, 2);
     }
 
     // ==========================================

@@ -1,56 +1,33 @@
 <!DOCTYPE html>
-<html lang="en" class="scroll-smooth overflow-x-hidden">
+<html lang="en" class="scroll-smooth">
 <head>
     <meta charset="utf-8"/>
     <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    
     <!-- Primary SEO Meta Tags -->
-    <title>FRZI Labs - Interactive Periodic Table Experience (118 Elements)</title>
-    <meta name="title" content="FRZI Labs - Interactive Periodic Table Experience (118 Elements)"/>
-    <meta name="description" content="Explore all 118 chemical elements interactively on FRZI Labs. Features 3D atomic orbital visualizations, real-time search, electronic configurations, and periodic trends."/>
-    <meta name="keywords" content="Periodic Table, Chemical Elements, Interactive Chemistry, Atomic Number, Electron Configuration, Science Education, FRZI Labs"/>
+    <title>Frequently Asked Questions | FRZI Labs</title>
+    <meta name="title" content="Frequently Asked Questions | FRZI Labs"/>
+    <meta name="description" content="Find answers to frequently asked questions about the periodic table, elements, chemistry basics, and how to use FRZI Labs."/>
+    <meta name="keywords" content="Terms and Conditions, FRZI Labs Terms, Website Terms of Use, Science Data License, Educational Terms"/>
     <meta name="author" content="FRZI Labs"/>
     <meta name="robots" content="index, follow"/>
-    <link rel="canonical" href="https://preodic-table-explainer.vercel.app/"/>
+    <link rel="canonical" href="https://preodic-table-explainer.vercel.app/faq.html"/>
 
-    <!-- Google AdSense Verification & Ads -->
+    <!-- Google AdSense -->
     <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-9577238871140380" crossorigin="anonymous"></script>
 
     <!-- Open Graph / Facebook -->
     <meta property="og:type" content="website"/>
-    <meta property="og:url" content="https://preodic-table-explainer.vercel.app/"/>
-    <meta property="og:title" content="FRZI Labs - Interactive Periodic Table Experience (118 Elements)"/>
-    <meta property="og:description" content="Explore all 118 chemical elements interactively on FRZI Labs with 3D atomic orbital models, real-time search, and chemical data."/>
+    <meta property="og:url" content="https://preodic-table-explainer.vercel.app/terms-and-conditions.html"/>
+    <meta property="og:title" content="Frequently Asked Questions | FRZI Labs"/>
+    <meta property="og:description" content="Find answers to frequently asked questions about the periodic table, elements, and chemistry basics."/>
     <meta property="og:site_name" content="FRZI Labs"/>
 
     <!-- Twitter Card -->
     <meta name="twitter:card" content="summary_large_image"/>
-    <meta name="twitter:url" content="https://preodic-table-explainer.vercel.app/"/>
-    <meta name="twitter:title" content="FRZI Labs - Interactive Periodic Table Experience (118 Elements)"/>
-    <meta name="twitter:description" content="Explore all 118 chemical elements interactively on FRZI Labs with 3D atomic orbital models."/>
-
-    <!-- Structured Data (Schema.org) -->
-    <script type="application/ld+json">
-    {
-      "@context": "https://schema.org",
-      "@graph": [
-        {
-          "@type": "WebApplication",
-          "@id": "https://preodic-table-explainer.vercel.app/#webapp",
-          "url": "https://preodic-table-explainer.vercel.app/",
-          "name": "FRZI Labs - Interactive Periodic Table",
-          "applicationCategory": "EducationalApplication",
-          "operatingSystem": "All",
-          "description": "Interactive digital periodic table platform for chemistry students, educators, and researchers."
-        },
-        {
-          "@type": "EducationalOrganization",
-          "@id": "https://preodic-table-explainer.vercel.app/#organization",
-          "name": "FRZI Labs",
-          "url": "https://preodic-table-explainer.vercel.app/"
-        }
-      ]
-    }
-    </script>
+    <meta name="twitter:url" content="https://preodic-table-explainer.vercel.app/terms-and-conditions.html"/>
+    <meta name="twitter:title" content="Frequently Asked Questions | FRZI Labs"/>
+    <meta name="twitter:description" content="Find answers to frequently asked questions about the periodic table, elements, and chemistry basics."/>
 
     <!-- Google Fonts & Material Symbols -->
     <link rel="preconnect" href="https://fonts.googleapis.com"/>
@@ -60,111 +37,57 @@
 
     <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
-
-    <!-- Three.js 3D Library -->
-    <script src="https://ajax.googleapis.com/ajax/libs/threejs/r125/three.min.js"></script>
-
-    <!-- PDF Generation Libraries -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.5.28/jspdf.plugin.autotable.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
-
-    <!-- Tailwind Config matching Kinetic Lab design system -->
     <script src="js/tailwind-config.js"></script>
     <script src="js/faqs-elements.js"></script>
     <script src="js/pdf-generator.js"></script>
+    <script src="js/faqs-global.js"></script>
+    
+
+    <!-- Structured Data (Schema.org) -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@graph": [
+        {
+          "@type": "WebPage",
+          "@id": "https://preodic-table-explainer.vercel.app/terms-and-conditions.html#webpage",
+          "url": "https://preodic-table-explainer.vercel.app/terms-and-conditions.html",
+          "name": "Frequently Asked Questions | FRZI Labs",
+          "description": "Frequently asked questions about the periodic table and chemical elements."
+        },
+        {
+          "@type": "BreadcrumbList",
+          "itemListElement": [
+            {
+              "@type": "ListItem",
+              "position": 1,
+              "name": "Home",
+              "item": "https://preodic-table-explainer.vercel.app/"
+            },
+            {
+              "@type": "ListItem",
+              "position": 2,
+              "name": "FAQ",
+              "item": "https://preodic-table-explainer.vercel.app/terms-and-conditions.html"
+            }
+          ]
+        }
+      ]
+    }
+    </script>
 
     <style>
-        /* Global focus reset to remove default browser outline boxes */
         *:focus, input:focus, button:focus {
             outline: none !important;
             box-shadow: none !important;
         }
-
         body {
             background-color: #f9f9f9;
             color: #1a1c1c;
-            overflow-x: hidden;
-        }
-
-        .glass-panel {
-            background: rgba(255, 255, 255, 0.75);
-            backdrop-filter: blur(24px);
-            -webkit-backdrop-filter: blur(24px);
-            border: 1px solid rgba(196, 199, 199, 0.25);
-        }
-
-        .element-cell {
-            transition: all 0.35s cubic-bezier(0.2, 0.8, 0.2, 1);
-            position: relative;
-            overflow: hidden;
-        }
-
-        .element-cell::after {
-            content: '';
-            position: absolute;
-            top: 0; left: 0; right: 0; bottom: 0;
-            border: 1.5px solid transparent;
-            border-radius: inherit;
-            transition: border-color 0.3s ease;
-            pointer-events: none;
-        }
-
-        .element-cell:hover::after {
-            border-color: #007AFF;
-        }
-
-        /* Category left borders */
-        .category-alkali { border-left: 3px solid #ff6b6b; }
-        .category-alkaline-earth { border-left: 3px solid #ff9f43; }
-        .category-transition { border-left: 3px solid #feca57; }
-        .category-basic-metal { border-left: 3px solid #1dd1a1; }
-        .category-metalloid { border-left: 3px solid #0abde3; }
-        .category-nonmetal { border-left: 3px solid #5f27cd; }
-        .category-halogen { border-left: 3px solid #341f97; }
-        .category-noble-gas { border-left: 3px solid #ee5253; }
-        .category-lanthanide { border-left: 3px solid #10b981; }
-        .category-actinide { border-left: 3px solid #d946ef; }
-
-        /* Grid Layout */
-        .periodic-grid {
-            display: grid;
-            grid-template-columns: repeat(18, minmax(0, 1fr));
-            grid-template-rows: repeat(10, minmax(0, 1fr));
-            gap: 6px;
-            max-width: 1440px;
-            margin: 0 auto;
-        }
-
-        /* Scroll Animations */
-        .reveal-up {
-            opacity: 0;
-            transform: translateY(30px) scale(0.98);
-            transition: opacity 0.7s cubic-bezier(0.2, 0.8, 0.2, 1), transform 0.7s cubic-bezier(0.2, 0.8, 0.2, 1);
-        }
-        .reveal-up.is-visible {
-            opacity: 1;
-            transform: translateY(0) scale(1);
-        }
-
-        /* Electron Orbit Animations */
-        @keyframes spin {
-            100% { transform: rotate(360deg); }
-        }
-        .orbit-ring {
-            animation: spin linear infinite;
-        }
-
-        @keyframes float {
-            0%, 100% { transform: translateY(0); }
-            50% { transform: translateY(-12px); }
-        }
-        .molecule-float {
-            animation: float 4s ease-in-out infinite;
         }
     </style>
 </head>
-<body class="relative min-h-screen font-sans antialiased selection:bg-secondary/20">
+<body class="relative min-h-screen font-sans antialiased selection:bg-secondary/20 flex flex-col justify-between">
 
     <!-- Global Particle Canvas Shader Background -->
     <div class="fixed inset-0 z-[-1] opacity-25 pointer-events-none">
@@ -270,15 +193,15 @@
     <header class="fixed top-0 w-full z-50 bg-white/80 backdrop-blur-2xl border-b border-outline-variant/15 transition-all duration-300">
         <div class="flex justify-between items-center h-20 px-margin-mobile md:px-margin-desktop max-w-container-max mx-auto">
             <!-- Brand Logo -->
-            <a href="#explorer" class="font-headline-sm text-headline-sm tracking-tight text-primary font-bold flex items-center gap-2.5 hover:opacity-85 transition-opacity">
+            <a href="index.html#explorer" class="font-headline-sm text-headline-sm tracking-tight text-primary font-bold flex items-center gap-2.5 hover:opacity-85 transition-opacity">
                 <span class="w-3 h-3 rounded-full bg-secondary inline-block shadow-sm"></span>
-                <span data-i18n="nav.brand">Frzi Labs</span>
+                <span data-i18n="nav.brand">FRZI Labs</span>
             </a>
 
             <!-- Navigation Controls: Home & Navbar Search Icon -->
             <div class="flex items-center gap-2.5">
                 <!-- Home Button -->
-                <a href="#explorer" id="nav-home-btn" class="flex items-center gap-2 px-4 py-2 rounded-full bg-surface-container-low/90 hover:bg-primary hover:text-on-primary text-primary transition-all font-label-caps text-xs font-semibold shadow-xs group" title="Go to Home / Hero Page" data-i18n-title="nav.homeTitle">
+                <a href="index.html#explorer" id="nav-home-btn" class="flex items-center gap-2 px-4 py-2 rounded-full bg-surface-container-low/90 hover:bg-primary hover:text-on-primary text-primary transition-all font-label-caps text-xs font-semibold shadow-xs group" title="Go to Home / Hero Page" data-i18n-title="nav.homeTitle">
                     <span class="material-symbols-outlined text-base group-hover:scale-110 transition-transform">home</span>
                     <span class="hidden sm:inline" data-i18n="nav.home">Home</span>
                 </a>
@@ -289,11 +212,12 @@
                     <span class="hidden sm:inline">PDF</span>
                 </button>
 
+
                 <!-- Header Spotlight Search Widget -->
                 <div class="relative" id="nav-search-container">
                     <button id="nav-search-toggle-btn" class="flex items-center gap-2 px-3.5 py-2 rounded-full bg-surface-container-low/90 hover:bg-surface-container text-primary border border-outline-variant/20 transition-all font-label-caps text-xs font-medium shadow-xs" title="Search All Elements" data-i18n-title="nav.searchTitle">
                         <span class="material-symbols-outlined text-lg text-secondary">search</span>
-                        <span class="hidden sm:inline text-on-surface-variant font-label-mono" data-i18n="nav.search">Search...</span>
+                        <span class="hidden sm:inline text-on-surface-variant font-label-mono">Search...</span>
                     </button>
 
                     <!-- Clean Spotlight Search Card -->
@@ -315,16 +239,40 @@
         </div>
     </header>
 
-    <!-- Main Dynamic Application Canvas Container -->
-    <div id="app-main-content"></div>
+    <!-- Main Content Area -->
+    <main class="pt-28 pb-20 px-margin-mobile md:px-margin-desktop max-w-4xl mx-auto space-y-12">
+        <!-- Breadcrumb Navigation -->
+        <nav aria-label="Breadcrumb" class="text-xs font-label-mono text-on-surface-variant flex items-center gap-2">
+            <a href="index.html#explorer" class="hover:text-primary transition-colors" data-i18n="legal.homeBreadcrumb">Home</a>
+            <span>/</span>
+            <span class="text-primary font-semibold">Frequently Asked Questions</span>
+        </nav>
+
+        <!-- Page Header -->
+        <header class="space-y-4 border-b border-outline-variant/20 pb-8">
+            <div class="inline-block px-3.5 py-1 rounded-full border border-secondary/30 bg-secondary/10 text-secondary font-label-caps text-xs uppercase tracking-widest font-semibold">
+                Knowledge Base
+            </div>
+            <h1 class="text-4xl md:text-5xl font-bold tracking-tight text-primary">
+                Frequently Asked Questions
+            </h1>
+            <p class="text-sm font-label-mono text-on-surface-variant/80">
+                Everything you need to know about elements, periodic trends, and chemistry basics.
+            </p>
+        </header>
+
+        <!-- Detailed Legal Content -->
+        <article class="w-full max-w-none text-on-surface-variant space-y-4 leading-relaxed font-body-md" id="faq-container">
+    <!-- FAQs will be injected here by JS -->
+</article>
+    </main>
 
     <!-- Global Footer -->
     <footer class="w-full py-16 px-margin-mobile md:px-margin-desktop bg-surface border-t border-outline-variant/15 transition-all duration-300">
         <div class="max-w-container-max mx-auto space-y-12">
             <div class="grid grid-cols-1 md:grid-cols-12 gap-8 items-start">
-                <!-- Column 1: Brand & Tagline -->
                 <div class="md:col-span-5 space-y-4">
-                    <a href="#explorer" class="font-headline-sm text-headline-sm tracking-tight text-primary font-bold flex items-center gap-2.5">
+                    <a href="index.html#explorer" class="font-headline-sm text-headline-sm tracking-tight text-primary font-bold flex items-center gap-2.5">
                         <span class="w-3 h-3 rounded-full bg-secondary inline-block shadow-sm"></span>
                         <span data-i18n="footer.brand">FRZI Labs</span>
                     </a>
@@ -333,33 +281,30 @@
                     </p>
                 </div>
 
-                <!-- Column 2: Quick Navigation -->
                 <div class="md:col-span-3 space-y-3">
                     <h3 class="font-label-caps text-xs uppercase tracking-wider text-primary font-semibold" data-i18n="footer.quickNav">Quick Navigation</h3>
                     <ul class="space-y-2 text-sm text-on-surface-variant font-body-md">
-                        <li><a href="#explorer" class="hover:text-primary transition-colors" data-i18n="footer.periodicExplorer">Periodic Explorer</a></li>
-                        <li><a href="#element/1" class="hover:text-primary transition-colors" data-i18n="footer.hydrogen">Hydrogen (H #1)</a></li>
-                        <li><a href="#element/6" class="hover:text-primary transition-colors" data-i18n="footer.carbon">Carbon (C #6)</a></li>
-                        <li><a href="#element/8" class="hover:text-primary transition-colors" data-i18n="footer.oxygen">Oxygen (O #8)</a></li>
-                        <li><a href="#element/79" class="hover:text-primary transition-colors" data-i18n="footer.gold">Gold (Au #79)</a></li>
-                        <li><a href="#element/118" class="hover:text-primary transition-colors" data-i18n="footer.oganesson">Oganesson (Og #118)</a></li>
+                        <li><a href="index.html#explorer" class="hover:text-primary transition-colors" data-i18n="footer.periodicExplorer">Periodic Explorer</a></li>
+                        <li><a href="index.html#element/1" class="hover:text-primary transition-colors" data-i18n="footer.hydrogen">Hydrogen (H #1)</a></li>
+                        <li><a href="index.html#element/6" class="hover:text-primary transition-colors" data-i18n="footer.carbon">Carbon (C #6)</a></li>
+                        <li><a href="index.html#element/8" class="hover:text-primary transition-colors" data-i18n="footer.oxygen">Oxygen (O #8)</a></li>
+                        <li><a href="index.html#element/79" class="hover:text-primary transition-colors" data-i18n="footer.gold">Gold (Au #79)</a></li>
+                        <li><a href="index.html#element/118" class="hover:text-primary transition-colors" data-i18n="footer.oganesson">Oganesson (Og #118)</a></li>
                     </ul>
                 </div>
 
-                <!-- Column 3: Legal & Information -->
                 <div class="md:col-span-4 space-y-3">
                     <h3 class="font-label-caps text-xs uppercase tracking-wider text-primary font-semibold" data-i18n="footer.legalInfo">Legal & Information</h3>
                     <ul class="space-y-2 text-sm text-on-surface-variant font-body-md">
                         <li><a href="about.html" class="hover:text-primary transition-colors" data-i18n="footer.aboutUs">About Us</a></li>
                         <li><a href="contact.html" class="hover:text-primary transition-colors" data-i18n="footer.contactUs">Contact Us</a></li>
                         <li><a href="privacy-policy.html" class="hover:text-primary transition-colors" data-i18n="footer.privacyPolicy">Privacy Policy</a></li>
-                        <li><a href="terms-and-conditions.html" class="hover:text-primary transition-colors" data-i18n="footer.termsConditions">Terms &amp; Conditions</a></li>
+                        <li><a href="terms-and-conditions.html" class="text-secondary font-semibold border-b border-secondary pb-0.5" data-i18n="footer.termsConditions">Terms &amp; Conditions</a></li>
                         <li><a href="disclaimer.html" class="hover:text-primary transition-colors" data-i18n="footer.disclaimer">Disclaimer</a></li>
                     </ul>
                 </div>
             </div>
 
-            <!-- Bottom Copyright & Tagline -->
             <div class="pt-8 border-t border-outline-variant/10 flex flex-col sm:flex-row justify-between items-center gap-4 text-xs font-body-md text-on-surface-variant/80">
                 <div data-i18n="footer.copyright">
                     © 2026 FRZI Labs. All Rights Reserved.
@@ -374,7 +319,54 @@
     <!-- Application Data & Logic -->
     <script src="js/elements-data.js"></script>
     <script src="js/app.js"></script>
+
     <!-- AI Assistant Widget -->
     <script src="js/ai-widget.js"></script>
+
+<script>
+    document.addEventListener('DOMContentLoaded', () => {
+        const container = document.getElementById('faq-container');
+        if (!container || typeof GLOBAL_FAQS === 'undefined') return;
+        
+        let faqsHtml = '';
+        let schemaFaqs = [];
+
+        GLOBAL_FAQS.forEach((faq, index) => {
+            faqsHtml += `
+                <details class="group border border-outline-variant/30 bg-white/60 backdrop-blur-md rounded-2xl overflow-hidden [&_summary::-webkit-details-marker]:hidden mb-4">
+                    <summary class="flex items-center justify-between p-5 cursor-pointer text-primary font-semibold text-lg hover:bg-surface-container-low transition-colors">
+                        <span>${faq.q}</span>
+                        <span class="material-symbols-outlined transition-transform duration-300 group-open:-rotate-180 text-secondary">expand_more</span>
+                    </summary>
+                    <div class="px-5 pb-5 text-on-surface-variant/90 border-t border-outline-variant/10 pt-4">
+                        <p>${faq.a}</p>
+                    </div>
+                </details>
+            `;
+
+            schemaFaqs.push({
+                "@type": "Question",
+                "name": faq.q,
+                "acceptedAnswer": {
+                    "@type": "Answer",
+                    "text": faq.a
+                }
+            });
+        });
+        
+        container.innerHTML = faqsHtml;
+
+        // Inject FAQ Schema
+        const schema = {
+            "@context": "https://schema.org",
+            "@type": "FAQPage",
+            "mainEntity": schemaFaqs
+        };
+        const scriptEl = document.createElement('script');
+        scriptEl.type = 'application/ld+json';
+        scriptEl.text = JSON.stringify(schema, null, 2);
+        document.head.appendChild(scriptEl);
+    });
+</script>
 </body>
 </html>
