@@ -38,6 +38,9 @@
     <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
     <script src="js/tailwind-config.js"></script>
+    
+    <!-- i18n Support -->
+    <script src="js/i18n.js"></script>
 
     <!-- Structured Data (Schema.org) -->
     <script type="application/ld+json">
@@ -191,20 +194,27 @@
             <!-- Brand Logo -->
             <a href="index.html#explorer" class="font-headline-sm text-headline-sm tracking-tight text-primary font-bold flex items-center gap-2.5 hover:opacity-85 transition-opacity">
                 <span class="w-3 h-3 rounded-full bg-secondary inline-block shadow-sm"></span>
-                <span>FRZI Labs</span>
+                <span data-i18n="nav.brand">FRZI Labs</span>
             </a>
 
             <!-- Navigation Controls: Home & Navbar Search Icon -->
             <div class="flex items-center gap-2.5">
                 <!-- Home Button -->
-                <a href="index.html#explorer" id="nav-home-btn" class="flex items-center gap-2 px-4 py-2 rounded-full bg-surface-container-low/90 hover:bg-primary hover:text-on-primary text-primary transition-all font-label-caps text-xs font-semibold shadow-xs" title="Go to Home / Hero Page">
-                    <span class="material-symbols-outlined text-base">home</span>
-                    <span class="hidden sm:inline">Home</span>
+                <a href="index.html#explorer" id="nav-home-btn" class="flex items-center gap-2 px-4 py-2 rounded-full bg-surface-container-low/90 hover:bg-primary hover:text-on-primary text-primary transition-all font-label-caps text-xs font-semibold shadow-xs group" title="Go to Home / Hero Page" data-i18n-title="nav.homeTitle">
+                    <span class="material-symbols-outlined text-base group-hover:scale-110 transition-transform">home</span>
+                    <span class="hidden sm:inline" data-i18n="nav.home">Home</span>
                 </a>
+
+                <!-- Language Switcher -->
+                <div class="flex items-center px-3 py-2 rounded-full bg-surface-container-low/90 text-xs font-label-caps font-medium shadow-xs border border-transparent">
+                    <button id="lang-btn-en" data-lang-switch="en" class="hover:text-primary transition-colors text-primary font-bold">EN</button>
+                    <span class="mx-1 text-on-surface-variant/50">|</span>
+                    <button id="lang-btn-hi" data-lang-switch="hi" class="hover:text-primary transition-colors text-on-surface-variant">HI</button>
+                </div>
 
                 <!-- Header Spotlight Search Widget -->
                 <div class="relative" id="nav-search-container">
-                    <button id="nav-search-toggle-btn" class="flex items-center gap-2 px-3.5 py-2 rounded-full bg-surface-container-low/90 hover:bg-surface-container text-primary border border-outline-variant/20 transition-all font-label-caps text-xs font-medium shadow-xs" title="Search All Elements">
+                    <button id="nav-search-toggle-btn" class="flex items-center gap-2 px-3.5 py-2 rounded-full bg-surface-container-low/90 hover:bg-surface-container text-primary border border-outline-variant/20 transition-all font-label-caps text-xs font-medium shadow-xs" title="Search All Elements" data-i18n-title="nav.searchTitle">
                         <span class="material-symbols-outlined text-lg text-secondary">search</span>
                         <span class="hidden sm:inline text-on-surface-variant font-label-mono">Search...</span>
                     </button>
@@ -214,7 +224,7 @@
                         <!-- Single Integrated Input Header -->
                         <div class="relative flex items-center px-4 py-3 border-b border-outline-variant/15 bg-transparent">
                             <span class="material-symbols-outlined text-secondary text-xl shrink-0">search</span>
-                            <input id="nav-search-input" type="text" placeholder="Search by Name, Symbol, or Atomic #..." 
+                            <input id="nav-search-input" type="text" placeholder="Search by Name, Symbol, or Atomic #..." data-i18n-placeholder="nav.searchPlaceholder"
                                 class="w-full pl-3 pr-8 bg-transparent text-primary placeholder:text-on-surface-variant/50 focus:outline-none border-none ring-0 focus:ring-0 text-sm font-sans" />
                             <button id="nav-search-clear-btn" class="hidden absolute right-3 text-on-surface-variant/60 hover:text-primary p-1">
                                 <span class="material-symbols-outlined text-base">close</span>
@@ -232,9 +242,9 @@
     <main class="pt-28 pb-20 px-margin-mobile md:px-margin-desktop max-w-4xl mx-auto space-y-12">
         <!-- Breadcrumb Navigation -->
         <nav aria-label="Breadcrumb" class="text-xs font-label-mono text-on-surface-variant flex items-center gap-2">
-            <a href="index.html#explorer" class="hover:text-primary transition-colors">Home</a>
+            <a href="index.html#explorer" class="hover:text-primary transition-colors" data-i18n="legal.homeBreadcrumb">Home</a>
             <span>/</span>
-            <span class="text-primary font-semibold">Terms &amp; Conditions</span>
+            <span class="text-primary font-semibold" data-i18n="legal.termsConditions">Terms &amp; Conditions</span>
         </nav>
 
         <!-- Page Header -->
@@ -330,42 +340,42 @@
                 <div class="md:col-span-5 space-y-4">
                     <a href="index.html#explorer" class="font-headline-sm text-headline-sm tracking-tight text-primary font-bold flex items-center gap-2.5">
                         <span class="w-3 h-3 rounded-full bg-secondary inline-block shadow-sm"></span>
-                        <span>FRZI Labs</span>
+                        <span data-i18n="footer.brand">FRZI Labs</span>
                     </a>
-                    <p class="font-body-md text-sm text-on-surface-variant max-w-sm leading-relaxed">
+                    <p class="font-body-md text-sm text-on-surface-variant max-w-sm leading-relaxed" data-i18n="footer.description">
                         Making Chemistry Simple, Interactive & Accessible. Exploring the 118 chemical elements through 3D visualizations, periodic trends, and scientific accuracy.
                     </p>
                 </div>
 
                 <div class="md:col-span-3 space-y-3">
-                    <h3 class="font-label-caps text-xs uppercase tracking-wider text-primary font-semibold">Quick Navigation</h3>
+                    <h3 class="font-label-caps text-xs uppercase tracking-wider text-primary font-semibold" data-i18n="footer.quickNav">Quick Navigation</h3>
                     <ul class="space-y-2 text-sm text-on-surface-variant font-body-md">
-                        <li><a href="index.html#explorer" class="hover:text-primary transition-colors">Periodic Explorer</a></li>
-                        <li><a href="index.html#element/1" class="hover:text-primary transition-colors">Hydrogen (H #1)</a></li>
-                        <li><a href="index.html#element/6" class="hover:text-primary transition-colors">Carbon (C #6)</a></li>
-                        <li><a href="index.html#element/8" class="hover:text-primary transition-colors">Oxygen (O #8)</a></li>
-                        <li><a href="index.html#element/79" class="hover:text-primary transition-colors">Gold (Au #79)</a></li>
-                        <li><a href="index.html#element/118" class="hover:text-primary transition-colors">Oganesson (Og #118)</a></li>
+                        <li><a href="index.html#explorer" class="hover:text-primary transition-colors" data-i18n="footer.periodicExplorer">Periodic Explorer</a></li>
+                        <li><a href="index.html#element/1" class="hover:text-primary transition-colors" data-i18n="footer.hydrogen">Hydrogen (H #1)</a></li>
+                        <li><a href="index.html#element/6" class="hover:text-primary transition-colors" data-i18n="footer.carbon">Carbon (C #6)</a></li>
+                        <li><a href="index.html#element/8" class="hover:text-primary transition-colors" data-i18n="footer.oxygen">Oxygen (O #8)</a></li>
+                        <li><a href="index.html#element/79" class="hover:text-primary transition-colors" data-i18n="footer.gold">Gold (Au #79)</a></li>
+                        <li><a href="index.html#element/118" class="hover:text-primary transition-colors" data-i18n="footer.oganesson">Oganesson (Og #118)</a></li>
                     </ul>
                 </div>
 
                 <div class="md:col-span-4 space-y-3">
-                    <h3 class="font-label-caps text-xs uppercase tracking-wider text-primary font-semibold">Legal & Information</h3>
+                    <h3 class="font-label-caps text-xs uppercase tracking-wider text-primary font-semibold" data-i18n="footer.legalInfo">Legal & Information</h3>
                     <ul class="space-y-2 text-sm text-on-surface-variant font-body-md">
-                        <li><a href="about.html" class="hover:text-primary transition-colors">About Us</a></li>
-                        <li><a href="contact.html" class="hover:text-primary transition-colors">Contact Us</a></li>
-                        <li><a href="privacy-policy.html" class="hover:text-primary transition-colors">Privacy Policy</a></li>
-                        <li><a href="terms-and-conditions.html" class="text-secondary font-semibold border-b border-secondary pb-0.5">Terms &amp; Conditions</a></li>
-                        <li><a href="disclaimer.html" class="hover:text-primary transition-colors">Disclaimer</a></li>
+                        <li><a href="about.html" class="hover:text-primary transition-colors" data-i18n="footer.aboutUs">About Us</a></li>
+                        <li><a href="contact.html" class="hover:text-primary transition-colors" data-i18n="footer.contactUs">Contact Us</a></li>
+                        <li><a href="privacy-policy.html" class="hover:text-primary transition-colors" data-i18n="footer.privacyPolicy">Privacy Policy</a></li>
+                        <li><a href="terms-and-conditions.html" class="text-secondary font-semibold border-b border-secondary pb-0.5" data-i18n="footer.termsConditions">Terms &amp; Conditions</a></li>
+                        <li><a href="disclaimer.html" class="hover:text-primary transition-colors" data-i18n="footer.disclaimer">Disclaimer</a></li>
                     </ul>
                 </div>
             </div>
 
             <div class="pt-8 border-t border-outline-variant/10 flex flex-col sm:flex-row justify-between items-center gap-4 text-xs font-body-md text-on-surface-variant/80">
-                <div>
+                <div data-i18n="footer.copyright">
                     © 2026 FRZI Labs. All Rights Reserved.
                 </div>
-                <div class="italic text-on-surface-variant/60">
+                <div class="italic text-on-surface-variant/60" data-i18n="footer.tagline">
                     "Making Chemistry Simple, Interactive & Accessible."
                 </div>
             </div>

@@ -128,12 +128,12 @@ document.addEventListener("DOMContentLoaded", () => {
 
                 <div class="relative z-10 max-w-4xl reveal-up">
                     <div class="inline-block mb-6 px-4 py-1.5 rounded-full border border-outline-variant/30 bg-surface-container-lowest/70 backdrop-blur-md shadow-sm">
-                        <span class="font-label-caps text-label-caps text-secondary tracking-widest uppercase">Interactive Exhibition • 118 Elements</span>
+                        <span class="font-label-caps text-label-caps text-secondary tracking-widest uppercase" data-i18n="home.interactiveExhibition">Interactive Exhibition • 118 Elements</span>
                     </div>
-                    <h1 class="font-display-xl-mobile md:font-display-xl text-display-xl-mobile md:text-display-xl text-primary mb-6 tracking-tighter text-balance font-semibold">
+                    <h1 class="font-display-xl-mobile md:font-display-xl text-display-xl-mobile md:text-display-xl text-primary mb-6 tracking-tighter text-balance font-semibold" data-i18n="home.discoverBuildingBlocks">
                         Discover the Building Blocks of the Universe
                     </h1>
-                    <p class="font-body-lg text-body-lg text-on-surface-variant max-w-2xl mx-auto mb-10 text-balance leading-relaxed">
+                    <p class="font-body-lg text-body-lg text-on-surface-variant max-w-2xl mx-auto mb-10 text-balance leading-relaxed" data-i18n="home.exploreDescription">
                         Explore all 118 chemical elements through interactive 3D atomic structures, real-world applications, chemical reactions, and discovery histories.
                     </p>
 
@@ -141,7 +141,7 @@ document.addEventListener("DOMContentLoaded", () => {
                     <div class="relative max-w-2xl mx-auto mb-6 w-full z-30">
                         <div class="relative flex items-center bg-white/90 backdrop-blur-2xl border border-outline-variant/30 rounded-full shadow-xl focus-within:border-secondary focus-within:ring-4 focus-within:ring-secondary/10 transition-all p-1.5">
                             <span class="material-symbols-outlined text-secondary pl-4 text-2xl shrink-0">search</span>
-                            <input id="hero-search-input" type="text" placeholder="Search any element by Name (Gold), Symbol (Au), or Number (79)..." 
+                            <input id="hero-search-input" type="text" placeholder="Search any element by Name (Gold), Symbol (Au), or Number (79)..." data-i18n-placeholder="home.searchPlaceholder"
                                 value="${searchQuery}"
                                 class="w-full py-3.5 pl-3 pr-4 bg-transparent text-primary placeholder:text-on-surface-variant/50 focus:outline-none font-body-md text-base border-none ring-0 focus:ring-0" />
                             <button id="clear-search-btn" class="${searchQuery ? 'block' : 'hidden'} pr-4 text-on-surface-variant/60 hover:text-primary p-1">
@@ -154,18 +154,18 @@ document.addEventListener("DOMContentLoaded", () => {
 
                     <!-- Clean Quick Links -->
                     <div class="flex flex-wrap items-center justify-center gap-2.5">
-                        <span class="text-xs font-label-mono text-on-surface-variant/70 uppercase tracking-wider font-semibold mr-1">Popular:</span>
+                        <span class="text-xs font-label-mono text-on-surface-variant/70 uppercase tracking-wider font-semibold mr-1" data-i18n="home.popular">Popular:</span>
                         <a href="#element/1" class="px-3.5 py-1.5 bg-surface-container-low/80 hover:bg-primary hover:text-on-primary text-primary rounded-full font-label-mono text-xs transition-all border border-outline-variant/20 shadow-2xs flex items-center gap-1.5">
-                            <span class="font-bold text-secondary">1</span> Hydrogen (H)
+                            <span class="font-bold text-secondary">1</span> <span data-i18n="footer.hydrogen">Hydrogen (H)</span>
                         </a>
                         <a href="#element/6" class="px-3.5 py-1.5 bg-surface-container-low/80 hover:bg-primary hover:text-on-primary text-primary rounded-full font-label-mono text-xs transition-all border border-outline-variant/20 shadow-2xs flex items-center gap-1.5">
-                            <span class="font-bold text-secondary">6</span> Carbon (C)
+                            <span class="font-bold text-secondary">6</span> <span data-i18n="footer.carbon">Carbon (C)</span>
                         </a>
                         <a href="#element/8" class="px-3.5 py-1.5 bg-surface-container-low/80 hover:bg-primary hover:text-on-primary text-primary rounded-full font-label-mono text-xs transition-all border border-outline-variant/20 shadow-2xs flex items-center gap-1.5">
-                            <span class="font-bold text-secondary">8</span> Oxygen (O)
+                            <span class="font-bold text-secondary">8</span> <span data-i18n="footer.oxygen">Oxygen (O)</span>
                         </a>
                         <a href="#element/79" class="px-3.5 py-1.5 bg-surface-container-low/80 hover:bg-primary hover:text-on-primary text-primary rounded-full font-label-mono text-xs transition-all border border-outline-variant/20 shadow-2xs flex items-center gap-1.5">
-                            <span class="font-bold text-amber-500">79</span> Gold (Au)
+                            <span class="font-bold text-amber-500">79</span> <span data-i18n="home.gold">Gold (Au)</span>
                         </a>
                     </div>
                 </div>
@@ -175,7 +175,7 @@ document.addEventListener("DOMContentLoaded", () => {
             <section class="py-12 px-2 md:px-margin-desktop max-w-container-max mx-auto overflow-x-auto reveal-up">
                 <div class="flex flex-wrap items-center justify-center gap-2 mb-8" id="filter-pills-wrapper">
                     ${Object.keys(categoryNames).map(catKey => `
-                        <button data-filter="${catKey}" class="filter-pill px-4 py-2 rounded-full font-label-caps text-xs transition-all duration-300 border ${activeFilter === catKey ? 'bg-primary text-on-primary border-primary shadow-sm scale-105' : 'bg-surface-container-lowest/80 text-on-surface-variant border-outline-variant/30 hover:border-primary/50'}">
+                        <button data-filter="${catKey}" data-i18n="category.${catKey}" class="filter-pill px-4 py-2 rounded-full font-label-caps text-xs transition-all duration-300 border ${activeFilter === catKey ? 'bg-primary text-on-primary border-primary shadow-sm scale-105' : 'bg-surface-container-lowest/80 text-on-surface-variant border-outline-variant/30 hover:border-primary/50'}">
                             ${categoryNames[catKey]}
                         </button>
                     `).join('')}
@@ -201,8 +201,8 @@ document.addEventListener("DOMContentLoaded", () => {
 
                     <!-- Table Footer Legend -->
                     <div class="mt-6 flex flex-wrap justify-between items-center text-xs font-label-mono text-on-surface-variant/80 border-t border-outline-variant/10 pt-4 px-2">
-                        <span>Rows 1–7: Periods • Columns 1–18: Groups</span>
-                        <span>* Lanthanides & Actinides separated below</span>
+                        <span data-i18n="home.tableLegendRows">Rows 1–7: Periods • Columns 1–18: Groups</span>
+                        <span data-i18n="home.tableLegendLanthanides">* Lanthanides & Actinides separated below</span>
                     </div>
                 </div>
             </section>
@@ -215,7 +215,7 @@ document.addEventListener("DOMContentLoaded", () => {
                         <div class="absolute top-0 right-0 p-8 opacity-10 font-display-xl text-[120px] leading-none pointer-events-none transform translate-x-4 -translate-y-4 transition-transform group-hover:scale-110 duration-700 font-bold">
                             Au
                         </div>
-                        <h3 class="font-label-caps text-label-caps text-secondary mb-8 uppercase tracking-widest font-semibold">Element of the Day</h3>
+                        <h3 class="font-label-caps text-label-caps text-secondary mb-8 uppercase tracking-widest font-semibold" data-i18n="home.elementOfDay">Element of the Day</h3>
                         <div class="flex items-end gap-6 mb-8">
                             <div class="w-32 h-32 rounded-2xl bg-surface-container-lowest border border-amber-400 flex flex-col items-center justify-center shadow-md">
                                 <span class="font-label-mono text-sm self-start pl-3 pt-2 text-on-surface-variant font-medium">79</span>
@@ -223,40 +223,40 @@ document.addEventListener("DOMContentLoaded", () => {
                                 <span class="font-label-mono text-xs text-on-surface-variant pb-2">196.97</span>
                             </div>
                             <div>
-                                <h2 class="font-headline-lg text-headline-lg text-primary mb-2 font-semibold">Gold</h2>
-                                <span class="px-3 py-1 rounded-full text-xs font-label-caps border border-amber-400 text-amber-600 bg-amber-400/10 uppercase font-semibold">Transition Metal</span>
+                                <h2 class="font-headline-lg text-headline-lg text-primary mb-2 font-semibold" data-i18n="home.goldTitle">Gold</h2>
+                                <span class="px-3 py-1 rounded-full text-xs font-label-caps border border-amber-400 text-amber-600 bg-amber-400/10 uppercase font-semibold" data-i18n="category.transition">Transition Metal</span>
                             </div>
                         </div>
-                        <p class="font-body-md text-body-md text-on-surface-variant mb-8 leading-relaxed">
+                        <p class="font-body-md text-body-md text-on-surface-variant mb-8 leading-relaxed" data-i18n="home.goldDesc">
                             A dense, soft, malleable, and highly ductile metal with a bright yellow metallic luster. Extremely resistant to corrosion and chemical oxidation.
                         </p>
                         <a href="#element/79" class="inline-flex text-primary font-label-caps text-label-caps uppercase tracking-wider items-center gap-2 hover:text-secondary transition-colors font-semibold">
-                            View Details
+                            <span data-i18n="home.viewDetails">View Details</span>
                             <span class="material-symbols-outlined text-sm">arrow_forward</span>
                         </a>
                     </div>
 
                     <!-- Timeline Preview -->
                     <div class="md:col-span-7 flex flex-col justify-center">
-                        <h3 class="font-headline-lg text-headline-lg text-primary mb-4 font-semibold">Discovery Timeline</h3>
-                        <p class="font-body-md text-body-md text-on-surface-variant mb-10 max-w-xl leading-relaxed">
+                        <h3 class="font-headline-lg text-headline-lg text-primary mb-4 font-semibold" data-i18n="home.timelineTitle">Discovery Timeline</h3>
+                        <p class="font-body-md text-body-md text-on-surface-variant mb-10 max-w-xl leading-relaxed" data-i18n="home.timelineDesc">
                             Trace the human journey of isolating chemical elements, from antiquity's metals to modern synthetic superheavy elements.
                         </p>
                         <div class="space-y-6 relative before:absolute before:inset-0 before:ml-5 before:-translate-x-px md:before:mx-auto md:before:translate-x-0 before:h-full before:w-0.5 before:bg-gradient-to-b before:from-transparent before:via-outline-variant/30 before:to-transparent">
                             ${[
-                                { yr: "Antiquity", name: "Copper (Cu), Gold (Au), Iron (Fe)", desc: "Known since prehistoric times by ancient civilizations." },
-                                { yr: "1669", name: "Phosphorus (P)", desc: "First element scientifically isolated by Hennig Brand." },
-                                { yr: "1774", name: "Oxygen (O)", desc: "Isolated by Joseph Priestley and Carl Wilhelm Scheele." },
-                                { yr: "1869", name: "Mendeleev's Periodic Law", desc: "Dmitri Mendeleev arranged 63 known elements into the first periodic table." },
-                                { yr: "2016", name: "Oganesson (Og #118)", desc: "Period 7 completed with official recognition of superheavy element 118." }
+                                { key: "antiquity", yr: "Antiquity", name: "Copper (Cu), Gold (Au), Iron (Fe)", desc: "Known since prehistoric times by ancient civilizations." },
+                                { key: "t1669", yr: "1669", name: "Phosphorus (P)", desc: "First element scientifically isolated by Hennig Brand." },
+                                { key: "t1774", yr: "1774", name: "Oxygen (O)", desc: "Isolated by Joseph Priestley and Carl Wilhelm Scheele." },
+                                { key: "t1869", yr: "1869", name: "Mendeleev's Periodic Law", desc: "Dmitri Mendeleev arranged 63 known elements into the first periodic table." },
+                                { key: "t2016", yr: "2016", name: "Oganesson (Og #118)", desc: "Period 7 completed with official recognition of superheavy element 118." }
                             ].map(item => `
                                 <div class="relative flex items-center justify-between md:justify-normal md:odd:flex-row-reverse group">
                                     <div class="flex items-center justify-center w-10 h-10 rounded-full border border-outline-variant/40 bg-surface-container-lowest shadow-sm shrink-0 md:order-1 md:group-odd:-translate-x-1/2 md:group-even:translate-x-1/2">
-                                        <span class="font-label-caps text-[9px] text-primary font-bold">${item.yr}</span>
+                                        <span class="font-label-caps text-[9px] text-primary font-bold" data-i18n="home.timeline.${item.key}">${item.yr}</span>
                                     </div>
                                     <div class="w-[calc(100%-4rem)] md:w-[calc(50%-2.5rem)] p-4 rounded-xl border border-outline-variant/15 bg-surface-container-lowest/60 backdrop-blur-sm transition-all hover:border-secondary/40 hover:bg-surface-container-lowest shadow-sm">
-                                        <div class="font-semibold text-primary mb-1">${item.name}</div>
-                                        <p class="text-xs text-on-surface-variant leading-relaxed">${item.desc}</p>
+                                        <div class="font-semibold text-primary mb-1" data-i18n="home.timeline.${item.key}Name">${item.name}</div>
+                                        <p class="text-xs text-on-surface-variant leading-relaxed" data-i18n="home.timeline.${item.key}Desc">${item.desc}</p>
                                     </div>
                                 </div>
                             `).join('')}

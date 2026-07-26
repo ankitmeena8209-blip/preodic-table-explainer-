@@ -1,9 +1,6 @@
 module.exports = (req, res) => {
   const email = process.env.CONTACT_EMAIL || process.env.NEXT_PUBLIC_CONTACT_EMAIL || "ankitgemini4@gmail.com";
 
-  if (!email || email.trim() === "" || email.includes("example.com")) {
-    return res.status(503).json({ error: "Contact email is currently unavailable." });
-  }
 
   const format = req.query ? req.query.format : null;
   if (format === "json") {
