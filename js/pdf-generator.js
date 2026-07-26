@@ -115,14 +115,18 @@ function drawMiniPeriodicTable(doc, startX, startY, activeElement) {
 window.downloadStudySheet = async function() {
     if (isGeneratingPDF) return;
     
-    // Get element ID natively from URL hash to fix global scope issues
     const hash = window.location.hash;
+    const path = window.location.pathname;
     let elementIdStr = null;
     
-    if (hash.startsWith("#element-")) {
+    if (window.currentElementId) {
+        elementIdStr = window.currentElementId.toString();
+    } else if (hash.startsWith("#element-")) {
         elementIdStr = hash.replace("#element-", "");
     } else if (hash.startsWith("#element/")) {
         elementIdStr = hash.replace("#element/", "");
+    } else if (path.includes("/elements/")) {
+        elementIdStr = path.split("/elements/")[1].replace("/", "");
     }
 
     if (!elementIdStr) {

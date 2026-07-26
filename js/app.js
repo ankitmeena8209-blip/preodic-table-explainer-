@@ -117,6 +117,7 @@ document.addEventListener("DOMContentLoaded", () => {
     // ==========================================
     function renderExplorerView() {
         currentElementId = null;
+        window.currentElementId = null;
         if (threejsInstance && threejsInstance.destroy) {
             threejsInstance.destroy();
             threejsInstance = null;
@@ -414,6 +415,7 @@ document.addEventListener("DOMContentLoaded", () => {
     // ==========================================
     function renderElementDetailView(el) {
         currentElementId = el.atomicNumber;
+        window.currentElementId = el.atomicNumber;
         if (threejsInstance && threejsInstance.destroy) {
             threejsInstance.destroy();
             threejsInstance = null;
