@@ -419,8 +419,8 @@
                         throw new Error("Invalid data");
                     }
                 } catch (e) {
-                    // Fallback or show error
-                    if (unavailableMsg) unavailableMsg.classList.remove("hidden");
+                    // Fallback to direct mailto if API fails (e.g. static dev server)
+                    window.location.href = "mailto:ankitgemini4@gmail.com";
                 } finally {
                     emailBtn.disabled = false;
                     emailBtn.style.opacity = '1';
