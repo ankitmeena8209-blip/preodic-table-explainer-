@@ -122,6 +122,11 @@ document.addEventListener("DOMContentLoaded", () => {
             threejsInstance = null;
         }
 
+        const pdfBtn = document.getElementById("nav-pdf-btn");
+        if (pdfBtn) {
+            pdfBtn.classList.add("hidden");
+        }
+
         mainContainer.innerHTML = `
             <!-- Hero Section -->
             <section class="relative pt-32 pb-16 px-margin-mobile md:px-margin-desktop max-w-container-max mx-auto flex flex-col items-center justify-center min-h-[600px] text-center overflow-hidden">
@@ -412,6 +417,11 @@ document.addEventListener("DOMContentLoaded", () => {
         if (threejsInstance && threejsInstance.destroy) {
             threejsInstance.destroy();
             threejsInstance = null;
+        }
+
+        const pdfBtn = document.getElementById("nav-pdf-btn");
+        if (pdfBtn) {
+            pdfBtn.classList.remove("hidden");
         }
 
         const prevEl = ELEMENTS_DATA.find(e => e.atomicNumber === el.atomicNumber - 1);
