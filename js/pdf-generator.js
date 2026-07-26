@@ -136,9 +136,9 @@ window.downloadStudySheet = async function() {
     
     let el = null;
     if (!isNaN(elementIdStr)) {
-        el = window.ELEMENTS_DATA.find(e => e.atomicNumber === parseInt(elementIdStr));
+        el = ELEMENTS_DATA.find(e => e.atomicNumber === parseInt(elementIdStr));
     } else {
-        el = window.ELEMENTS_DATA.find(e => e.name.toLowerCase() === elementIdStr.toLowerCase() || e.symbol.toLowerCase() === elementIdStr.toLowerCase());
+        el = ELEMENTS_DATA.find(e => e.name.toLowerCase() === elementIdStr.toLowerCase() || e.symbol.toLowerCase() === elementIdStr.toLowerCase());
     }
 
     if (!el) {
