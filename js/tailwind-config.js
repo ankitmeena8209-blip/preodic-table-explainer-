@@ -1,0 +1,90 @@
+tailwind.config = {
+    darkMode: "class",
+    theme: {
+        extend: {
+            colors: {
+                "error": "#ba1a1a",
+                "surface-container-lowest": "#ffffff",
+                "secondary-fixed-dim": "#adc6ff",
+                "inverse-on-surface": "#f1f1f1",
+                "surface-bright": "#f9f9f9",
+                "tertiary-fixed-dim": "#c6c6c7",
+                "tertiary-container": "#1a1c1c",
+                "on-secondary": "#ffffff",
+                "primary-container": "#1c1b1b",
+                "secondary": "#0058bc",
+                "tertiary-fixed": "#e2e2e2",
+                "surface-variant": "#e2e2e2",
+                "primary-fixed": "#e5e2e1",
+                "on-tertiary": "#ffffff",
+                "surface-container": "#eeeeee",
+                "primary-fixed-dim": "#c8c6c5",
+                "surface": "#f9f9f9",
+                "inverse-surface": "#2f3131",
+                "on-secondary-fixed": "#001a41",
+                "surface-dim": "#dadada",
+                "on-secondary-fixed-variant": "#004493",
+                "on-surface-variant": "#444748",
+                "tertiary": "#000000",
+                "secondary-container": "#0070eb",
+                "on-background": "#1a1c1c",
+                "outline-variant": "#c4c7c7",
+                "on-primary": "#ffffff",
+                "inverse-primary": "#c8c6c5",
+                "on-error-container": "#93000a",
+                "on-surface": "#1a1c1c",
+                "surface-container-low": "#f3f3f3",
+                "on-error": "#ffffff",
+                "on-tertiary-container": "#838484",
+                "on-primary-fixed": "#1c1b1b",
+                "on-tertiary-fixed": "#1a1c1c",
+                "secondary-fixed": "#d8e2ff",
+                "surface-container-highest": "#e2e2e2",
+                "on-primary-container": "#858383",
+                "primary": "#000000",
+                "surface-tint": "#5f5e5e",
+                "surface-container-high": "#e8e8e8",
+                "on-secondary-container": "#fefcff",
+                "background": "#f9f9f9",
+                "outline": "#747878",
+                "error-container": "#ffdad6"
+            },
+            borderRadius: {
+                "DEFAULT": "0.25rem",
+                "lg": "0.5rem",
+                "xl": "0.75rem",
+                "2xl": "1rem",
+                "full": "9999px"
+            },
+            spacing: {
+                "margin-desktop": "64px",
+                "gutter": "24px",
+                "unit": "8px",
+                "container-max": "1440px",
+                "margin-mobile": "20px"
+            },
+            fontFamily: {
+                "sans": ["Inter", "sans-serif"],
+                "mono": ["JetBrains Mono", "monospace"],
+                "headline-lg": ["Inter"],
+                "display-xl": ["Inter"],
+                "label-caps": ["Inter"],
+                "label-mono": ["JetBrains Mono"],
+                "headline-sm": ["Inter"],
+                "body-md": ["Inter"],
+                "display-xl-mobile": ["Inter"],
+                "body-lg": ["Inter"]
+            },
+            fontSize: {
+                "headline-lg": ["32px", { "lineHeight": "40px", "letterSpacing": "-0.02em", "fontWeight": "500" }],
+                "display-xl": ["64px", { "lineHeight": "72px", "letterSpacing": "-0.04em", "fontWeight": "600" }],
+                "label-caps": ["12px", { "lineHeight": "16px", "letterSpacing": "0.1em", "fontWeight": "600" }],
+                "label-mono": ["14px", { "lineHeight": "20px", "letterSpacing": "0.05em", "fontWeight": "500" }],
+                "headline-sm": ["24px", { "lineHeight": "32px", "letterSpacing": "-0.01em", "fontWeight": "500" }],
+                "body-md": ["16px", { "lineHeight": "24px", "fontWeight": "400" }],
+                "display-xl-mobile": ["40px", { "lineHeight": "48px", "letterSpacing": "-0.03em", "fontWeight": "600" }],
+                "body-lg": ["18px", { "lineHeight": "28px", "fontWeight": "400" }]
+            }
+        }
+    }
+};
