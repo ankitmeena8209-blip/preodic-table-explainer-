@@ -33,7 +33,7 @@ function setButtonState(state, message = "") {
             iconSpan.textContent = 'hourglass_empty';
             iconSpan.classList.add('animate-spin');
         }
-        if (textSpan) textSpan.textContent = 'Generating...';
+        if (textSpan) textSpan.textContent = 'Generating PDF...';
     } else if (state === 'error') {
         btn.disabled = false;
         btn.classList.remove('opacity-80', 'cursor-not-allowed', 'bg-gradient-to-r', 'from-blue-600', 'to-indigo-600');
@@ -77,15 +77,66 @@ async function fetchWikipediaSummary(elementName) {
     }
 }
 
+function drawMiniPeriodicTable(doc, startX, startY, activeElement) {
+    const boxSize = 2.5;
+    
+    // Standard coordinates (1-based cols and rows)
+    const coords = {
+        1: [1,1], 2: [18,1],
+        3: [1,2], 4: [2,2], 5:[13,2], 6:[14,2], 7:[15,2], 8:[16,2], 9:[17,2], 10:[18,2],
+        11: [1,3], 12: [2,3], 13:[13,3], 14:[14,3], 15:[15,3], 16:[16,3], 17:[17,3], 18:[18,3],
+        19: [1,4], 20: [2,4], 21:[3,4], 22:[4,4], 23:[5,4], 24:[6,4], 25:[7,4], 26:[8,4], 27:[9,4], 28:[10,4], 29:[11,4], 30:[12,4], 31:[13,4], 32:[14,4], 33:[15,4], 34:[16,4], 35:[17,4], 36:[18,4],
+        37: [1,5], 38: [2,5], 39:[3,5], 40:[4,5], 41:[5,5], 42:[6,5], 43:[7,5], 44:[8,5], 45:[9,5], 46:[10,5], 47:[11,5], 48:[12,5], 49:[13,5], 50:[14,5], 51:[15,5], 52:[16,5], 53:[17,5], 54:[18,5],
+        55: [1,6], 56: [2,6], 72:[4,6], 73:[5,6], 74:[6,6], 75:[7,6], 76:[8,6], 77:[9,6], 78:[10,6], 79:[11,6], 80:[12,6], 81:[13,6], 82:[14,6], 83:[15,6], 84:[16,6], 85:[17,6], 86:[18,6],
+        87: [1,7], 88: [2,7], 104:[4,7], 105:[5,7], 106:[6,7], 107:[7,7], 108:[8,7], 109:[9,7], 110:[10,7], 111:[11,7], 112:[12,7], 113:[13,7], 114:[14,7], 115:[15,7], 116:[16,7], 117:[17,7], 118:[18,7]
+    };
+    
+    // Lanthanides
+    for(let i=57; i<=71; i++) coords[i] = [i-57+3, 8.5];
+    // Actinides
+    for(let i=89; i<=103; i++) coords[i] = [i-89+3, 9.5];
+
+    for (let i = 1; i <= 118; i++) {
+        if (!coords[i]) continue;
+        const [cx, cy] = coords[i];
+        const x = startX + (cx - 1) * boxSize;
+        const y = startY + (cy - 1) * boxSize;
+        
+        if (i === activeElement.atomicNumber) {
+            doc.setFillColor(37, 99, 235); // blue-600
+            doc.rect(x, y, boxSize, boxSize, 'F');
+        } else {
+            doc.setFillColor(226, 232, 240); // slate-200
+            doc.rect(x, y, boxSize, boxSize, 'F');
+        }
+    }
+}
+
 window.downloadStudySheet = async function() {
     if (isGeneratingPDF) return;
     
-    if (typeof currentElementId === 'undefined' || !currentElementId) {
+    // Get element ID natively from URL hash to fix global scope issues
+    const hash = window.location.hash;
+    let elementIdStr = null;
+    
+    if (hash.startsWith("#element-")) {
+        elementIdStr = hash.replace("#element-", "");
+    } else if (hash.startsWith("#element/")) {
+        elementIdStr = hash.replace("#element/", "");
+    }
+
+    if (!elementIdStr) {
         alert("Please select an element first to download its study sheet.");
         return;
     }
     
-    const el = ELEMENTS_DATA.find(e => e.atomicNumber === currentElementId);
+    let el = null;
+    if (!isNaN(elementIdStr)) {
+        el = window.ELEMENTS_DATA.find(e => e.atomicNumber === parseInt(elementIdStr));
+    } else {
+        el = window.ELEMENTS_DATA.find(e => e.name.toLowerCase() === elementIdStr.toLowerCase() || e.symbol.toLowerCase() === elementIdStr.toLowerCase());
+    }
+
     if (!el) {
         alert("Element not found.");
         return;
@@ -145,6 +196,9 @@ window.downloadStudySheet = async function() {
         doc.setFontSize(10);
         doc.text("FRZI Labs - Element Study Sheet", pageWidth - margin - 55, 25);
 
+        // Draw Mini Periodic Table indicator in the header area
+        drawMiniPeriodicTable(doc, pageWidth - margin - 45, 12, el);
+
         let currentY = 50;
         
         function addSectionTitle(title) {
@@ -166,11 +220,9 @@ window.downloadStudySheet = async function() {
             doc.setFont("helvetica", "normal");
             doc.setFontSize(11);
             doc.setTextColor(51, 65, 85);
-            // Replace some html entities and tags just in case
             let cleanText = text.replace(/<[^>]*>?/gm, '').replace(/&amp;/g, '&');
             const lines = doc.splitTextToSize(cleanText, pageWidth - margin * 2);
             
-            // Check page boundaries for each block of lines
             if (currentY + (lines.length * 5) > pageHeight - 20) {
                 doc.addPage();
                 currentY = 20;
@@ -180,7 +232,7 @@ window.downloadStudySheet = async function() {
         }
 
         // --- Content ---
-        addSectionTitle("Summary & Key Facts");
+        addSectionTitle("Quick Summary");
         addText(el.sections.whatIsThis || `${el.name} is a chemical element with the symbol ${el.symbol} and atomic number ${el.atomicNumber}.`);
         
         if (currentY > pageHeight - 60) { doc.addPage(); currentY = 20; }
@@ -203,24 +255,20 @@ window.downloadStudySheet = async function() {
         });
         currentY = doc.lastAutoTable.finalY + 10;
 
-        addSectionTitle("Discovery & History");
+        addSectionTitle("Discovery Information");
         addText(history || `${el.name} was discovered by ${el.discoverer} in ${el.discoveryYear}.`);
-        
-        addSectionTitle("Extraction & Occurrence");
-        addText(occurrence || "Found in various natural occurrences depending on its reactivity.");
-        addText(el.sections.howExtracted || "");
         
         addSectionTitle("Everyday & Industrial Uses");
         addText(`Everyday: ${el.sections.everydayUses || 'No common everyday uses listed.'}`);
         addText(`Industrial: ${el.sections.industrialApps || 'No specific industrial applications listed.'}`);
-        addText(`Biological Role: ${el.sections.biologicalImportance || 'No known biological role.'}`);
+        if (el.sections.biologicalImportance) addText(`Biological Role: ${el.sections.biologicalImportance}`);
         
         if (el.sections.commonCompounds && el.sections.commonCompounds.name) {
             addSectionTitle("Common Compounds");
             addText(`${el.sections.commonCompounds.name} (${el.sections.commonCompounds.formula}): ${el.sections.commonCompounds.description}`);
         }
 
-        addSectionTitle("Safety Information");
+        addSectionTitle("Safety Notes");
         addText(el.sections.safetyInfo || "Standard chemical safety protocols apply.");
         
         addSectionTitle("Interesting Facts");
@@ -231,7 +279,7 @@ window.downloadStudySheet = async function() {
         addText(`Exam Focus: Remember atomic number ${el.atomicNumber}, category: ${el.category}, and valency of ${el.valency} for balancing equations.`);
         
         // Add QR Code at the bottom of the last page
-        const currentUrl = window.location.href.split('#')[0] + `#element/${el.atomicNumber}`;
+        const currentUrl = window.location.href.split('#')[0] + `#element/${el.name.toLowerCase()}`;
         const qrContainer = document.createElement("div");
         new window.QRCode(qrContainer, {
             text: currentUrl,
@@ -253,7 +301,9 @@ window.downloadStudySheet = async function() {
             doc.text("Interactive Page", pageWidth - margin - 35, currentY + 45);
         }
 
-        doc.save(`${el.name}_Study_Sheet.pdf`);
+        // Generate safe filename e.g. oxygen-study-sheet.pdf
+        const safeName = el.name.toLowerCase().replace(/[^a-z0-9]/g, '-');
+        doc.save(`${safeName}-study-sheet.pdf`);
         setButtonState('default');
 
     } catch (error) {
