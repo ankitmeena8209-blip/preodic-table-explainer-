@@ -2,6 +2,12 @@
   "version": 2,
   "cleanUrls": true,
   "trailingSlash": false,
+  "rewrites": [
+    {
+      "source": "/google43adcab49a0f3305.html",
+      "destination": "/google43adcab49a0f3305.html"
+    }
+  ],
   "headers": [
     {
       "source": "/(.*)",
